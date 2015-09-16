@@ -10,7 +10,7 @@
 			<ul>
 			{{#each channel}}
 				<li>
-					<a href="{{pathFor 'channel' name=name}}" class="channel-link">
+					<a href="{{pathFor 'channel' name=name}}" data-room="{{_id}}" class="channel-link">
 						<i class="icon-hash"></i>
 						{{name}}
 					</a>
@@ -19,9 +19,4 @@
 			</ul>
 		</div>
 	</div>
-	<footer>
-		<div>
-			<button class="button clean create">{{_ "Create_new"}}</button>
-		</div>
-	</footer>
 </template>

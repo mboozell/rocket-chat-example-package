@@ -3,6 +3,9 @@ Meteor.methods
 		if not Meteor.userId()
 			throw new Meteor.Error 'invalid-user', "[methods] createChannel -> Invalid user"
 
+		if not Meteor.user().admin is true
+			throw new Meteor.Error 401, "[methods] createChannel -> Must be admin"
+
 		if not /^[0-9a-z-_]+$/.test name
 			throw new Meteor.Error 'name-invalid'
 

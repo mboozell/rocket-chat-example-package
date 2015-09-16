@@ -2,15 +2,15 @@ Template.listChannelsFlex.helpers
 	channel: ->
 		return Template.instance().channelsList?.get()
 
+
 Template.listChannelsFlex.events
 	'click header': ->
 		SideNav.closeFlex()
 
-	'click .channel-link': ->
+	'click .channel-link': (e) ->
+		rid = e.target.getAttribute 'data-room'
+		Meteor.call 'showRoom', rid
 		SideNav.closeFlex()
-
-	'click footer .create': ->
-		SideNav.setFlex "createChannelFlex"
 
 	'mouseenter header': ->
 		SideNav.overArrow()
@@ -25,4 +25,3 @@ Template.listChannelsFlex.onCreated ->
 	Meteor.call 'channelsList', (err, result) ->
 		if result
 			instance.channelsList.set result.channels
-
