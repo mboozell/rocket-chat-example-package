@@ -1,6 +1,4 @@
 Template.admin.helpers
-	isAdmin: ->
-		return Meteor.user().admin is true
 	group: ->
 		group = FlowRouter.getParam('group')
 		group ?= Settings.findOne({ type: 'group' })?._id
@@ -23,10 +21,10 @@ Template.admin.helpers
 		return sectionsArray
 
 	flexOpened: ->
-		return 'opened' if Session.equals('flexOpened', true)
+		return 'opened' if RocketChat.TabBar.isFlexOpen()
 	arrowPosition: ->
 		console.log 'room.helpers arrowPosition' if window.rocketDebug
-		return 'left' unless Session.equals('flexOpened', true)
+		return 'left' unless RocketChat.TabBar.isFlexOpen()
 	label: ->
 		label = @i18nLabel or @_id
 		if label?.indexOf(':') is -1

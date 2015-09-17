@@ -13,7 +13,6 @@ Meteor.methods
 			'u._id': Meteor.userId()
 		,
 			$set:
-				alert: true,
 				open: true
 
 		console.log ChatSubscription.findOne

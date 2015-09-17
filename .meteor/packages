@@ -38,10 +38,11 @@ rocketchat:me
 rocketchat:mentions
 rocketchat:oembed
 rocketchat:slashcommands-invite
+rocketchat:slashcommands-join
 rocketchat:slashcommands-leave
 rocketchat:statistics
 rocketchat:webrtc
-#rocketchat:external
+#rocketchat:livechat
 #rocketchat:hubot
 #rocketchat:irc
 
@@ -84,3 +85,4 @@ todda00:friendly-slugs
 underscorestring:underscore.string
 yasaricli:slugify
 yasinuslu:blaze-meta
+rocketchat:authorization

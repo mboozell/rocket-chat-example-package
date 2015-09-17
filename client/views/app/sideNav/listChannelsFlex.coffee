@@ -12,6 +12,10 @@ Template.listChannelsFlex.events
 		Meteor.call 'showRoom', rid
 		SideNav.closeFlex()
 
+	'click footer .create': ->
+		if RocketChat.authz.hasAtLeastOnePermission( 'create-c')
+			SideNav.setFlex "createChannelFlex"
+
 	'mouseenter header': ->
 		SideNav.overArrow()
 

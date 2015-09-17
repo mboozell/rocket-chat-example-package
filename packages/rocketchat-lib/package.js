@@ -7,13 +7,13 @@ Package.describe({
 
 Package.onUse(function(api) {
 	api.versionsFrom('1.0');
-
+	
+	api.use('reactive-var');
 	api.use('reactive-dict');
 	api.use('coffeescript');
 	api.use('random');
 	api.use('underscore');
 	api.use('underscorestring:underscore.string');
-
 
 	// COMMON
 	api.addFiles('lib/core.coffee');
@@ -26,6 +26,7 @@ Package.onUse(function(api) {
 
 	// CLIENT
 	api.addFiles('client/Notifications.coffee', 'client');
+	api.addFiles('client/TabBar.coffee', 'client');
 
 	api.addFiles('settings/client/startup.coffee', 'client');
 	api.addFiles('settings/client/rocketchat.coffee', 'client');
@@ -36,6 +37,7 @@ Package.onUse(function(api) {
 	api.addFiles('server/functions/setUsername.coffee', 'server');
 
 	api.addFiles('server/methods/joinDefaultChannels.coffee', 'server');
+	api.addFiles('server/methods/sendInvitationEmail.coffee', 'server');
 	api.addFiles('server/methods/setAdminStatus.coffee', 'server');
 	api.addFiles('server/methods/setUsername.coffee', 'server');
 	api.addFiles('server/methods/updateUser.coffee', 'server');

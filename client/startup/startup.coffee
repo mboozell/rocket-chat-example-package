@@ -1,9 +1,10 @@
 Meteor.startup ->
+	TimeSync.loggingEnabled = false
+
 	UserPresence.awayTime = 300000
 	UserPresence.start()
 	Meteor.subscribe("activeUsers")
 
-	Session.setDefault('flexOpened', false)
 	Session.setDefault('AvatarRandom', 0)
 
 	window.lastMessageWindow = {}

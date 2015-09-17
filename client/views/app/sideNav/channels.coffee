@@ -27,9 +27,11 @@ Template.channels.helpers
 
 Template.channels.events
 	'click .add-room': (e, instance) ->
-		flexChannel = if Meteor.user().admin is true then "createChannelFlex" else "listChannelsFlex"
-		SideNav.setFlex flexChannel
-		SideNav.openFlex()
+		if RocketChat.authz.hasAtLeastOnePermission('create-c')
+			SideNav.setFlex "createChannelFlex"
+			SideNav.openFlex()
+		else
+			e.preventDefault()
 
 	'click .more-channels': ->
 		SideNav.setFlex "listChannelsFlex"
