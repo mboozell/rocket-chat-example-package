@@ -229,7 +229,7 @@ Template.room.helpers
 		return RocketChat.TabBar.getData()
 
 	adminClass: ->
-		return 'admin' if Meteor.user()?.admin is true
+		return 'admin' if RocketChat.authz.hasRole(Meteor.userId(), 'admin')
 
 Template.room.events
 	"touchstart .message": (e, t) ->
@@ -405,12 +405,13 @@ Template.room.events
 	'click .see-all': (e, instance) ->
 		instance.showUsersOffline.set(!instance.showUsersOffline.get())
 
-	"click .edit-message": (e) ->
-		Template.instance().chatMessages.edit(e.currentTarget.parentNode.parentNode)
-		input = Template.instance().find('.input-message')
-		Meteor.setTimeout ->
-			input.focus()
-		, 200
+	'click .message-cog': (e) ->
+		message_id = $(e.currentTarget).closest('.message').attr('id')
+		$('.message-dropdown:visible').hide()
+		$("\##{message_id} .message-dropdown").show()
+
+	'click .message-dropdown-close': ->
+		$('.message-dropdown:visible').hide()
 
 	"click .editing-commands-cancel > a": (e) ->
 		Template.instance().chatMessages.clearEditing()
@@ -431,30 +432,6 @@ Template.room.events
 	'click .image-to-download': (event) ->
 		ChatMessage.update {_id: this._arguments[1]._id, 'urls.url': $(event.currentTarget).data('url')}, {$set: {'urls.$.downloadImages': true}}
 
-	'click .delete-message': (event) ->
-		message = @_arguments[1]
-		msg = event.currentTarget.parentNode.parentNode
-		instance = Template.instance()
-		return if msg.classList.contains("system")
-		swal {
-			title: t('Are_you_sure')
-			text: t('You_will_not_be_able_to_recover')
-			type: 'warning'
-			showCancelButton: true
-			confirmButtonColor: '#DD6B55'
-			confirmButtonText: t('Yes_delete_it')
-			cancelButtonText: t('Cancel')
-			closeOnConfirm: false
-			html: false
-		}, ->
-			swal
-				title: t('Deleted')
-				text: t('Your_entry_has_been_deleted')
-				type: 'success'
-				timer: 1000
-				showConfirmButton: false
-
-			instance.chatMessages.deleteMsg(message)
 	'click .pin-message': (event) ->
 		message = @_arguments[1]
 		instance = Template.instance()
@@ -463,29 +440,6 @@ Template.room.events
 			instance.chatMessages.unpinMsg(message)
 		else
 			instance.chatMessages.pinMsg(message)
-
-	'click .start-video': (event) ->
-		_id = Template.instance().data._id
-		webrtc.to = _id.replace(Meteor.userId(), '')
-		webrtc.room = _id
-		webrtc.mode = 1
-		webrtc.start(true)
-
-	'click .stop-video': (event) ->
-		webrtc.stop()
-
-	'click .monitor-video': (event) ->
-		_id = Template.instance().data._id
-		webrtc.to = _id.replace(Meteor.userId(), '')
-		webrtc.room = _id
-		webrtc.mode = 2
-		webrtc.start(true)
-
-
-	'click .setup-video': (event) ->
-		webrtc.mode = 2
-		webrtc.activateLocalStream()
-
 
 	'dragenter .dropzone': (e) ->
 		e.currentTarget.classList.add 'over'
@@ -569,6 +523,12 @@ Template.room.onCreated ->
 	@autorun ->
 		self.subscribe 'fullUserData', Session.get('showUserInfo'), 1
 
+	for button in RocketChat.MessageAction.getButtons()
+		if _.isFunction button.action
+			evt = {}
+			evt["click .#{button.id}"] = button.action
+			Template.room.events evt
+
 Template.room.onDestroyed ->
 	RocketChat.TabBar.resetButtons()
 
@@ -633,11 +593,19 @@ Template.room.onRendered ->
 	# salva a data da renderização para exibir alertas de novas mensagens
 	$.data(this.firstNode, 'renderedAt', new Date)
 
+	webrtc.onAcceptCall = (fromUsername) ->
+		if FlowRouter.current().route.name is 'direct' and FlowRouter.current().params.username is fromUsername
+			return
+
+		FlowRouter.go 'direct', {username: fromUsername}
+
 	webrtc.onRemoteUrl = (url) ->
+		RocketChat.TabBar.setTemplate 'membersList'
 		RocketChat.TabBar.openFlex()
 		Session.set('remoteVideoUrl', url)
 
 	webrtc.onSelfUrl = (url) ->
+		RocketChat.TabBar.setTemplate 'membersList'
 		RocketChat.TabBar.openFlex()
 		Session.set('selfVideoUrl', url)
 

@@ -1,12 +1,15 @@
+currentTracker = undefined
+
 openRoom = (type, name) ->
 	Session.set 'openedRoom', null
 
 	Meteor.defer ->
-		Tracker.autorun (c) ->
+		currentTracker = Tracker.autorun (c) ->
 			if RoomManager.open(type + name).ready() isnt true
 				BlazeLayout.render 'main', {center: 'loading'}
 				return
 
+			currentTracker = undefined
 			c.stop()
 
 			query =
@@ -58,8 +61,13 @@ openRoom = (type, name) ->
 			if ChatSubscription.findOne({rid: room._id})?.open is false
 				Meteor.call 'openRoom', room._id
 
+			RocketChat.callbacks.run 'enter-room'
+
 roomExit = ->
 	BlazeLayout.render 'main', {center: 'none'}
+
+	if currentTracker?
+		currentTracker.stop()
 
 	mainNode = document.querySelector('.main-content')
 	if mainNode?
