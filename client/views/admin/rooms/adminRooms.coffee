@@ -60,7 +60,7 @@ Template.adminRooms.onCreated ->
 			channelSubscription = instance.subscribe 'roomUsers', Session.get 'adminRoomSelected'
 			RocketChat.TabBar.setData ChatRoom.findOne Session.get 'adminRoomSelected'
 			RocketChat.TabBar.addButton({ id: 'room-info', title: t('Room_Info'), icon: 'icon-info', template: 'adminRoomInfo', order: 1 })
-			RocketChat.TabBar.addButton({ id: 'room-users-info', title: t('Room_User_Info'), icon: 'icon-users', template: 'adminRoomUserInfo', order: 1 })
+			RocketChat.TabBar.addButton({ id: 'room-users-info', title: t('Room_User_Info'), icon: 'icon-users', template: 'adminRoomUsers', order: 1 })
 		else
 			RocketChat.TabBar.reset()
 

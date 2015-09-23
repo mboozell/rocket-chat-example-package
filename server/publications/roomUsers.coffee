@@ -2,7 +2,7 @@ Meteor.publish 'roomUsers', (rid, limit) ->
 	unless @userId
 		return @ready()
 
-	user = Meteor.users.findOne @userId
+	user = RocketChat.models.Users.findOne @userId
 
 	fields =
 		name: 1
@@ -21,7 +21,7 @@ Meteor.publish 'roomUsers', (rid, limit) ->
 			services: 1
 			roles : 1
 
-	query = username: $in: ChatRoom.findOne(rid).usernames
+	query = username: $in: RocketChat.models.Rooms.findOneById(rid).usernames
 
 	console.log '[publish] roomUsers'.green, rid, limit
 

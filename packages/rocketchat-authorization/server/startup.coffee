@@ -30,6 +30,9 @@ Meteor.startup ->
 		{ _id: 'assign-admin-role',
 		roles : ['admin']}
 
+		{ _id: 'assign-moderator-role',
+		roles : ['admin']}
+
 		{ _id: 'edit-other-user-active-status',
 		roles : ['admin', 'site-moderator']}
 
