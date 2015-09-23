@@ -45,22 +45,13 @@
 		</div>
 	</section>
 	<section class="flex-tab">
-		<div class="control">
-			<button class="more"><span class="arrow {{arrowPosition}}"></span></button>
-			<div class="info-tabs">
-				<a href="#adminRoomInfo" class="active"><i class="icon-hash"></i></a>
-			</div>
-		</div>
-		{{#if flexOpened}}
-			<div class="content">
-				<div class="user-view">
-					<div id="adminRoomInfo" class="room-info-content">
-						{{#if roomData}}
-							{{> adminRoomInfo roomData}}
-						{{/if}}
-					</div>
+			<div class="channel-view">
+				{{#with flexData}}
+				<div>
+					<h3><a href="{{route}}"><i class="icon-{{icon}}"></i>{{name}}</a></h3>
 				</div>
+				{{/with}}
+				{{> Template.dynamic template=flexTemplate data=flexData}}
 			</div>
-		{{/if}}
 	</section>
 </template>

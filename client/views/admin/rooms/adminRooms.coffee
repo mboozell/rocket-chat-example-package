@@ -25,8 +25,21 @@ Template.adminRooms.helpers
 			return TAPi18next.t 'project:Direct Message'
 		if @t is 'p'
 			return TAPi18next.t 'project:Private Group'
-	roomData: ->
-		return ChatRoom.findOne Session.get 'adminRoomsSelected'
+	icon: ->
+		return if @t is 'd' then 'at' else if @t is 'p' then 'lock' else 'hash'
+	route: ->
+		return switch this.t
+			when 'd'
+				FlowRouter.path('direct', {username: @name})
+			when 'p'
+				FlowRouter.path('group', {name: @name})
+			when 'c'
+				FlowRouter.path('channel', {name: @name})
+
+	flexTemplate: ->
+		return RocketChat.TabBar.getTemplate()
+	flexData: ->
+		return RocketChat.TabBar.getData()
 
 Template.adminRooms.onCreated ->
 	instance = @
@@ -42,23 +55,33 @@ Template.adminRooms.onCreated ->
 		subscription = instance.subscribe 'adminRooms', filter, types, limit
 		instance.ready.set subscription.ready()
 
+	@autorun ->
+		if Session.get 'adminRoomSelected'
+			channelSubscription = instance.subscribe 'roomUsers', Session.get 'adminRoomSelected'
+			RocketChat.TabBar.setData ChatRoom.findOne Session.get 'adminRoomSelected'
+			RocketChat.TabBar.addButton({ id: 'room-info', title: t('Room_Info'), icon: 'icon-info', template: 'adminRoomInfo', order: 1 })
+			RocketChat.TabBar.addButton({ id: 'room-users-info', title: t('Room_User_Info'), icon: 'icon-users', template: 'adminRoomUserInfo', order: 1 })
+		else
+			RocketChat.TabBar.reset()
+
+
 	@rooms = ->
 		filter = _.trim instance.filter?.get()
 		types = instance.types?.get()
-		
+
 		unless _.isArray types
 			types = []
 
 		query = {}
-	
+
 		filter = _.trim filter
 		if filter
 			filterReg = new RegExp filter, "i"
 			query = { $or: [ { name: filterReg }, { t: 'd', usernames: filterReg } ] }
-		
+
 		if types.length
 			query['t'] = { $in: types }
-		
+
 		return ChatRoom.find(query, { limit: instance.limit?.get(), sort: { name: 1 } })
 
 	@getSearchTypes = ->
@@ -88,13 +111,19 @@ Template.adminRooms.events
 
 	'click .room-info': (e) ->
 		e.preventDefault()
-		Session.set 'adminRoomsSelected', $(e.currentTarget).data('id')
+		rid = $(e.currentTarget).data('id')
+		Session.set 'adminRoomSelected', rid
+		Session.set 'showRoomInfo', Meteor.users.findOne(rid)?.name or true
+		RocketChat.TabBar.setTemplate 'adminRoomInfo'
 		RocketChat.TabBar.openFlex()
 
 	'click .room-info-tabs a': (e) ->
 		e.preventDefault()
-		$('.room-info-tabs a').removeClass 'active'
+		$('.info-tabs a').removeClass 'active'
 		$(e.currentTarget).addClass 'active'
+
+		$('.user-info-content').hide()
+		$($(e.currentTarget).attr('href')).show()
 
 	'click .load-more': (e, t) ->
 		e.preventDefault()
