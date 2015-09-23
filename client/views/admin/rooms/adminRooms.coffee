@@ -91,6 +91,8 @@ Template.adminRooms.onRendered ->
 	Tracker.afterFlush ->
 		SideNav.setFlex "adminFlex"
 		SideNav.openFlex()
+	instance = Template.instance()
+	instance.types.set instance.getSearchTypes()
 
 Template.adminRooms.events
 	'keydown #rooms-filter': (e) ->

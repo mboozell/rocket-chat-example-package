@@ -10,6 +10,7 @@
 					{{> avatar username=username}}
 				</li>
 				@{{username}}
+				{{#if isModerator}}<i class='icon-crown'></i>{{/if}}
 			</div>
 			{{/each}}
 			</ul>

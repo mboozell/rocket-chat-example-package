@@ -1,11 +1,10 @@
 Template.adminRoomUsers.helpers
 
 	isModerator: ->
-		rid = Template.currentData()._id
+		rid = Template.instance().data._id
 		RocketChat.authz.hasRole(@_id, 'moderator', rid)
 
 	users: ->
-		console.log(@)
 		Meteor.users.find({}, { limit: 0, sort: { username: 1, name: 1 } }).fetch()
 
 Template.adminRoomUsers.events

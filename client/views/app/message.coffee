@@ -1,7 +1,7 @@
 Template.message.helpers
 	actions: ->
 		return RocketChat.MessageAction.getButtons(this)
-		
+
 	own: ->
 		return 'own' if this.u?._id is Meteor.userId()
 
@@ -65,6 +65,9 @@ Template.message.helpers
 		return RocketChat.settings.get 'Message_AllowPinning'
 	showEditedStatus: ->
 		return RocketChat.settings.get 'Message_ShowEditedStatus'
+	isModerator: ->
+		rid = Template.instance().data.rid
+		RocketChat.authz.hasRole(@_id, 'moderator', rid)
 
 Template.message.onViewRendered = (context) ->
 	view = this
