@@ -1,0 +1,18 @@
+<template name="adminRoomUserInfo">
+	{{#unless hasPermission 'view-room-administration'}}
+		<p>You are not authorized to view this page.</p>
+	{{else}}
+		<div>
+			<ul>
+			{{#each users}}
+			<div class="user-info" data-id="{{_id}}">
+				<li class='user-image status-{{status}}'>
+					{{> avatar username=username}}
+				</li>
+				@{{username}}
+			</div>
+			{{/each}}
+			</ul>
+		</div>
+	{{/unless}}
+</template>
