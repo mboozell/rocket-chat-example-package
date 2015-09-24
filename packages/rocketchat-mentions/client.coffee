@@ -19,6 +19,8 @@ class MentionsClient
 				mentions = mentions.join('|')
 				msg = msg.replace new RegExp("(?:^|\\s|\\n)(@(#{mentions}):?)\\b", 'g'), (match, mention, username) ->
 					if username is 'all'
+						if not RocketChat.authz.hasAtLeastOnePermission('group-notify', message.rid, message.u._id)
+							return match
 						return match.replace mention, "<a href=\"\" class=\"mention-link mention-link-me\">#{mention}</a>"
 
 					if not message.temp?

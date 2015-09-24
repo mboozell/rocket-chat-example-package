@@ -1,4 +1,3 @@
-# @TODO bug com o botão para "rolar até o fim" (novas mensagens) quando há uma mensagem com texto que gere rolagem horizontal
 Template.room.helpers
 	favorite: ->
 		sub = ChatSubscription.findOne { rid: this._id }, { fields: { f: 1 } }
@@ -146,9 +145,11 @@ Template.room.helpers
 		else
 			return t('See_all')
 
-	getPupupConfig: ->
+	getPopupConfig: ->
 		template = Template.instance()
+		console.log template.data._id
 		return {
+			rid: template.data._id
 			getInput: ->
 				return template.find('.input-message')
 		}

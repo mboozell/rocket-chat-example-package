@@ -14,6 +14,8 @@ class MentionsServer
 			verifiedMentions = []
 			mentions.forEach (mention) ->
 				if mention is 'all'
+					if not RocketChat.authz.hasPermission(message.u._id, 'group-notify', message.rid)
+						return
 					verifiedMention =
 						_id: mention
 						username: mention

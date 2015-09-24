@@ -148,7 +148,7 @@ Template.messagePopup.onCreated ->
 
 		filter = template.textFilter.get()
 		if filter?
-			result = template.data.getFilter template.data.collection, filter
+			result = template.data.getFilter template.data.collection, filter, template.data
 			if (template.data.collection instanceof Meteor.Collection and result.count? and result.count() is 0) or result?.length is 0
 				template.hasData.set false
 			else

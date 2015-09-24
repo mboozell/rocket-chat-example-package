@@ -16,3 +16,4 @@ Meteor.publish 'userData', ->
 			language: 1
 			settings: 1
 			defaultRoom: 1
+			roles: 1

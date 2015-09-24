@@ -20,11 +20,14 @@ Template.messagePopupConfig.helpers
 					username: '@all'
 					system: true
 					name: t 'Notify_all_in_this_room'
-					compatibility: 'channel group'
+					compatibility: 'channel group all'
 
 				exp = new RegExp("(^|\\s)#{filter}", 'i')
-				if exp.test(all.username) or exp.test(all.compatibility)
-					items.unshift all
+
+				if RocketChat.authz.hasAtLeastOnePermission('group-notify', self.rid)
+					if exp.test(all.username) or exp.test(all.compatibility)
+						items.unshift all
+
 				return items
 
 			getValue: (_id, collection, firstPartValue) ->

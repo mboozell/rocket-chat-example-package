@@ -13,16 +13,15 @@ Template.registerHelper 'hasPermission', (permission, scope) ->
 		scope = Roles.GLOBAL_GROUP
 	return hasPermission( permission, scope, atLeastOne)
 
-RocketChat.authz.hasAllPermission = (permissions, scope=Roles.GLOBAL_GROUP) ->
-	return hasPermission( permissions, scope, all )
+RocketChat.authz.hasAllPermission = (permissions, scope=Roles.GLOBAL_GROUP, user=Meteor.userId()) ->
+	return hasPermission( permissions, scope, all, user)
 
-RocketChat.authz.hasAtLeastOnePermission = (permissions, scope=Roles.GLOBAL_GROUP) ->
-	return hasPermission(permissions, scope, atLeastOne)
+RocketChat.authz.hasAtLeastOnePermission = (permissions, scope=Roles.GLOBAL_GROUP, user=Meteor.userId()) ->
+	return hasPermission(permissions, scope, atLeastOne, user)
 
-hasPermission = (permissions, scope=Roles.GLOBAL_GROUP, strategy) ->
-	userId = Meteor.userId()
+hasPermission = (permissions, scope=Roles.GLOBAL_GROUP, strategy, user=Meteor.userId()) ->
 
-	unless userId
+	unless user
 		return false
 
 	unless RocketChat.authz.subscription.ready()
@@ -31,7 +30,7 @@ hasPermission = (permissions, scope=Roles.GLOBAL_GROUP, strategy) ->
 	unless _.isArray(permissions)
 		permissions = [permissions]
 
-	roleNames = Roles.getRolesForUser(userId, scope)
+	roleNames = Roles.getRolesForUser(user, scope)
 
 	userPermissions = []
 	for roleName in roleNames
