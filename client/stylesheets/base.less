@@ -1782,6 +1782,15 @@ a.github-fork {
 				border: 1px solid;
 				padding: 20px;
 				border-radius: 5px;
+
+				.section-helper {
+					padding: 20px 20px 40px;
+
+					pre {
+						display: inline;
+						background-color: #eee;
+					}
+				}
 			}
 		}
 		h1,
@@ -3814,6 +3823,20 @@ a.github-fork {
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
+	}
+}
+
+.message-popup-results {
+	&.notready {
+		.message-popup-items {
+			background-image: url(/images/logo/loading.gif);
+			background-repeat: no-repeat;
+			background-position: 50% 50%;
+			height: 100px;
+		}
+		.popup-item {
+			display: none;
+		}
 	}
 }
 

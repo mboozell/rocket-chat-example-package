@@ -16,14 +16,14 @@ Template.channels.helpers
 		return 'active' if activeChats?
 
 	rooms: ->
-		subscriptions = ChatSubscription.find
-			t: {$in: ['c']},
-			f: {$ne: true},
+		query =
+			t: { $in: ['c']},
 			open: true
-		,
-			sort: {'t': 1},
-			'name': 1
-		return subscriptions
+
+		if !RocketChat.settings.get 'Disable_Favorite_Rooms'
+			query.f = { $ne: true }
+
+		return ChatSubscription.find query, { sort: 't': 1, 'name': 1 }
 
 Template.channels.events
 	'click .add-room': (e, instance) ->
