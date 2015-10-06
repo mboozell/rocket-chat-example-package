@@ -21,6 +21,9 @@ Meteor.startup ->
 		{ _id: 'view-user-administration',
 		roles : ['admin']}
 
+		{ _id: 'view-integration-administration',
+		roles : ['admin']}
+
 		{ _id: 'view-full-other-user-info',
 		roles : ['admin']}
 
@@ -77,6 +80,12 @@ Meteor.startup ->
 
 		{ _id: 'delete-d',
 		roles : ['admin', 'site-moderator']}
+
+		{ _id: 'create-integration',
+		roles : ['admin']}
+
+		{ _id: 'view-integrations',
+		roles : ['admin']}
 
 	]
 

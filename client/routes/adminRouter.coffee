@@ -24,6 +24,13 @@ FlowRouter.route '/admin/statistics',
 	action: ->
 		BlazeLayout.render 'main', {center: 'adminStatistics'}
 
+FlowRouter.route '/admin/integrations',
+	name: 'admin-integrations'
+	triggersEnter: [tabReset]
+	triggersExit: [tabReset]
+	action: ->
+		BlazeLayout.render 'main', {center: 'adminIntegrations'}
+
 
 FlowRouter.route '/admin/:group?',
 	name: 'admin'

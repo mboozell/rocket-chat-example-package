@@ -24,6 +24,11 @@
 						<a href="{{pathFor 'admin-users'}}" class="admin-link">{{_ "Users"}}</a>
 					</li>
 				{{/if}}
+				{{#if hasPermission 'view-integration-administration'}}
+					<li>
+						<a href="{{pathFor 'admin-integrations'}}" class="admin-link">{{_ "Integrations"}}</a>
+					</li>
+				{{/if}}
 
 				<h3 class="add-room">
 					{{_ "Settings"}}
