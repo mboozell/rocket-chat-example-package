@@ -6,7 +6,10 @@ RocketChat.sendMessage = (user, message, room, options) ->
 	unless message.ts?
 		message.ts = new Date()
 
-	message.u = _.pick user, ['_id','username']
+	unless options?.integration
+		message.u = _.pick user, ['_id','username']
+	else
+		message.i = _.pick user, ['_id', 'name']
 
 	message.rid = room._id
 
@@ -41,6 +44,9 @@ RocketChat.sendMessage = (user, message, room, options) ->
 	Increment unread couter if direct messages
 	###
 	Meteor.defer ->
+
+		if options.integration
+			message.u = message.i
 
 		if not room.t? or room.t is 'd'
 

@@ -5,12 +5,10 @@ Api = new Restivus
 
 Api.addRoute 'rooms/:id/alert', authRequired: false,
 	post: ->
-			Meteor.call( 'sendIntegrationMessage', @urlParams.id,
-				@bodyParams.msg, @bodyParams.apiKey, { alert: true } )
+		try
+			Meteor.call('sendIntegrationMessage', { rid: @urlParams.id, msg: @bodyParams.msg, alert: true},
+				@bodyParams.apiKey)
 			status: 'success'
-		# try
-		# 	Meteor.call( 'sendIntegrationMessage', { key: @bodyParams.apiKey } )
-		# 	status: 'success'
-		# catch e
-		# 	statusCode: e.error
-		# 	body: status: 'fail', reason: e.reason
+		catch e
+			statusCode: e.error
+			body: status: 'fail', reason: e.reason
