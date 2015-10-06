@@ -19,6 +19,12 @@ RocketChat.models.Integrations = new class extends RocketChat.models._Base
 
 		return @findOne query, options
 
+	findOneByKey: (key, options) ->
+		query =
+			key: key
+
+		return @findOne query, options
+
 	# INSERT
 	createOneWithApiKey: (name, key, extraData) ->
 		integration =
