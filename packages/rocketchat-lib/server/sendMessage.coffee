@@ -45,7 +45,7 @@ RocketChat.sendMessage = (user, message, room, options) ->
 	###
 	Meteor.defer ->
 
-		if options.integration
+		if options?.integration
 			message.u = message.i
 
 		if not room.t? or room.t is 'd'

@@ -165,36 +165,6 @@ Template.room.helpers
 				return template.find('.input-message')
 		}
 
-	remoteVideoUrl: ->
-		return Session.get('remoteVideoUrl')
-
-	selfVideoUrl: ->
-		return Session.get('selfVideoUrl')
-
-	videoActive: ->
-		return (Session.get('remoteVideoUrl') || Session.get('selfVideoUrl'))
-
-	remoteMonitoring: ->
-		return (webrtc?.stackid? && (webrtc.stackid == 'webrtc-ib'))
-
-	flexOpenedRTC1: ->
-		return 'layout1' if Session.equals('flexOpenedRTC1', true)
-
-	flexOpenedRTC2: ->
-		return 'layout2' if Session.equals('flexOpenedRTC2', true)
-
-	rtcLayout1: ->
-		return (Session.get('rtcLayoutmode') == 1 ? true: false);
-
-	rtcLayout2: ->
-		return (Session.get('rtcLayoutmode') == 2 ? true: false);
-
-	rtcLayout3: ->
-		return (Session.get('rtcLayoutmode') == 3 ? true: false);
-
-	noRtcLayout: ->
-		return (!Session.get('rtcLayoutmode') || (Session.get('rtcLayoutmode') == 0) ? true: false);
-
 	maxMessageLength: ->
 		return RocketChat.settings.get('Message_MaxAllowedSize')
 
@@ -238,7 +208,7 @@ Template.room.helpers
 		return RocketChat.TabBar.getTemplate()
 
 	flexData: ->
-		return RocketChat.TabBar.getData()
+		return _.extend { rid: this._id }, RocketChat.TabBar.getData()
 
 	adminClass: ->
 		return 'admin' if RocketChat.authz.hasRole(Meteor.userId(), 'admin')
@@ -398,7 +368,7 @@ Template.room.events
 	'click .message-cog': (e) ->
 		message_id = $(e.currentTarget).closest('.message').attr('id')
 		$('.message-dropdown:visible').hide()
-		$("\##{message_id} .message-dropdown").show()
+		$(".messages-box \##{message_id} .message-dropdown").show()
 
 	'click .message-dropdown-close': ->
 		$('.message-dropdown:visible').hide()
@@ -583,21 +553,16 @@ Template.room.onRendered ->
 	# salva a data da renderização para exibir alertas de novas mensagens
 	$.data(this.firstNode, 'renderedAt', new Date)
 
-	webrtc.onAcceptCall = (fromUsername) ->
-		if FlowRouter.current().route.name is 'direct' and FlowRouter.current().params.username is fromUsername
-			return
+	webrtc = WebRTC.getInstanceByRoomId template.data._id
+	if webrtc?
+		Tracker.autorun ->
+			if webrtc.remoteItems.get()?.length > 0
+				RocketChat.TabBar.setTemplate 'membersList'
+				RocketChat.TabBar.openFlex()
 
-		FlowRouter.go 'direct', {username: fromUsername}
-
-	webrtc.onRemoteUrl = (url) ->
-		RocketChat.TabBar.setTemplate 'membersList'
-		RocketChat.TabBar.openFlex()
-		Session.set('remoteVideoUrl', url)
-
-	webrtc.onSelfUrl = (url) ->
-		RocketChat.TabBar.setTemplate 'membersList'
-		RocketChat.TabBar.openFlex()
-		Session.set('selfVideoUrl', url)
+			if webrtc.localUrl.get()?
+				RocketChat.TabBar.setTemplate 'membersList'
+				RocketChat.TabBar.openFlex()
 
 
 renameRoom = (rid, name) ->
