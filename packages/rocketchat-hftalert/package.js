@@ -11,10 +11,9 @@ Package.onUse(function(api) {
 	api.use([
 		'coffeescript',
 		'mongo',
-		'jalik:ufs',
-		'jalik:ufs-gridfs',
 		'rocketchat:lib@0.0.1',
-		'percolate:synced-cron'
+		'percolate:synced-cron',
+		'webapp'
 	]);
 
 	Npm.depends({
@@ -25,6 +24,8 @@ Package.onUse(function(api) {
 	api.addFiles('hftalert.coffee', ['server', 'client']);
 	api.addFiles('server/settings.coffee', ['server']);
 	api.addFiles('server/getDelineatorImage.coffee', ['server']);
+	api.addFiles('server/hftAlertStore.coffee', ['server']);
+	api.addFiles('server/downloadDelineatorImage.coffee', ['server']);
 	api.addFiles('server/startup/imageCron.coffee', ['server']);
 });
 

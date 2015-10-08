@@ -5,12 +5,12 @@ SyncedCron.config
 Meteor.startup ->
 	Meteor.defer ->
 
-		for id, image of RocketChat.hftAlerts.settings.images
+		for id, image of RocketChat.hftAlert.settings.images
 			SyncedCron.add
 				name: "Get Delineator Image [#{id}]",
 				schedule: (parser) -># parser is a later.parse object
 					return parser.text image.frequency
 				job: ->
 					try
-						RocketChat.hftAlerts.getDelineatorImage id
+						RocketChat.hftAlert.getDelineatorImage id
 					return true
