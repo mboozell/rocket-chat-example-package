@@ -124,7 +124,7 @@ readAsArrayBuffer = (file, callback) ->
 						item.percentage = Math.round(upload.getProgress() * 100)
 						Session.set 'uploading', uploading
 
-					upload.start();
+					upload.start()
 
 					# upload.stop();
 
