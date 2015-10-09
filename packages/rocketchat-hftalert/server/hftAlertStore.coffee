@@ -6,21 +6,25 @@ do ->
 			mongo = Package.mongo.MongoInternals.NpmModule
 			db = Package.mongo.MongoInternals.defaultRemoteCollectionDriver().mongo.db
 
-			this.name = name
-			this.store = new Grid(db, mongo)
+			@name = name
+			@store = new Grid(db, mongo)
+			@writing = false
 
-		upsert: (id, image) ->
-			this.store.createWriteStream
+		upsert: (id, image) =>
+			stream = @store.createWriteStream
 				_id: id
 				filename: image.name
 				mode: 'w'
-				root: this.name
+				root: @name
 				content_type: image.type
+			@writing = stream
+			stream.on 'close', -> @writing = false
+			return stream
 
 
 		find: (id) ->
-			this.store.createReadStream
+			@store.createReadStream
 				_id: id
-				root: this.name
+				root: @name
 
 	RocketChat.hftAlert.store = new GridFS('rocketchat_plugin_hftalert_files')

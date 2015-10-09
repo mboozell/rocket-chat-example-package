@@ -53,7 +53,8 @@ Package.onUse(function(api) {
 	api.addFiles([
 		'client/views/app/tabBar/hftAlerts.html',
 		'client/views/app/tabBar/hftAlerts.coffee',
-		'client/hftAlertTabBar.coffee'
+		'client/hftAlertTabBar.coffee',
+		'client/stylesheets/hftalerts.css'
 	], 'client');
 
 });
