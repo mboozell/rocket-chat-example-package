@@ -5,7 +5,8 @@ WebApp.connectHandlers.use (req, res, next) ->
 		image = RocketChat.hftAlert.settings.images[id]
 		if image
 			res.writeHead(200, "Content-Type": "image")
-			stream = RocketChat.hftAlert.store.find(id).pipe res
+			try
+				stream = RocketChat.hftAlert.store.find(id).pipe res
 			return
 	else
 		next()
