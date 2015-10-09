@@ -29,7 +29,6 @@ rocketchat:emojione
 rocketchat:favico
 rocketchat:file
 rocketchat:gitlab
-rocketchat:hftalert
 rocketchat:wordpress
 rocketchat:highlight
 rocketchat:ldap
@@ -45,10 +44,12 @@ rocketchat:slashcommands-leave
 rocketchat:spotify
 rocketchat:statistics
 rocketchat:webrtc
-#rocketchat:chatops
 #rocketchat:livechat
 #rocketchat:hubot
 #rocketchat:irc
+
+#custom plugins
+rocketchat:hftalert
 
 konecty:change-case
 konecty:delayed-task

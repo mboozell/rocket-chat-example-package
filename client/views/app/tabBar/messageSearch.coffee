@@ -1,7 +1,7 @@
 Template.messageSearch.helpers
 	tSearchMessages: ->
 		return t('Search_Messages')
-	
+
 	searchResult: ->
 		return Template.instance().searchResult.get()
 

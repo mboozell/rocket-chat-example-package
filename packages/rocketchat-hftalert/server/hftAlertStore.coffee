@@ -23,5 +23,4 @@ do ->
 				_id: id
 				root: this.name
 
-
 	RocketChat.hftAlert.store = new GridFS('rocketchat_plugin_hftalert_files')

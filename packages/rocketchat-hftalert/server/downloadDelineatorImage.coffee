@@ -1,5 +1,4 @@
 WebApp.connectHandlers.use (req, res, next) ->
-	console.log(Meteor.userId)
 	re = RocketChat.hftAlert.settings.downloadRoute.exec(req.url)
 	if re?
 		id = re[1].split('.')[0]
@@ -7,3 +6,6 @@ WebApp.connectHandlers.use (req, res, next) ->
 		if image
 			res.writeHead(200, "Content-Type": "image")
 			stream = RocketChat.hftAlert.store.find(id).pipe res
+			return
+	else
+		next()
