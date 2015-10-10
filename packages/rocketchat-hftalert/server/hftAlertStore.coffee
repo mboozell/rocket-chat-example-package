@@ -10,7 +10,7 @@ do ->
 			@store = new Grid(db, mongo)
 			@writing = false
 
-		upsert: (id, image) =>
+		upsert: (id, image) ->
 			stream = @store.createWriteStream
 				_id: id
 				filename: image.name
@@ -18,7 +18,8 @@ do ->
 				root: @name
 				content_type: image.type
 			@writing = stream
-			stream.on 'close', -> @writing = false
+			stream.on 'close', =>
+				@writing = false
 			return stream
 
 

@@ -9,7 +9,7 @@ Template.hftAlerts.helpers
 
 Template.hftAlerts.onCreated ->
 	instance = @
-	@stream = new Meteor.Stream 'hftAlert'
+	# @stream = new Meteor.Stream 'hftAlert'
 	@images = new ReactiveVar {
 		'5min': {
 			extension: 'jpg',
@@ -17,8 +17,11 @@ Template.hftAlerts.onCreated ->
 		}
 	}
 
-	@stream.on 'new image', (data) ->
+	RocketChat.hftAlert.stream.on 'new image', (data) ->
+		setTimeout instance.getNewImage.bind(instance, data.id), Math.random()*2000
+
+	@getNewImage = (id) ->
 		images = instance.images.get()
-		if images[data.id]
-			images[data.id].num++
+		if images[id]
+			images[id].num++
 			instance.images.set(images)
