@@ -15,7 +15,6 @@ Template.hftAlerts.helpers
 
 Template.hftAlerts.onCreated ->
 	instance = @
-	@stream = new Meteor.Stream 'hftAlert'
 	@images = new ReactiveVar
 		'5min':
 			caption: "5 minute",
