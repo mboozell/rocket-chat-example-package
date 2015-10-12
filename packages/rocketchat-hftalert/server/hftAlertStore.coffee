@@ -18,8 +18,7 @@ do ->
 				root: @name
 				content_type: image.type
 			@writing = stream
-			stream.on 'close', =>
-				@writing = false
+			stream.on 'close', => @writing = false
 			return stream
 
 

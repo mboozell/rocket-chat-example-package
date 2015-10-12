@@ -1,8 +1,9 @@
 <template name="hftAlerts">
 	<div class="content">
 		{{#each images}}
-		<img src="/plugins/hftalert/image/{{id}}.{{extension}}?num={{num}}"
-			id="hft-alert-image-{{id}}" class="hft-alert-image">
+		<a href="{{getUrl}}" class="hft-alert-swipebox" title="{{caption}}" target="_blank">
+			<img src="{{getUrl}}" id="hft-alert-image-{{id}}" class="hft-alert-image">
+		</a>
 		{{/each}}
 	</div>
 </template>

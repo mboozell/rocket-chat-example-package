@@ -7,7 +7,6 @@ WebApp.connectHandlers.use (req, res, next) ->
 			res.writeHead(200, "Content-Type": "image")
 			if RocketChat.hftAlert.store.writing
 				RocketChat.hftAlert.store.writing.on 'close', ->
-					console.log('happens')
 					RocketChat.hftAlert.store.find(id).pipe res
 			else
 				RocketChat.hftAlert.store.find(id).pipe res
