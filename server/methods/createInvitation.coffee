@@ -2,10 +2,10 @@ Meteor.methods
 	createInvitation: (email, name) ->
 		if not Meteor.userId()
 			throw new Meteor.Error 'invalid-user', "[methods] createInvitation -> Invalid user"
-			
-		console.log email, name
 
-		if not /^[^@]+@[^@]+\.[^@]+$/.test email
+		rfcMailPattern = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+
+		if not rfcMailPattern.test email
 			throw new Meteor.Error 'email-invalid'
 
 		if RocketChat.authz.hasPermission(Meteor.userId(), 'create-invitation') isnt true
@@ -23,6 +23,4 @@ Meteor.methods
 		# create new room
 		invitation = RocketChat.models.Invitations.createOneWithEmailAndKey email, key, options
 
-		return {
-			iid: invitation._id
-		}
+		return invitation

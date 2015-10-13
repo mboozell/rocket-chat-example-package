@@ -9,18 +9,25 @@ Template.adminInviteUser.helpers
 
 Template.adminInviteUser.events
 	'click .send': (e, instance) ->
-		emails = $('#inviteEmails').val().split /[\s,;]/
+		values = $('#inviteEmails').val().split /[,;]/
 		rfcMailPattern = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-		validEmails = _.compact _.map emails, (email) -> return email if rfcMailPattern.test email
+		validEmails = _.compact _.map values, (val) ->
+		  parts = _.compact val.split(/\s/)
+		  email = parts.pop()
+		  name = parts.join(' ')
+		  return [name, email] if rfcMailPattern.test email
 		if validEmails.length
-			Meteor.call 'sendInvitationEmail', validEmails, (error, result) ->
-				if result
-					instance.clearForm()
-					instance.inviteEmails.set validEmails
-				if error
-					toastr.error error.reason
-		else
-			toastr.error t('Send_invitation_email_error')
+				Meteor.call 'sendInvitationEmail', validEmails, (error, result) ->
+					if result
+						instance.clearForm()
+						successfulEmails = _.map result, (tuple) ->
+							[name, email] = tuple
+							return if name then name + " at " + email else email
+						instance.inviteEmails.set successfulEmails
+					if error
+						toastr.error error.reason
+			else
+				toastr.error t('Send_invitation_email_error')
 
 	'click .cancel': (e, instance) ->
 		instance.clearForm()
