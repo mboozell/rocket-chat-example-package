@@ -10,7 +10,7 @@
 					</div>
 				</form>
 			</div>
-			<nav>
+			<nav class="form-buttons">
 				<button class='button button-block cancel secondary'><span>{{_ "Cancel"}}</span></button>
 				<button class='button button-block blue send' data-loading-text="{{_ "Please_wait"}}"><span>{{_ "Send"}}</span></button>
 			</nav>
@@ -26,6 +26,21 @@
 			{{/if}}
 		{{else}}
 			{{_ "Send_invitation_email_warning"}}
+		{{/if}}
+		<div class="about clearfix" style="margin-top: 30px;">
+			<form class="edit-form">
+				<h4>{{_ "Generate Invitation Url"}}</h4>
+				<div class="input-line">
+					<input type="email" id="inviteEmail" placeholder="email"/>
+					<input type="text" id="inviteName" placeholder="name (optional)"/>
+				</div>
+			</form>
+		</div>
+		<nav>
+			<button class='button button-block blue generate' data-loading-text="{{_ "Please_wait"}}"><span>{{_ "Generate URL"}}</span></button>
+		</nav>
+		{{#if inviteUrl.length}}
+			<pre class="selectable" style="background: #FFF; padding: .5em; word-wrap: break-word; margin-top: 24px;">{{inviteUrl}}</pre>
 		{{/if}}
 	{{/if}}
 </template>

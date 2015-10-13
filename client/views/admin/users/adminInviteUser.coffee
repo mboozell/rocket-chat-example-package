@@ -2,24 +2,24 @@ Template.adminInviteUser.helpers
 	isAdmin: ->
 		return RocketChat.authz.hasRole(Meteor.userId(), 'admin')
 	emailEnabled: ->
-		console.log 'emailEnabled', RocketChat.settings.get('MAIL_URL') or (RocketChat.settings.get('SMTP_Host') and RocketChat.settings.get('SMTP_Username') and RocketChat.settings.get('SMTP_Password'))
 		return RocketChat.settings.get('MAIL_URL') or (RocketChat.settings.get('SMTP_Host') and RocketChat.settings.get('SMTP_Username') and RocketChat.settings.get('SMTP_Password'))
 	inviteEmails: ->
 		return Template.instance().inviteEmails.get()
+	inviteUrl: ->
+		return Template.instance().inviteUrl.get()
 
 Template.adminInviteUser.events
 	'click .send': (e, instance) ->
 		values = $('#inviteEmails').val().split /[,;]/
-		rfcMailPattern = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 		validEmails = _.compact _.map values, (val) ->
 		  parts = _.compact val.split(/\s/)
 		  email = parts.pop()
 		  name = parts.join(' ')
-		  return [name, email] if rfcMailPattern.test email
+		  return [name, email] if instance.isValidEmail(email)
 		if validEmails.length
 				Meteor.call 'sendInvitationEmail', validEmails, (error, result) ->
 					if result
-						instance.clearForm()
+						instance.clearEmailForm()
 						successfulEmails = _.map result, (tuple) ->
 							[name, email] = tuple
 							return if name then name + " at " + email else email
@@ -30,11 +30,34 @@ Template.adminInviteUser.events
 				toastr.error t('Send_invitation_email_error')
 
 	'click .cancel': (e, instance) ->
-		instance.clearForm()
+		instance.clearEmailForm()
 		instance.inviteEmails.set []
 		RocketChat.TabBar.closeFlex()
 
+	'click .generate': (e, instance) ->
+		name = $('#inviteName').val()
+		email = $('#inviteEmail').val()
+		if not instance.isValidEmail(email)
+			toastr.error t("Email not valid")
+		else
+			Meteor.call 'createInvitation', email, name, (error, result) ->
+				if result
+					instance.inviteUrl.set(result.url)
+					instance.clearGenerateForm()
+				if error
+					toastr.error error.reason
+
+	'keyup #inviteEmail, keyup #inviteName': (e, instance) ->
+		instance.inviteUrl.set('')
+
 Template.adminInviteUser.onCreated ->
 	@inviteEmails = new ReactiveVar []
-	@clearForm = ->
+	@inviteUrl = new ReactiveVar ''
+	@clearEmailForm = ->
 		$('#inviteEmails').val('')
+	@clearGenerateForm = ->
+		$('#inviteEmail').val('')
+		$('#inviteName').val('')
+	@isValidEmail = (email) ->
+		rfcMailPattern = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+		return rfcMailPattern.test(email)

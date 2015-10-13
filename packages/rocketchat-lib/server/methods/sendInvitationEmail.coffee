@@ -22,8 +22,7 @@ Meteor.methods
 			firstName = names[0]
 			lastName = names[names.length-1]
 
-			{key} = Meteor.call 'createInvitation', email, name
-			url = "#{Meteor.absoluteUrl()}home?key=#{key}"
+			{url} = Meteor.call 'createInvitation', email, name
 
 			html = RocketChat.settings.get 'Invitation_HTML'
 			html = html.replace "{{url}}", url
