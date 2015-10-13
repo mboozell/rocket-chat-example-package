@@ -17,7 +17,6 @@ Meteor.methods
 			throw new Meteor.Error 'duplicate-integration'
 
 		key = Random.secret()
-		console.log(key)
 
 		# create new room
 		integration = RocketChat.models.Integrations.createOneWithApiKey name, key

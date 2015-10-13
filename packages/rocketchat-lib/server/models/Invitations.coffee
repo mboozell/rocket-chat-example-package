@@ -3,7 +3,7 @@ RocketChat.models.Invitations = new class extends RocketChat.models._Base
 		@_initModel 'invitations'
 
 		@tryEnsureIndex { 'key': 1 }, { unique: 1 }
-		@tryEnsureIndex { 'email': 1 }, { unique: 1 }
+		@tryEnsureIndex { 'email': 1 }
 
 
 	# FIND ONE
@@ -21,6 +21,13 @@ RocketChat.models.Invitations = new class extends RocketChat.models._Base
 
 	findOneByKey: (key, options) ->
 		query =
+			key: key
+
+		return @findOne query, options
+
+	findOneByEmailAndKey: (email, key, options) ->
+		query =
+			email: email
 			key: key
 
 		return @findOne query, options
@@ -44,8 +51,8 @@ RocketChat.models.Invitations = new class extends RocketChat.models._Base
 
 		return @remove query
 
-	removeByEmail: (email) ->
+	removeByKey: (key) ->
 		query =
-			email: email
+			key: key
 
 		return @remove query

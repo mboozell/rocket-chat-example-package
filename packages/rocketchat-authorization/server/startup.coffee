@@ -81,6 +81,9 @@ Meteor.startup ->
 		{ _id: 'delete-d',
 		roles : ['admin', 'site-moderator']}
 
+		{ _id: 'create-invitation',
+		roles : ['admin']}
+
 		{ _id: 'create-integration',
 		roles : ['admin']}
 
