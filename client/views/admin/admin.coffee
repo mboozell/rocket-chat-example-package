@@ -103,3 +103,13 @@ Template.admin.onRendered ->
 	Tracker.afterFlush ->
 		SideNav.setFlex "adminFlex"
 		SideNav.openFlex()
+
+	Meteor.setTimeout ->
+		$('input.minicolors').minicolors({theme: 'rocketchat'})
+	, 500
+
+	Tracker.autorun ->
+		FlowRouter.watchPathChange()
+		Meteor.setTimeout ->
+			$('input.minicolors').minicolors({theme: 'rocketchat'})
+		, 200

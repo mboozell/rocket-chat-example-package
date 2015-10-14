@@ -134,6 +134,7 @@ rocketchat:highlight@0.0.1
 rocketchat:ldap@0.0.1
 rocketchat:lib@0.0.1
 rocketchat:logger@0.0.1
+rocketchat:markdown@0.0.1
 rocketchat:me@0.0.1
 rocketchat:mentions@0.0.1
 rocketchat:message-star@0.0.1
@@ -144,6 +145,7 @@ rocketchat:slashcommands-join@0.0.1
 rocketchat:slashcommands-leave@0.0.1
 rocketchat:spotify@0.0.1
 rocketchat:statistics@0.0.1
+rocketchat:theme@0.0.1
 rocketchat:webrtc@0.0.1
 rocketchat:wordpress@0.0.1
 routepolicy@1.0.6

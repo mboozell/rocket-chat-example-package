@@ -1,5 +1,5 @@
 <template name="message">
-	<li id="{{_id}}" class="message sequential {{system}} {{t}} {{own}} {{isTemp}}" data-username="{{u.username}}" data-date="{{date}}">
+	<li id="{{_id}}" class="message sequential {{system}} {{t}} {{own}} {{isTemp}} {{chatops}}" data-username="{{u.username}}" data-date="{{date}}">
 		{{#with u}}
 		<a class="thumb user-card-message" href="#" data-username="{{username}}" tabindex="1">{{> avatar username=username}}</a>
 		<a class="user user-card-message" href="#" data-username="{{username}}" tabindex="1">

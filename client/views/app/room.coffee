@@ -5,7 +5,7 @@ favoritesEnabled = ->
 
 Template.room.helpers
 	showFormattingTips: ->
-		return RocketChat.Markdown or RocketChat.Highlight
+		return RocketChat.settings.get('Message_ShowFormattingTips') and (RocketChat.Markdown or RocketChat.Highlight)
 	showMarkdown: ->
 		return RocketChat.Markdown
 	showHighlight: ->
@@ -187,11 +187,12 @@ Template.room.helpers
 		return !! ChatRoom.findOne { _id: @_id, t: 'c' }
 
 	canRecordAudio: ->
-		return navigator.getUserMedia? or navigator.webkitGetUserMedia?
+		return RocketChat.settings.get('Message_AudioRecorderEnabled') and (navigator.getUserMedia? or navigator.webkitGetUserMedia?)
 
-	roomManager: ->
+	unreadSince: ->
 		room = ChatRoom.findOne(this._id, { reactive: false })
-		return RoomManager.openedRooms[room.t + room.name]
+		if room?
+			return RoomManager.openedRooms[room.t + room.name]?.unreadSince?.get()
 
 	unreadCount: ->
 		return RoomHistoryManager.getRoom(@_id).unreadNotLoaded.get() + Template.instance().unreadCount.get()
@@ -215,6 +216,9 @@ Template.room.helpers
 
 	showToggleFavorite: ->
 		return true if isSubscribed(this._id) and favoritesEnabled()
+
+	compactView: ->
+		return 'compact' if Meteor.user()?.settings?.preferences?.compactView
 
 Template.room.events
 	"touchstart .message": (e, t) ->
@@ -303,7 +307,8 @@ Template.room.events
 					file: item.getAsFile()
 					name: 'Clipboard'
 
-		fileUpload files
+		if files.length > 0
+			fileUpload files
 
 	'keydown .input-message': (event) ->
 		Template.instance().chatMessages.keydown(@_id, event, Template.instance())

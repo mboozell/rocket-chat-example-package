@@ -33,7 +33,7 @@ rocketchat:wordpress
 rocketchat:highlight
 rocketchat:ldap
 rocketchat:logger
-#rocketchat:markdown
+rocketchat:markdown
 rocketchat:me
 rocketchat:mentions
 rocketchat:message-star
@@ -91,6 +91,7 @@ todda00:friendly-slugs
 underscorestring:underscore.string
 yasaricli:slugify
 yasinuslu:blaze-meta
+rocketchat:theme
 rocketchat:authorization
 perak:codemirror
 standard-minifiers
@@ -110,3 +111,4 @@ rocketchat:github-enterprise
 rocketchat:chatops
 # sanjo:jasmine@0.20.2
 # velocity:html-reporter
+ddp-rate-limiter
