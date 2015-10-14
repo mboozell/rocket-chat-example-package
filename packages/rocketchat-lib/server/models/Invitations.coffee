@@ -44,6 +44,16 @@ RocketChat.models.Invitations = new class extends RocketChat.models._Base
 		invitation._id = @insert invitation
 		return invitation
 
+	createRequest: (email, extraData) ->
+		invitation =
+			email: email
+			ts: new Date()
+
+		_.extend invitation, extraData
+
+		invitation._id = @insert invitation
+		return invitation
+
 	# REMOVE
 	removeById: (_id) ->
 		query =

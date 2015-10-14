@@ -6,7 +6,7 @@ Meteor.methods
 		# create new room
 		invitation = RocketChat.models.Invitations.findOneByKey key
 
-		return {
+		return if invitation then {
 			name: invitation.name
 			email: invitation.email
-		}
+		} else {}

@@ -15,7 +15,12 @@ Template.loginForm.helpers
 		Template.instance().showFieldWhen 'login'
 
 	showEmail: ->
-		Template.instance().showFieldWhen ['register', 'forgot-password', 'email-verification']
+		Template.instance().showFieldWhen [
+			'register',
+			'forgot-password',
+			'email-verification',
+			'request-invite'
+		]
 
 	showRegisterLink: ->
 		Template.instance().showFieldWhen 'login'
@@ -28,7 +33,8 @@ Template.loginForm.helpers
 			'register',
 			'forgot-password',
 			'email-verification',
-			'wait-activation'
+			'wait-activation',
+			'request-invite'
 		]
 
 	btnLoginSave: ->
@@ -43,6 +49,8 @@ Template.loginForm.helpers
 				return t('Send_confirmation_email')
 			when 'forgot-password'
 				return t('Reset_password')
+			when 'request-invite'
+				return t('Request Invite')
 
 	waitActivation: ->
 		return Template.instance().state.get() is 'wait-activation'
@@ -70,6 +78,16 @@ Template.loginForm.events
 				Meteor.call 'sendForgotPasswordEmail', formData.email, (err, result) ->
 					RocketChat.Button.reset(button)
 					toastr.success t('We_have_sent_password_email')
+					instance.state.set 'login'
+				return
+
+			if instance.state.get() is 'request-invite'
+				Meteor.call 'requestInvitation', formData.email, (error, result) ->
+					if error?
+						toastr.error error.reason
+						return
+					RocketChat.Button.reset(button)
+					toastr.success t('We will get back to you soon!')
 					instance.state.set 'login'
 				return
 
@@ -106,19 +124,22 @@ Template.loginForm.events
 						return
 					FlowRouter.go 'index'
 
-	'click .register': ->
-		Template.instance().state.set 'register'
+	'click .register': (e, instance) ->
+		if RocketChat.settings.get('Invitation_Required') and not Template.instance().inviteKey
+			Template.instance().state.set 'request-invite'
+		else
+			Template.instance().state.set 'register'
 
-	'click .back-to-login': ->
+	'click .back-to-login': (e, instance) ->
 		Template.instance().state.set 'login'
 
-	'click .forgot-password': ->
+	'click .forgot-password': (e, instance) ->
 		Template.instance().state.set 'forgot-password'
 
 Template.loginForm.onCreated ->
 	instance = @
 	@inviteKey = FlowRouter.getQueryParam('invite')
-	@state = new ReactiveVar(if @inviteKey then 'register' else 'login')
+	@state = new ReactiveVar if @inviteKey then 'register' else 'login'
 
 	@validate = ->
 		formData = $("#login-card").serializeArray()
@@ -181,6 +202,9 @@ Template.loginForm.onRendered ->
 
 	if @inviteKey
 		Meteor.call 'getInvitation', @inviteKey, (error, result) =>
+			unless result
+				@state.set 'request-invite'
+				return
 			if result.email
 				$('input[name=email]').val(result.email)
 			if result.name
