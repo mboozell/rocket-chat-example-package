@@ -174,6 +174,17 @@ RocketChat.models.Users = new class extends RocketChat.models._Base
 		return @update query, update
 
 
+	setEmailVerified: (_id) ->
+		query =
+			_id: _id
+
+		update =
+			$set:
+				"emails.0.verified": true
+
+		return @update query, update
+
+
 	# INSERT
 	create: (data) ->
 		user =
