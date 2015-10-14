@@ -138,6 +138,7 @@ rocketchat:me@0.0.1
 rocketchat:mentions@0.0.1
 rocketchat:message-star@0.0.1
 rocketchat:oembed@0.0.1
+rocketchat:payment@0.0.1
 rocketchat:slashcommands-invite@0.0.1
 rocketchat:slashcommands-join@0.0.1
 rocketchat:slashcommands-leave@0.0.1

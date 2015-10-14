@@ -44,12 +44,17 @@ Template.admin.events
 		updateSettings = []
 		for setting in settings
 			value = null
-			if setting.type is 'string'
+
+			if setting.type is 'boolean'
+				elem = t.$("[name=#{setting._id}]:checked")
+				if elem.length
+					value = if elem.val() is "1" then true else false
+			else
 				value = _.trim(t.$("[name=#{setting._id}]").val())
-			else if setting.type is 'int'
-				value = parseInt(_.trim(t.$("[name=#{setting._id}]").val()))
-			else if setting.type is 'boolean' and t.$("[name=#{setting._id}]:checked").length
-				value = if t.$("[name=#{setting._id}]:checked").val() is "1" then true else false
+				if setting.type is 'int'
+					value = parseInt(value)
+				else if setting.type is 'float'
+					value = parseFloat(value)
 
 			if value?
 				updateSettings.push { _id: setting._id, value: value }

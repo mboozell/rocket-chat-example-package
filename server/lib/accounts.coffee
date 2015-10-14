@@ -1,8 +1,8 @@
 # Deny Account.createUser in client
 Accounts.config { forbidClientAccountCreation: true }
 
-Accounts.emailTemplates.siteName = RocketChat.settings.get 'Site_Name';
-Accounts.emailTemplates.from = "#{RocketChat.settings.get 'Site_Name'} <#{RocketChat.settings.get 'From_Email'}>";
+Accounts.emailTemplates.siteName = RocketChat.settings.get 'Site_Name'
+Accounts.emailTemplates.from = "#{RocketChat.settings.get 'Site_Name'} <#{RocketChat.settings.get 'From_Email'}>"
 
 verifyEmailText = Accounts.emailTemplates.verifyEmail.text
 Accounts.emailTemplates.verifyEmail.text = (user, url) ->
@@ -52,7 +52,11 @@ Accounts.insertUserDoc = _.wrap Accounts.insertUserDoc, (insertUserDoc) ->
 
 	# when inserting first user give them admin privileges otherwise make a regular user
 	firstUser = RocketChat.models.Users.findOne({},{sort:{createdAt:1}})
-	roleName = if firstUser?._id is _id then 'admin' else 'user'
+	roleName = 'user'
+	if firstUser?._id is _id
+		roleName = 'admin'
+	else if RocketChat.settings.get 'Require_Payment'
+		roleName = 'unpaid-user'
 
 	RocketChat.authz.addUsersToRoles(_id, roleName)
 	RocketChat.callbacks.run 'afterCreateUser', options, user

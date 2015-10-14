@@ -50,6 +50,7 @@ rocketchat:webrtc
 
 #custom plugins
 rocketchat:hftalert
+rocketchat:payment
 
 konecty:change-case
 konecty:delayed-task
