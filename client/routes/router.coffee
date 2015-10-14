@@ -34,8 +34,15 @@ FlowRouter.route '/',
 FlowRouter.route '/login',
 	name: 'login'
 
-	action: ->
-		FlowRouter.go 'home'
+	action: (params, query) ->
+		FlowRouter.go 'home', params, query
+
+
+FlowRouter.route '/register',
+	name: 'register'
+
+	action: (params, query) ->
+		FlowRouter.go 'home', params, query
 
 
 FlowRouter.route '/home',

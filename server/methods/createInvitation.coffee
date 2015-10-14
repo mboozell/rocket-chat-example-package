@@ -22,6 +22,6 @@ Meteor.methods
 
 		# create new room
 		invitation = RocketChat.models.Invitations.createOneWithEmailAndKey email, key, options
-		invitation.url = "#{Meteor.absoluteUrl()}home?key=#{encodeURIComponent(key)}"
+		invitation.url = "#{Meteor.absoluteUrl()}register?invite=#{encodeURIComponent(key)}"
 
 		return invitation

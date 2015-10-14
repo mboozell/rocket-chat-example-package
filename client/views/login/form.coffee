@@ -3,28 +3,33 @@ Template.loginForm.helpers
 		return Meteor.user()?.username
 
 	showName: ->
-		return 'hidden' unless Template.instance().state.get() is 'register'
+		Template.instance().showFieldWhen 'register'
 
 	showPassword: ->
-		return 'hidden' unless Template.instance().state.get() in ['login', 'register']
+		Template.instance().showFieldWhen ['login', 'register']
 
 	showConfirmPassword: ->
-		return 'hidden' unless Template.instance().state.get() is 'register'
+		Template.instance().showFieldWhen 'register'
 
 	showEmailOrUsername: ->
-		return 'hidden' unless Template.instance().state.get() is 'login'
+		Template.instance().showFieldWhen 'login'
 
 	showEmail: ->
-		return 'hidden' unless Template.instance().state.get() in ['register', 'forgot-password', 'email-verification']
+		Template.instance().showFieldWhen ['register', 'forgot-password', 'email-verification']
 
 	showRegisterLink: ->
-		return 'hidden' unless Template.instance().state.get() is 'login'
+		Template.instance().showFieldWhen 'login'
 
 	showForgotPasswordLink: ->
-		return 'hidden' unless Template.instance().state.get() is 'login'
+		Template.instance().showFieldWhen 'login'
 
 	showBackToLoginLink: ->
-		return 'hidden' unless Template.instance().state.get() in ['register', 'forgot-password', 'email-verification', 'wait-activation']
+		Template.instance().showFieldWhen [
+			'register',
+			'forgot-password',
+			'email-verification',
+			'wait-activation'
+		]
 
 	btnLoginSave: ->
 		switch Template.instance().state.get()
@@ -71,14 +76,14 @@ Template.loginForm.events
 			if instance.state.get() is 'register'
 				Meteor.call 'registerUser', formData, (error, result) ->
 					RocketChat.Button.reset(button)
-
+					console.log(error)
 					if error?
 						if error.error is 'Email already exists.'
 							toastr.error t 'Email_already_exists'
 						else
 							toastr.error error.reason
 						return
-
+					return
 					Meteor.loginWithPassword formData.email, formData.pass, (error) ->
 						if error?.error is 'no-valid-email'
 							toastr.success t('We_have_sent_registration_email')
@@ -113,7 +118,9 @@ Template.loginForm.events
 
 Template.loginForm.onCreated ->
 	instance = @
-	@state = new ReactiveVar('login')
+	@inviteKey = FlowRouter.getQueryParam('invite')
+	@state = new ReactiveVar(if @inviteKey then 'register' else 'login')
+
 	@validate = ->
 		formData = $("#login-card").serializeArray()
 		formObj = {}
@@ -147,7 +154,20 @@ Template.loginForm.onCreated ->
 
 		$("#login-card h2").removeClass "error"
 		$("#login-card input.error").removeClass "error"
+
+		if @inviteKey
+			formObj.inviteKey = @inviteKey
+
 		return formObj
+
+	@showFieldWhen = (states) ->
+		state = Template.instance().state.get()
+		validState = false
+		if typeof states is 'string'
+			validState = state is states
+		else if typeof states is 'object'
+			validState = state in states
+		return 'hidden' unless validState
 
 Template.loginForm.onRendered ->
 	Tracker.autorun =>
@@ -159,3 +179,10 @@ Template.loginForm.onRendered ->
 			when 'register'
 				Meteor.defer ->
 					$('input[name=name]').select().focus()
+
+	if @inviteKey
+		Meteor.call 'getInvitation', @inviteKey, (error, result) =>
+			if result.email
+				$('input[name=email]').val(result.email)
+			if result.name
+				$('input[name=name]').val(result.name)
