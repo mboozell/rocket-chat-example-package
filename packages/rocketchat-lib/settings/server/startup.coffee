@@ -6,7 +6,7 @@ RocketChat.settings.addGroup 'Accounts'
 RocketChat.settings.add 'Accounts_RegistrationRequired', true, { type: 'boolean', group: 'Accounts', public: true, section: 'Registration' }
 RocketChat.settings.add 'Accounts_EmailVerification', false, { type: 'boolean', group: 'Accounts', public: true, section: 'Registration' }
 RocketChat.settings.add 'Accounts_ManuallyApproveNewUsers', false, { type: 'boolean', group: 'Accounts', section: 'Registration' }
-RocketChat.settings.add 'Invitation_Required', true, { type: 'boolean', group: 'Accounts', public: true, section: 'Registration' }
+RocketChat.settings.add 'Invitation_Required', false, { type: 'boolean', group: 'Accounts', public: true, section: 'Registration' }
 
 RocketChat.settings.add 'Accounts_AvatarStoreType', 'GridFS', { type: 'string', group: 'Accounts', section: 'Avatar' }
 RocketChat.settings.add 'Accounts_AvatarStorePath', '/var/www/rocket.chat/uploads/avatar/', { type: 'string', group: 'Accounts', section: 'Avatar' }

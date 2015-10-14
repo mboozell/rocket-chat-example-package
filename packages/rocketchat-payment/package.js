@@ -40,7 +40,12 @@ Package.onUse(function(api) {
 		'server/startup.coffee'
 	], 'server');
 
-	api.addFiles([], 'client');
+	api.addFiles([
+		'client/views/login/payment.coffee',
+		'client/views/login/payment.html',
+		'client/views/payment/form.coffee',
+		'client/views/payment/form.html'
+	], 'client');
 
 });
 
