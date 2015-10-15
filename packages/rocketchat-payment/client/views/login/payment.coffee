@@ -1,8 +1,3 @@
-Template.registerPayment.helpers({})
-
-
-Template.registerPayment.onCreated ->
-	instance = @
-
-
-Template.registerPayment.onRendered ->
+Template.registerPayment.helpers
+	price: ->
+		RocketChat.settings.get 'Price'

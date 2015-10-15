@@ -111,6 +111,12 @@ Template.main.helpers
 	hasUsername: ->
 		return Meteor.userId()? and Meteor.user().username?
 
+	isUnpaidUser: ->
+		if RocketChat.settings.get 'Require_Payment'
+			console.log RocketChat.authz
+			return RocketChat.authz.hasRole Meteor.userId(), 'unpaid-user'
+		return false
+
 	flexOpened: ->
 		console.log 'layout.helpers flexOpened' if window.rocketDebug
 		return 'flex-opened' if RocketChat.TabBar.isFlexOpen()

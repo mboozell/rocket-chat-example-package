@@ -1,4 +1,13 @@
 <template name="registerPayment">
-	<div class="content">
-	</div>
+	<section class="full-page">
+		<div class="wrapper">
+			<div id="login-card" method='/'>
+				<header>
+					<h2>{{_ "Enter Your Payment Information"}}</h2>
+					<!-- <p>{{_ "Username_description"}}</p> -->
+				</header>
+				{{> paymentForm price=price}}
+			</div>
+		</div>
+	</section>
 </template>

@@ -16,12 +16,16 @@ Package.onUse(function(api) {
 
 	api.use([], 'server')
 
+	api.use([
+		'templating',
+		'less@2.5.0'
+	], 'client');
+
 	Npm.depends({
 		'stripe': '4.0.0'
 	})
 
 	// TAPi18n
-	api.use('templating', 'client');
 	var _ = Npm.require('underscore');
 	var fs = Npm.require('fs');
 	tapi18nFiles = _.compact(_.map(fs.readdirSync('packages/rocketchat-payment/i18n'), function(filename) {
@@ -44,7 +48,8 @@ Package.onUse(function(api) {
 		'client/views/login/payment.html',
 		'client/views/login/payment.coffee',
 		'client/views/payment/form.html',
-		'client/views/payment/form.coffee'
+		'client/views/payment/form.coffee',
+		'client/stylesheets/payment.less'
 	], 'client');
 
 });

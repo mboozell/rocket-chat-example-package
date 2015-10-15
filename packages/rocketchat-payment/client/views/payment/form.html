@@ -1,4 +1,34 @@
 <template name="paymentForm">
-	<div class="content">
-	</div>
+	<form id="payment-form" class="payment-form">
+		<div class="payment-form-header">
+			<div class="payment-form-title">{{_ "Payment Details"}}</div>
+			<div class="payment-form-price">{{price}}</div>
+		</div>
+		<div class="payment-form-body">
+			<div class="payment-form-line">
+				<div class="payment-form-group spans-1-2">
+					<label for="name" class="payment-form-label">{{_ "Cardholder's Name"}}</label>
+					<input type="text" class="payment-form-input" placeholder="John Doe">
+				</div>
+				<div class="payment-form-group spans-1-2">
+					<label for="cardNumber" class="payment-form-label">{{_ "Card Number"}}</label>
+					<input type="text" class="payment-form-input" placeholder="XXXX XXXX XXXX XXXX XXXX" data-stripe="number">
+				</div>
+			</div>
+			<div class="payment-form-line">
+				<div class="payment-form-group spans-1-3">
+					<label for="" class="payment-form-label">{{_ "Expiration Month"}}</label>
+					<input type="text" class="payment-form-input" placeholder="MM" size="2" data-stripe="exp-month">
+				</div>
+				<div class="payment-form-group spans-1-3">
+					<label for="" class="payment-form-label">{{_ "Year"}}</label>
+					<input type="text" class="payment-form-input" placeholder="YYYY" size="4" data-stripe="exp-year">
+				</div>
+				<div class="payment-form-group spans-1-3">
+					<label for="" class="payment-form-label">{{_ "CVC"}}</label>
+					<input type="text" class="payment-form-input" placeholder="XXX" size="4" data-stripe="cvc">
+				</div>
+			</div>
+		</div>
+	</form>
 </template>

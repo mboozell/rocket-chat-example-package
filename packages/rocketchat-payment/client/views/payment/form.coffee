@@ -6,7 +6,7 @@ Template.paymentForm.helpers
 Template.paymentForm.onCreated ->
 	instance = @
 	@stripeLoaded = new ReactiveVar false
-
+	# instance.data.price
 	$.ajaxSetup(cache: true)
 
 Template.paymentForm.onRendered ->
