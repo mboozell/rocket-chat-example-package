@@ -2,6 +2,9 @@ Meteor.methods
 	canAccessRoom: (rid, userId) ->
 		console.log '[methods] canAccessRoom -> '.green, 'userId:', userId, 'rid:', rid
 
+		if RocketChat.authz.hasPermission(userId, 'basic') isnt true
+			throw new Meteor.Error 'not-authorized', '[methods] canAccessRoom -> Not authorized'
+
 		user = RocketChat.models.Users.findOneById userId, fields: username: 1
 
 		unless user?.username

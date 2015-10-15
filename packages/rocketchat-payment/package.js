@@ -41,10 +41,10 @@ Package.onUse(function(api) {
 	], 'server');
 
 	api.addFiles([
-		'client/views/login/payment.coffee',
 		'client/views/login/payment.html',
-		'client/views/payment/form.coffee',
-		'client/views/payment/form.html'
+		'client/views/login/payment.coffee',
+		'client/views/payment/form.html',
+		'client/views/payment/form.coffee'
 	], 'client');
 
 });

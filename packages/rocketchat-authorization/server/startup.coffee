@@ -78,6 +78,9 @@ Meteor.startup ->
 		{ _id: 'delete-p',
 		roles : ['admin', 'site-moderator']}
 
+		{ _id: 'create-d',
+		roles : ['admin', 'site-moderator', 'user']}
+
 		{ _id: 'delete-d',
 		roles : ['admin', 'site-moderator']}
 
@@ -89,6 +92,12 @@ Meteor.startup ->
 
 		{ _id: 'view-integrations',
 		roles : ['admin']}
+
+		{ _id: 'basic',
+		roles : ['admin', 'site-moderator', 'moderator', 'user']}
+
+		{ _id: 'unauthorized',
+		roles : ['unpaid-user']}
 
 	]
 

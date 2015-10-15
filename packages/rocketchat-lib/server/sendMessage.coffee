@@ -3,6 +3,9 @@ RocketChat.sendMessage = (user, message, room, options) ->
 	if not user or not message or not room._id
 		return false
 
+	# unless Meteor.call 'canAccessRoom', room._id, user._id
+	# 	return false
+
 	unless message.ts?
 		message.ts = new Date()
 
