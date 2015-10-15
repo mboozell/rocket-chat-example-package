@@ -62,6 +62,26 @@
 	color: #777;
 }
 
-.payment-form-input {
+button.payment-form-submit-button.button {
+	color: #FFF;
+	background-color: #43C761;
+	width: 100%;
+	border-radius: 4px;
+	font-size: 14px;
+	padding: 12px;
+	margin: 16px 0;
+
+	&::before {
+		background-color: rgba(255,255,255,0.15);
+	}
+
+	&:disabled {
+		background-color: #CCC;
+
+		&:hover {
+			background-color: #CCC;
+			cursor: not-allowed;
+		}
+	}
 
 }
