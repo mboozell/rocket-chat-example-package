@@ -8,8 +8,6 @@ Template.listChannelsFlex.events
 		SideNav.closeFlex()
 
 	'click .channel-link': (e) ->
-		rid = e.target.getAttribute 'data-room'
-		Meteor.call 'showRoom', rid
 		SideNav.closeFlex()
 
 	'click footer .create': ->
