@@ -113,7 +113,6 @@ Template.main.helpers
 
 	isUnpaidUser: ->
 		if RocketChat.settings.get 'Require_Payment'
-			console.log RocketChat.authz
 			return RocketChat.authz.hasRole Meteor.userId(), 'unpaid-user'
 		return false
 

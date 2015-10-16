@@ -41,7 +41,11 @@ Package.onUse(function(api) {
 	api.addFiles([], ['server', 'client']);
 
 	api.addFiles([
-		'server/startup.coffee'
+		'server/startup.coffee',
+		'server/lib/Payment.coffee',
+		'server/methods/chargeCard.coffee',
+		'server/models/Customer.coffee',
+		'server/models/Transaction.coffee',
 	], 'server');
 
 	api.addFiles([
