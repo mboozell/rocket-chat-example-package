@@ -1,0 +1,3 @@
+FinLabs =
+	models: {}
+

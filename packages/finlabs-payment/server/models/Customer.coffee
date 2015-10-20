@@ -1,4 +1,4 @@
-RocketChat.models.Customer = new class extends RocketChat.models._Base
+FinLabs.models.Customer = new class extends RocketChat.models._Base
 	constructor: ->
 		@_initModel 'customers'
 

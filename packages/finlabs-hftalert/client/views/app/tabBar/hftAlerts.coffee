@@ -21,7 +21,7 @@ Template.hftAlerts.onCreated ->
 			extension: 'jpg',
 			num: 0
 
-	RocketChat.hftAlert.stream.on 'new image', (data) ->
+	FinLabs.hftAlert.stream.on 'new image', (data) ->
 		setTimeout instance.getNewImage.bind(instance, data.id), Math.random()*2000
 
 	@getNewImage = (id) ->

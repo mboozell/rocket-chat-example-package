@@ -18,12 +18,12 @@ Package.onUse(function(api) {
 	api.use([
 		'mongo',
 		'webapp'
-	], 'server')
+	], 'server');
 
 	Npm.depends({
 		'gridfs-stream': '1.1.1',
 		'request': '2.64.0'
-	})
+	});
 
 	// TAPi18n
 	api.use('templating', 'client');

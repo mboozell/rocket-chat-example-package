@@ -9,7 +9,7 @@ Meteor.methods
 		price = Math.round(parseFloat(price)*100)
 		user = Meteor.user()
 
-		payment = new RocketChat.payment.Util()
+		payment = new FinLabs.payment.Util()
 		payment.createTransaction user, token, price, "Registration Fee"
 
 		RocketChat.authz.removeUsersFromRoles user._id, 'unpaid-user'

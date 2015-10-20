@@ -68,6 +68,7 @@ rocketchat:wordpress
 #rocketchat:soundcloud
 
 #custom plugins
+finlabs:lib
 finlabs:hftalert
 finlabs:payment
 

@@ -1,5 +1,5 @@
 Package.describe({
-	name: 'finlabs:analytics',
+	name: 'finlabs:lib',
 	version: '0.0.1',
 	summary: 'finlabs Analytical Utils',
 	git: ''
@@ -17,12 +17,9 @@ Package.onUse(function(api) {
 	api.use([], 'server');
 	api.use([], 'client');
 
-	Npm.depends({
-		'stripe': '4.0.0'
-	});
-
-
-	api.addFiles([], ['server', 'client']);
+	api.addFiles([
+		"finlabs.coffee"
+	], ['server', 'client']);
 
 	api.addFiles([], 'server');
 
