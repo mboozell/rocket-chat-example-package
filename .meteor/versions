@@ -41,6 +41,8 @@ ejson@1.0.7
 email@1.0.7
 facebook@1.2.2
 fastclick@1.0.7
+finlabs:hftalert@0.0.1
+finlabs:payment@0.0.1
 francocatena:status@1.5.0
 geojson-utils@1.0.4
 github@1.1.4
@@ -129,7 +131,6 @@ rocketchat:favico@0.0.1
 rocketchat:file@0.0.1
 rocketchat:github-enterprise@0.0.1
 rocketchat:gitlab@0.0.1
-rocketchat:hftalert@0.0.1
 rocketchat:highlight@0.0.1
 rocketchat:ldap@0.0.1
 rocketchat:lib@0.0.1
@@ -139,7 +140,6 @@ rocketchat:me@0.0.1
 rocketchat:mentions@0.0.1
 rocketchat:message-star@0.0.1
 rocketchat:oembed@0.0.1
-rocketchat:payment@0.0.1
 rocketchat:slashcommands-invite@0.0.1
 rocketchat:slashcommands-join@0.0.1
 rocketchat:slashcommands-leave@0.0.1

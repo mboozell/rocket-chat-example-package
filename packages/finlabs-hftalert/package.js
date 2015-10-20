@@ -1,5 +1,5 @@
 Package.describe({
-	name: 'rocketchat:hftalert',
+	name: 'finlabs:hftalert',
 	version: '0.0.1',
 	summary: 'HFT Alert Utilities',
 	git: ''
@@ -29,8 +29,8 @@ Package.onUse(function(api) {
 	api.use('templating', 'client');
 	var _ = Npm.require('underscore');
 	var fs = Npm.require('fs');
-	tapi18nFiles = _.compact(_.map(fs.readdirSync('packages/rocketchat-hftalert/i18n'), function(filename) {
-		if (fs.statSync('packages/rocketchat-hftalert/i18n/' + filename).size > 16) {
+	tapi18nFiles = _.compact(_.map(fs.readdirSync('packages/finlabs-hftalert/i18n'), function(filename) {
+		if (fs.statSync('packages/finlabs-hftalert/i18n/' + filename).size > 16) {
 			return 'i18n/' + filename;
 		}
 	}));

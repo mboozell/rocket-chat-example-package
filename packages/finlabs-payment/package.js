@@ -1,7 +1,7 @@
 Package.describe({
-	name: 'rocketchat:payment',
+	name: 'finlabs:payment',
 	version: '0.0.1',
-	summary: 'Rocketchat Payment Utils',
+	summary: 'finlabs Payment Utils',
 	git: ''
 });
 
@@ -28,8 +28,8 @@ Package.onUse(function(api) {
 	// TAPi18n
 	var _ = Npm.require('underscore');
 	var fs = Npm.require('fs');
-	tapi18nFiles = _.compact(_.map(fs.readdirSync('packages/rocketchat-payment/i18n'), function(filename) {
-		if (fs.statSync('packages/rocketchat-payment/i18n/' + filename).size > 16) {
+	tapi18nFiles = _.compact(_.map(fs.readdirSync('packages/finlabs-payment/i18n'), function(filename) {
+		if (fs.statSync('packages/finlabs-payment/i18n/' + filename).size > 16) {
 			return 'i18n/' + filename;
 		}
 	}));

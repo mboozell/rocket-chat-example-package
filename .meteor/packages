@@ -68,8 +68,8 @@ rocketchat:wordpress
 #rocketchat:soundcloud
 
 #custom plugins
-rocketchat:hftalert
-rocketchat:payment
+finlabs:hftalert
+finlabs:payment
 
 konecty:change-case
 konecty:delayed-task
