@@ -1,4 +1,4 @@
-RocketChat.hftAlert.settings =
+FinLabs.hftAlert.settings =
 	downloadRoute: /^\/plugins\/hftalert\/image\/(.*)$/
 	referer: "http://www.sghammer.com/users/journal/index.html"
 	images:
@@ -18,5 +18,5 @@ RocketChat.hftAlert.settings =
 			type: "image/jpg"
 			frequency: "every 1 hour"
 
-RocketChat.hftAlert.stream.permissions.write -> false
-RocketChat.hftAlert.stream.permissions.read -> true
+FinLabs.hftAlert.stream.permissions.write -> false
+FinLabs.hftAlert.stream.permissions.read -> true

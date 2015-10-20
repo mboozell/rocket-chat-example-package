@@ -1,15 +1,15 @@
 WebApp.connectHandlers.use (req, res, next) ->
-	re = RocketChat.hftAlert.settings.downloadRoute.exec(req.url)
+	re = FinLabs.hftAlert.settings.downloadRoute.exec(req.url)
 	if re?
 		id = re[1].split('.')[0]
-		image = RocketChat.hftAlert.settings.images[id]
+		image = FinLabs.hftAlert.settings.images[id]
 		if image
 			res.writeHead(200, "Content-Type": "image")
-			if RocketChat.hftAlert.store.writing
-				RocketChat.hftAlert.store.writing.on 'close', ->
-					RocketChat.hftAlert.store.find(id).pipe res
+			if FinLabs.hftAlert.store.writing
+				FinLabs.hftAlert.store.writing.on 'close', ->
+					FinLabs.hftAlert.store.find(id).pipe res
 			else
-				RocketChat.hftAlert.store.find(id).pipe res
+				FinLabs.hftAlert.store.find(id).pipe res
 			return
 	else
 		next()

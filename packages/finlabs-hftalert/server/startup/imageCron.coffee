@@ -1,9 +1,9 @@
 Meteor.startup ->
 	Meteor.defer ->
 
-		getImage = Meteor.wrapAsync RocketChat.hftAlert.getDelineatorImage, RocketChat.hftAlert
+		getImage = Meteor.wrapAsync FinLabs.hftAlert.getDelineatorImage, FinLabs.hftAlert
 
-		for id, image of RocketChat.hftAlert.settings.images
+		for id, image of FinLabs.hftAlert.settings.images
 			do (id, image) ->
 				SyncedCron.add
 					name: "Get Delineator Image [#{id}]",

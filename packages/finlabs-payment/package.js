@@ -14,7 +14,7 @@ Package.onUse(function(api) {
 		'rocketchat:lib@0.0.1'
 	]);
 
-	api.use([], 'server')
+	api.use([], 'server');
 
 	api.use([
 		'templating',
@@ -23,7 +23,7 @@ Package.onUse(function(api) {
 
 	Npm.depends({
 		'stripe': '4.0.0'
-	})
+	});
 
 	// TAPi18n
 	var _ = Npm.require('underscore');

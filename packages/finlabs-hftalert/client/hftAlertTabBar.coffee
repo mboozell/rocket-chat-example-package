@@ -1,4 +1,4 @@
-RocketChat.hftAlert.tabBarItem =
+FinLabs.hftAlert.tabBarItem =
 	i18nTitle: "rocketchat-hftalert:HFT_Alerts"
 	icon: "icon-chart-line"
 	id: "hftalert"
@@ -6,6 +6,6 @@ RocketChat.hftAlert.tabBarItem =
 	order: 6
 
 Meteor.startup ->
-	RocketChat.callbacks.add 'enter-room', ->
-		RocketChat.TabBar.addButton RocketChat.hftAlert.tabBarItem
-	, RocketChat.callbacks.priority.MEDIUM, 'enter-room-tabbar-hftalert'
+	FinLabs.callbacks.add 'enter-room', ->
+		FinLabs.TabBar.addButton FinLabs.hftAlert.tabBarItem
+	, FinLabs.callbacks.priority.MEDIUM, 'enter-room-tabbar-hftalert'
