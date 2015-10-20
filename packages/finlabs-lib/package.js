@@ -1,7 +1,7 @@
 Package.describe({
 	name: 'finlabs:lib',
 	version: '0.0.1',
-	summary: 'finlabs Analytical Utils',
+	summary: 'finlabs Utils',
 	git: ''
 });
 
@@ -10,21 +10,21 @@ Package.onUse(function(api) {
 
 	api.use([
 		'coffeescript',
-		'underscore',
-		'rocketchat:lib@0.0.1'
+		'underscore'
 	]);
 
 	api.use([], 'server');
 	api.use([], 'client');
 
-	api.addFiles([
-		"finlabs.coffee"
-	], ['server', 'client']);
+	api.addFiles("lib/core.coffee");
+
+	api.addFiles([], ['server', 'client']);
 
 	api.addFiles([], 'server');
 
 	api.addFiles([], 'client');
 
+	api.export("FinLabs");
 });
 
 Package.onTest(function(api) {

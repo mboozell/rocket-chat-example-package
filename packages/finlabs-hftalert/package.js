@@ -12,7 +12,8 @@ Package.onUse(function(api) {
 		'coffeescript',
 		'underscore',
 		'rocketchat:lib@0.0.1',
-		'reactive-var'
+		'reactive-var',
+		'finlabs:lib@0.0.1'
 	]);
 
 	api.use([

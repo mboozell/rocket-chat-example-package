@@ -11,7 +11,8 @@ Package.onUse(function(api) {
 	api.use([
 		'coffeescript',
 		'underscore',
-		'rocketchat:lib@0.0.1'
+		'rocketchat:lib@0.0.1',
+		'finlabs:lib@0.0.1'
 	]);
 
 	api.use([], 'server');

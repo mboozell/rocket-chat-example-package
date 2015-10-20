@@ -6,6 +6,6 @@ FinLabs.hftAlert.tabBarItem =
 	order: 6
 
 Meteor.startup ->
-	FinLabs.callbacks.add 'enter-room', ->
-		FinLabs.TabBar.addButton FinLabs.hftAlert.tabBarItem
-	, FinLabs.callbacks.priority.MEDIUM, 'enter-room-tabbar-hftalert'
+	RocketChat.callbacks.add 'enter-room', ->
+		RocketChat.TabBar.addButton FinLabs.hftAlert.tabBarItem
+	, RocketChat.callbacks.priority.MEDIUM, 'enter-room-tabbar-hftalert'
