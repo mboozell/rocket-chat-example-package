@@ -76,4 +76,6 @@ Meteor.startup ->
           url: window.location.origin + route.path
     ]
 
-    RocketChat.callbacks.add 'afterCreateUser', -> console.log 'FUCK', Meteor.user()
+    RocketChat.callbacks.add 'enter-room', FinLabs.Analytics.identifyMeteorUser
+    , RocketChat.callbacks.priority.MEDIUM, 'enter-room-identify-analytics'
+
