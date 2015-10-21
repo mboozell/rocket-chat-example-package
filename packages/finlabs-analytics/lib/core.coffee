@@ -1,0 +1,1 @@
+FinLabs.Analytics = {}

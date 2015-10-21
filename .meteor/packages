@@ -71,6 +71,7 @@ rocketchat:wordpress
 finlabs:lib
 finlabs:hftalert
 finlabs:payment
+finlabs:analytics
 
 konecty:change-case
 konecty:delayed-task

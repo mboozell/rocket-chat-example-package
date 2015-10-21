@@ -19,15 +19,22 @@ Package.onUse(function(api) {
 	api.use([], 'client');
 
 	Npm.depends({
-		'stripe': '4.0.0'
+		'analytics-node': '2.0.0'
 	});
 
 
-	api.addFiles([], ['server', 'client']);
+	api.addFiles([
+		"lib/core.coffee"
+	], ['server', 'client']);
 
-	api.addFiles([], 'server');
+	api.addFiles([
+		"server/analytics.coffee",
+		"server/settings.coffee"
+	], 'server');
 
-	api.addFiles([], 'client');
+	api.addFiles([
+		"client/analytics.coffee"
+	], 'client');
 
 });
 
