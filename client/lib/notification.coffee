@@ -59,6 +59,7 @@
 		$('.link-room-' + rid).removeClass('new-room-highlight')
 
 Tracker.autorun ->
+  console.log(Session.get('user_' + Meteor.userId() + '_status'))
 	if Session.get('newRoomSound')?.length > 0
 		unless Session.equals('user_' + Meteor.userId() + '_status', 'busy') or Meteor.user()?.settings?.preferences?.disableNewRoomNotification
 			$('#chatNewRoomNotification').each ->
