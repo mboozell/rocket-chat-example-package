@@ -27,6 +27,7 @@ Package.onUse(function(api) {
 	], ['server', 'client']);
 
 	api.addFiles([
+		"server/models/WiseGuyAlert.coffee",
 		"server/restapi/v1/alerts.coffee",
 		"server/saveAlert.coffee"
 	], 'server');

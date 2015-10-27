@@ -1,6 +1,6 @@
 FinLabs.models.WiseGuyAlerts = new class extends RocketChat.models._Base
   constructor: ->
-    @_initModel 'integrations'
+    @_initModel 'wiseguy_alerts'
 
     @tryEnsureIndex { 'apiKey': 1 }
     @tryEnsureIndex { 'ticker': 1 }
@@ -19,10 +19,10 @@ FinLabs.models.WiseGuyAlerts = new class extends RocketChat.models._Base
     alert.ts = new Date()
     alert.key = key
 
-    _.extend integration, extraData
+    _.extend alert, extraData
 
-    integration._id = @insert integration
-    return integration
+    alert._id = @insert alert
+    return alert
 
   # REMOVE
   removeById: (_id) ->

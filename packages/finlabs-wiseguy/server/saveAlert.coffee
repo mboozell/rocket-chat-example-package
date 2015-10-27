@@ -8,16 +8,8 @@ FinLabs.WiseGuy.saveAlert = (alert, key) ->
   if not integration
     throw new Meteor.Error 401, 'Bad API Key -> Not Authorized'
 
-  ticker = FinLabs.WiseGuy.parse.ticker alert
-  state = FinLabs.WiseGuy.parse.state alert
-  date = FinLabs.WiseGuy.parse.date alert
-  weekly = FinLabs.WiseGuy.parse.weekly alert
-  order = FinLabs.WiseGuy.parse.order alert
-  price = FinLabs.WiseGuy.parse.price alert
+  data = FinLabs.WiseGuy.parseAll alert
+  console.log data
 
-  console.log ticker
-  console.log state
-  console.log date
-  console.log weekly
-  console.log order
-  console.log price
+  FinLabs.models.WiseGuyAlerts.createOneWithApiKey data, key
+
