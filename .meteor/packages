@@ -65,7 +65,7 @@ rocketchat:wordpress
 #rocketchat:hubot
 #rocketchat:irc
 #rocketchat:livechat
-#rocketchat:soundcloud
+rocketchat:soundcloud
 
 #custom plugins
 finlabs:lib
@@ -116,3 +116,4 @@ yasaricli:slugify
 yasinuslu:blaze-meta
 # sanjo:jasmine
 # velocity:html-reporter
+rocketchat:tutum
