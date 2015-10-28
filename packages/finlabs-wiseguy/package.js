@@ -12,14 +12,30 @@ Package.onUse(function(api) {
 		'coffeescript',
 		'underscore',
 		'rocketchat:lib@0.0.1',
-		'finlabs:lib@0.0.1'
+		'finlabs:lib@0.0.1',
+		'rocketchat:authorization@0.0.1'
 	]);
 
 	api.use([
-		"nimble:restivus"
+		"nimble:restivus",
+		"alanning:roles"
 	], 'server');
 
-	api.use([], 'client');
+	api.use([
+		"templating"
+	], 'client');
+
+	var _ = Npm.require('underscore');
+	var fs = Npm.require('fs');
+	tapi18nFiles = _.compact(_.map(fs.readdirSync('packages/finlabs-wiseguy/i18n'), function(filename) {
+		if (fs.statSync('packages/finlabs-wiseguy/i18n/' + filename).size > 16) {
+			return 'i18n/' + filename;
+		}
+	}));
+	api.use(["tap:i18n@1.5.1"], ["client", "server"]);
+	api.imply('tap:i18n');
+	api.addFiles("package-tap.i18n", ["client", "server"]);
+	api.addFiles(tapi18nFiles, ["client", "server"]);
 
 	api.addFiles([
 		"lib/core.coffee",
@@ -27,12 +43,18 @@ Package.onUse(function(api) {
 	], ['server', 'client']);
 
 	api.addFiles([
-		"server/models/WiseGuyAlert.coffee",
+		"server/models/WiseGuyAlerts.coffee",
 		"server/restapi/v1/alerts.coffee",
-		"server/saveAlert.coffee"
+		"server/saveAlert.coffee",
+		"server/publications/wiseGuyAlerts.coffee",
+		"server/settings.coffee"
 	], 'server');
 
 	api.addFiles([
+		"client/tabBar.coffee",
+		"client/views/app/tabBar/wiseGuyAlerts.html",
+		"client/views/app/tabBar/wiseGuyAlerts.coffee",
+		"client/stylesheets/wiseguy.css"
 	], 'client');
 
 });

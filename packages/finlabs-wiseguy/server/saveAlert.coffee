@@ -9,7 +9,6 @@ FinLabs.WiseGuy.saveAlert = (alert, key) ->
     throw new Meteor.Error 401, 'Bad API Key -> Not Authorized'
 
   data = FinLabs.WiseGuy.parseAll alert
-  console.log data
 
   FinLabs.models.WiseGuyAlerts.createOneWithApiKey data, key
 
