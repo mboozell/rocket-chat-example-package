@@ -17,7 +17,8 @@ Meteor.methods
 
 		if room
 			if room.t is 'c'
-				canAccess = true
+				if RocketChat.settings.get "General_Channels_Enabled"
+					canAccess = true
 			else if room.usernames.indexOf(user.username) isnt -1
 				canAccess = true
 

@@ -73,7 +73,7 @@ Meteor.startup ->
 		roles: ['admin', 'site-moderator', 'moderator']}
 
 		{ _id: 'create-p',
-		roles : ['admin', 'site-moderator', 'user']}
+		roles : ['admin', 'site-moderator']}
 
 		{ _id: 'delete-p',
 		roles : ['admin', 'site-moderator']}
