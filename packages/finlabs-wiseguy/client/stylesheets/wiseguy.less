@@ -1,0 +1,88 @@
+.wiseguy-alert-list {
+  padding: 80px 10px 0;
+
+  .col-1, .col-3, .col-4 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    float: left;
+  }
+  .col-1 {
+    width: 8.33333333%;
+  }
+  .col-3 {
+    width: 25%;
+  }
+  .col-4 {
+    width: 33.33333333%;
+  }
+
+  hr {
+    margin: 20px;
+    border-width: 1px 0px;
+    border-color: #C3C3C3 transparent #FFF transparent;
+    border-style: solid;
+  }
+
+  .wiseguy-alert {
+    height: 30px;
+
+    &:hover {
+      cursor: pointer;
+      .wiseguy-plus {
+        background-color: #fff;
+      }
+    }
+
+    .wiseguy-plus {
+      font-family: "fontello";
+      font-style: normal;
+      font-size: 12px;
+      font-weight: normal;
+      speak: none;
+      color: #948F8F;
+      display: inline-block;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      border: 3px solid #DADADA;
+      border-radius: 50%;
+      padding: 4px 8px;
+      margin: 1.5px 3px 0;
+      &:before {
+        content: '\e82c';
+      }
+    }
+
+    .timestamp {
+      font-size: 17px;
+      color: #A5A5A5;
+      position: relative;
+      top: 8px;
+      left: 25px;
+    }
+
+    .ticker {
+      font-size: 20px;
+      position: relative;
+      top: 7px;
+      left: 20px;
+    }
+
+    .bearish, .bullish {
+      text-align: center;
+      padding: 7px 0;
+      border-radius: 3px;
+      text-transform: uppercase;
+      color: #fff;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .bullish {
+      background-color: #CE5959;
+    }
+    .bearish {
+      background-color: #54C15C;
+    }
+  }
+}

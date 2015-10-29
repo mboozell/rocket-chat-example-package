@@ -5,32 +5,40 @@
 				<h2>Wiseguy Alerts</h2>
 			</div>
 		</div>
-		{{#each alerts}}
-			<div class="wiseguy-alert-list scrollable">
+		<div class="wiseguy-alert-list scrollable">
+			{{#each alerts}}
 				<div class="alert-wrap">
 					<div class="wiseguy-alert">
 						<div class="col-1">
-							<i class="icon-plus"></i>
+							<i class="wiseguy-plus"></i>
 						</div>
 						<div class="col-3">
-							{{timestamp}}
+							<div class="timestamp">
+								{{timestamp}}
+							</div>
 						</div>
 						<div class="col-4">
-							{{ticker}}
+							<div class="ticker">
+								{{ticker}}
+							</div>
 						</div>
 						<div class="col-4">
-							{{getState}}
+							<div class="{{getState}}">
+								{{getState}}
+							</div>
 						</div>
 					</div>
-
+				{{!--
 					<div class="more-info">
 						<ul>
 							<li>Exp: {{formatDate}} {{getDirection}} {{isWeekly}}</li>
 							<li>{{formatPrice}} BET {{tags}}</li>
 						</ul>
 					</div>
+				--}}
+					<hr>
 				</div>
-			</div>
-		{{/each}}
+			{{/each}}
+		</div>
 	</div>
 </template>

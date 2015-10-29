@@ -10,6 +10,7 @@ Package.onUse(function(api) {
 
 	api.use([
 		'coffeescript',
+		'less@2.5.0',
 		'underscore',
 		'rocketchat:lib@0.0.1',
 		'finlabs:lib@0.0.1',
@@ -54,7 +55,7 @@ Package.onUse(function(api) {
 		"client/tabBar.coffee",
 		"client/views/app/tabBar/wiseGuyAlerts.html",
 		"client/views/app/tabBar/wiseGuyAlerts.coffee",
-		"client/stylesheets/wiseguy.css",
+		"client/stylesheets/wiseguy.less",
 		"client/lib/collections.coffee"
 	], 'client');
 
