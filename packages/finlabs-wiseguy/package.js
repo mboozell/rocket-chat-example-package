@@ -54,7 +54,8 @@ Package.onUse(function(api) {
 		"client/tabBar.coffee",
 		"client/views/app/tabBar/wiseGuyAlerts.html",
 		"client/views/app/tabBar/wiseGuyAlerts.coffee",
-		"client/stylesheets/wiseguy.css"
+		"client/stylesheets/wiseguy.css",
+		"client/lib/collections.coffee"
 	], 'client');
 
 });
