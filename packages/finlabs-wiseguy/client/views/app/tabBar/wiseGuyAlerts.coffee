@@ -1,6 +1,6 @@
 Template.wiseGuyAlerts.helpers
 	alerts: ->
-		return Template.instance().WiseGuyAlerts()
+		return Template.instance().alerts()
 
 Template.wiseGuyAlerts.onCreated ->
 	instance = @
@@ -11,6 +11,6 @@ Template.wiseGuyAlerts.onCreated ->
 		instance.ready.set subscription.ready()
 
 	@alerts = ->
-		return Meteor.WiseGuyAlerts.find({}).fetch()
+		return WiseGuyAlerts.find({}).fetch()
 
 Template.wiseGuyAlerts.onRendered ->
