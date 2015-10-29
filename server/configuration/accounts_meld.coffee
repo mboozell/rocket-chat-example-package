@@ -6,7 +6,8 @@ Accounts.updateOrCreateUserFromExternalService = (serviceName, serviceData, opti
 		'google',
 		'meteor-developer',
 		'linkedin',
-		'twitter'
+		'twitter',
+		'sandstorm'
 	]
 	if not serviceExists and serviceData._oAuthCustom isnt true
 		return

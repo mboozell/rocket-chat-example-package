@@ -17,12 +17,14 @@ Get the app for your Android phone:
 
 Now compatible with all Android devices as old as version 4.0.x - [download here](https://github.com/RocketChat/Rocket.Chat/wiki/Build-the-Android-Cordova-Web-App-and-connect-to-your-own-Rocket.Chat-Server), even on BlackBerry Passport!
 
-Firefox OS support has landed as well (no Cordova required!):
-https://github.com/RocketChat/Rocket.Chat/wiki/Native-Firefox-OS-app-%28hosted-webapp%29
-
 Host your own Rocket.Chat server in four seconds flat:
 
 [![Rocket.Chat on Sandstorm.io](https://raw.githubusercontent.com/Sing-Li/bbug/master/images/sandstorm.jpg)](https://apps.sandstorm.io/app/vfnwptfn02ty21w715snyyczw0nqxkv3jvawcah10c6z7hj1hnu0)
+
+Also available as FirefoxOS app:
+
+[![Firefox OS app now available](https://raw.githubusercontent.com/Sing-Li/bbug/master/images/firefoxos.png)](https://github.com/RocketChat/Rocket.Chat/wiki/Native-Firefox-OS-app-%28hosted-webapp%29)
+
 
 
 Try it on Ubuntu:
@@ -44,6 +46,7 @@ Download the Native Cross-Platform Desktop Application at [Rocket.Chat.Electron]
 [![Coverage Status](https://coveralls.io/repos/RocketChat/Rocket.Chat/badge.svg)](https://coveralls.io/r/RocketChat/Rocket.Chat)
 [![Code Climate](https://codeclimate.com/github/RocketChat/Rocket.Chat/badges/gpa.svg)](https://codeclimate.com/github/RocketChat/Rocket.Chat)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/RocketChat/Rocket.Chat/raw/master/LICENSE)
+[![Stories in Ready](https://badge.waffle.io/RocketChat/Rocket.Chat.png?label=ready&title=Ready)](https://waffle.io/RocketChat/Rocket.Chat)
 
 Rocket.Chat is a Web Chat Server, developed in JavaScript, using the [Meteor](https://www.meteor.com/install) fullstack framework.
 
@@ -100,6 +103,7 @@ It is a great solution for communities and companies wanting to privately host t
 - REST APIs 
 - Remote Locations Video Monitoring 
 - Chat-ops powered by Hubot: scalable horizontal app integration (early access)
+- Massively scalable hosting and provisioning (beta testing now)
 - Native Cross-Platform Desktop Application [Windows, Mac OSX, or Linux](https://rocket.chat/)
 - Mobile app for iPhone, iPad, and iPod touch [Download on AppStore!](https://geo.itunes.apple.com/us/app/rocket.chat/id1028869439?mt=8)
 - Mobile app for Android phone, tablet, and TV stick [Available now on Google Play!](https://play.google.com/store/apps/details?id=com.konecty.rocket.chat)
@@ -127,7 +131,6 @@ It is a great solution for communities and companies wanting to privately host t
 - Anonymous use of Rocket.Chat: [Issue #604](https://github.com/RocketChat/Rocket.Chat/issues/604)
 - File Sharing via P2P and Scalable Multicast: [Issue #369](https://github.com/RocketChat/Rocket.Chat/issues/369), [Issue #370](https://github.com/RocketChat/Rocket.Chat/issues/370)
 - Anti-virus checking on file uploads: [Issue #757](https://github.com/RocketChat/Rocket.Chat/issues/757)
-- Massively scalable hosting and provisioning 
 
 ### Issues
 
