@@ -4,4 +4,4 @@ Meteor.publish 'wiseGuyAlerts', (limit) ->
 
 	FinLabs.models.WiseGuyAlerts.find {},
 		limit: limit,
-		sort: ts: -1
+		sort: ts: 1

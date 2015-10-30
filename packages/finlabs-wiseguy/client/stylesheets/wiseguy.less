@@ -1,5 +1,42 @@
+.wiseguy-wrap {
+  .flex-tab & {
+    .control {
+      height: 70px;
+    }
+  }
+  .new-day {
+    &:before {
+      content: attr(data-date);
+      display: block;
+      position: absolute;
+      top: 60px;
+      left: calc(32.5%);
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      -lh-property: 0;
+      z-index: 10;
+      padding: 2px 10px;
+      min-width: 140px;
+      color: #7f7f7f;
+      background-color: #fff;
+    }
+    &:after {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 70px;
+      left: 0;
+      border-top: 1px solid;
+      width: 96%;
+      margin-left: 2%;
+      border-top-color: #ddd;
+    }
+  }
+}
+
 .wiseguy-alert-list {
-  padding: 80px 10px 0;
+  padding: 105px 10px 0;
 
   .col-1, .col-3, .col-4 {
     position: relative;
@@ -19,10 +56,22 @@
   }
 
   hr {
-    margin: 20px;
+    margin: 10px 20px;
     border-width: 1px 0px;
     border-color: #C3C3C3 transparent #FFF transparent;
     border-style: solid;
+  }
+
+  ul {
+    list-style: disc;
+    padding-left: 90px;
+
+    li {
+      padding-top: 10px;
+      &:last-of-type {
+        padding-bottom: 3px;
+      }
+    }
   }
 
   .wiseguy-alert {
@@ -35,48 +84,57 @@
       }
     }
 
-    .wiseguy-plus {
+    .wisecon {
       font-family: "fontello";
       font-style: normal;
-      font-size: 12px;
+      font-size: 10px;
       font-weight: normal;
       speak: none;
       color: #948F8F;
       display: inline-block;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      border: 3px solid #DADADA;
+      border: 2px solid #DADADA;
       border-radius: 50%;
-      padding: 4px 8px;
-      margin: 1.5px 3px 0;
+      padding: 2.5px 7px;
+      margin: 0px 5px;
+      &.wiseguy-plus {
+        &:before {
+          content: '\e82c';
+        }
+      }
+    }
+
+    &.wiseguy-minus .wisecon {
       &:before {
-        content: '\e82c';
+        content: '\e833'
       }
     }
 
     .timestamp {
-      font-size: 17px;
+      font-size: 15px;
       color: #A5A5A5;
       position: relative;
-      top: 8px;
-      left: 25px;
+      top: 5px;
+      left: 20px;
     }
 
     .ticker {
-      font-size: 20px;
+      font-size: 17px;
       position: relative;
-      top: 7px;
-      left: 20px;
+      top: 4px;
+      left: 25px;
     }
 
     .bearish, .bullish {
       text-align: center;
-      padding: 7px 0;
+      padding: 5px 0;
       border-radius: 3px;
       text-transform: uppercase;
       color: #fff;
       font-weight: bold;
       letter-spacing: 1px;
+      font-size: 13px;
     }
     .bullish {
       background-color: #CE5959;
@@ -84,5 +142,10 @@
     .bearish {
       background-color: #54C15C;
     }
+  }
+
+  .more-info {
+    display: none;
+    clear: both;
   }
 }

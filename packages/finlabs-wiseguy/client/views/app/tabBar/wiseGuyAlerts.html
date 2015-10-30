@@ -1,16 +1,20 @@
 <template name="wiseGuyAlerts">
-	<div class="content">
+	<div class="content wiseguy-wrap">
+
 		<div class="control">
 			<div class="header">
 				<h2>Wiseguy Alerts</h2>
+				<div class="new-day" data-date="{{groupDate}}"></div>
 			</div>
 		</div>
+
 		<div class="wiseguy-alert-list scrollable">
 			{{#each alerts}}
 				<div class="alert-wrap">
+
 					<div class="wiseguy-alert">
 						<div class="col-1">
-							<i class="wiseguy-plus"></i>
+							<i class="wiseguy-plus wisecon"></i>
 						</div>
 						<div class="col-3">
 							<div class="timestamp">
@@ -28,15 +32,16 @@
 							</div>
 						</div>
 					</div>
-				{{!--
+
 					<div class="more-info">
 						<ul>
 							<li>Exp: {{formatDate}} {{getDirection}} {{isWeekly}}</li>
 							<li>{{formatPrice}} BET {{tags}}</li>
 						</ul>
 					</div>
-				--}}
+
 					<hr>
+
 				</div>
 			{{/each}}
 		</div>
