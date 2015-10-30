@@ -36,7 +36,7 @@
 }
 
 .wiseguy-alert-list {
-  padding: 105px 10px 0;
+  padding: 105px 0;
 
   .col-1, .col-3, .col-4 {
     position: relative;
@@ -50,6 +50,12 @@
   }
   .col-3 {
     width: 25%;
+    @media(max-width:400px){
+      width: 24%;
+    }
+    @media(max-width:370px){
+      width: 20%;
+    }
   }
   .col-4 {
     width: 33.33333333%;
@@ -64,7 +70,7 @@
 
   ul {
     list-style: disc;
-    padding-left: 90px;
+    padding-left: 85px;
 
     li {
       padding-top: 10px;
