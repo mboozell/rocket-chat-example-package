@@ -41,4 +41,4 @@ Template.wiseGuyAlerts.events
 		e.preventDefault()
 		ct = $(e.currentTarget)
 		ct.children('.more-info').slideToggle('fast')
-		ct.children('.wiseguy-alert').toggleClass('wiseguy-minus')
+		ct.children('.wiseguy-alert').toggleClass('wiseguy-plus')
