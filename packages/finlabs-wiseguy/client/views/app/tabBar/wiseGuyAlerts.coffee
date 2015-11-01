@@ -3,10 +3,10 @@ Template.wiseGuyAlerts.helpers
 		return Template.instance().alerts()
 
 	groupDate: ->
-		return moment(this.ts).format('LL')
+		return moment(WiseGuyAlerts.findOne().ts).format('LL')
 
 	timestamp: ->
-		return this.ts.toTimeString().substr(0,8)
+		return moment(this.ts).format('HH:mm:ss')
 
 	getState: ->
 		if this.state is 1 then 'bullish' else 'bearish'
