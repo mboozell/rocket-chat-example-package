@@ -6,7 +6,7 @@ Template.wiseGuyAlerts.helpers
 		return WiseGuyAlerts.find({}, { sort: { ts: -1 } }).count() > 0
 
 	groupDate: ->
-		return moment(this.ts).format('LL')
+		return moment(@ts).format('LL')
 
 	isEqual: ->
 		previousDate = WiseGuyAlerts.find({ts: {$gt: @ts}}, {sort: {ts: 1}, limit:1}).fetch()
@@ -26,22 +26,22 @@ Template.wiseGuyAlerts.helpers
 		
 
 	timestamp: ->
-		return moment(this.ts).format('HH:mm:ss')
+		return moment(@ts).format('HH:mm:ss')
 
 	getState: ->
-		if this.state is 1 then 'bullish' else 'bearish'
+		if @state is 1 then 'bullish' else 'bearish'
 
 	formatDate: ->
-		return this.exp_date.toDateString().substr(4,3) + this.exp_date.toDateString().substr(13,2)
+		return @exp_date.toDateString().substr(4,3) + @exp_date.toDateString().substr(13,2)
 
 	getDirection: ->
-		if this.direction is 1 then 'CALLS' else 'PUTS'
+		if @direction is 1 then 'CALLS' else 'PUTS'
 
 	isWeekly: ->
-		if this.weekly is true then '(Weekly)' else ''
+		if @weekly is true then '(Weekly)' else ''
 
 	formatPrice: ->
-		if this.price > 999 then (this.price/1000).toFixed() + 'K' else this.price
+		if @price > 999 then (@price/1000).toFixed() + 'K' else @price
 
 Template.wiseGuyAlerts.onCreated ->
 	instance = @
