@@ -1,16 +1,10 @@
 .wiseguy-wrap {
-  .flex-tab & {
-    .control {
-      height: 70px;
-    }
-  }
+
   .new-day {
     &:before {
       content: attr(data-date);
-      display: block;
-      position: absolute;
-      top: 60px;
-      left: calc(32.5%);
+      position: relative;
+      left: calc(35%);
       font-size: 12px;
       font-weight: 600;
       text-align: center;
@@ -24,8 +18,8 @@
     &:after {
       content: " ";
       display: block;
-      position: absolute;
-      top: 70px;
+      position: relative;
+      top: -8px;
       left: 0;
       border-top: 1px solid;
       width: 96%;
@@ -80,12 +74,21 @@
     }
   }
 
+  .new-day {
+    margin: 50px 0;
+    &:first-of-type {
+      margin: 0;
+      position: relative;
+      bottom: 40px;
+    }
+  }
+
   .wiseguy-alert {
     height: 30px;
 
     &:hover {
       cursor: pointer;
-      .wiseguy-plus {
+      .wisecon {
         background-color: #fff;
       }
     }
@@ -104,16 +107,16 @@
       border-radius: 50%;
       padding: 2.5px 7px;
       margin: 0px 5px;
-      &.wiseguy-plus {
+      &.wiseguy-minus {
         &:before {
-          content: '\e82c';
+          content: '\e833';
         }
       }
     }
 
-    &.wiseguy-minus .wisecon {
+    &.wiseguy-plus .wisecon {
       &:before {
-        content: '\e833'
+        content: '\e82c'
       }
     }
 
@@ -151,7 +154,6 @@
   }
 
   .more-info {
-    display: none;
     clear: both;
   }
 }

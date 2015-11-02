@@ -4,17 +4,18 @@
 		<div class="control">
 			<div class="header">
 				<h2>Wiseguy Alerts</h2>
-				<div class="new-day" data-date="{{groupDate}}"></div>
 			</div>
 		</div>
 
 		<div class="wiseguy-alert-list scrollable">
+			<div class="new-day" data-date="{{groupDate}}"></div>
 			{{#each alerts}}
+				{{!-- <div class="new-day" data-value="{{@index}}" data-date="{{groupDate}}"></div> --}}
 				<div class="alert-wrap">
 
 					<div class="wiseguy-alert">
 						<div class="col-1">
-							<i class="wiseguy-plus wisecon"></i>
+							<i class="wiseguy-minus wisecon"></i>
 						</div>
 						<div class="col-3">
 							<div class="timestamp">
