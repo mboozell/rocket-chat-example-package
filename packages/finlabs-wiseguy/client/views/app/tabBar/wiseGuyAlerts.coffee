@@ -2,6 +2,9 @@ Template.wiseGuyAlerts.helpers
 	alerts: ->
 		return Template.instance().alerts()
 
+	hasAlerts: ->
+		return WiseGuyAlerts.find({}, { sort: { ts: -1 } }).count() > 0
+
 	groupDate: ->
 		return moment(this.ts).format('LL')
 

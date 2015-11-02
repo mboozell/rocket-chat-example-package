@@ -8,42 +8,48 @@
 		</div>
 
 		<div class="wiseguy-alert-list scrollable">
-			{{#each alerts}}
-				{{#if isEqual}}<div class="new-day" data-date="{{groupDate}}"></div>{{/if}}
-				<div class="alert-wrap">
+			{{#if hasAlerts}}
+				{{#each alerts}}
+					{{#if isEqual}}<div class="new-day" data-date="{{groupDate}}"></div>{{/if}}
+					<div class="alert-wrap">
 
-					<div class="wiseguy-alert">
-						<div class="col-1">
-							<i class="wiseguy-minus wisecon"></i>
-						</div>
-						<div class="col-3">
-							<div class="timestamp">
-								{{timestamp}}
+						<div class="wiseguy-alert">
+							<div class="col-1">
+								<i class="wiseguy-minus wisecon"></i>
+							</div>
+							<div class="col-3">
+								<div class="timestamp">
+									{{timestamp}}
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="ticker">
+									{{ticker}}
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="{{getState}}">
+									{{getState}}
+								</div>
 							</div>
 						</div>
-						<div class="col-4">
-							<div class="ticker">
-								{{ticker}}
-							</div>
+
+						<div class="more-info">
+							<ul>
+								<li>Exp: {{formatDate}} {{getDirection}} {{isWeekly}}</li>
+								<li>{{formatPrice}} BET {{tags}}</li>
+							</ul>
 						</div>
-						<div class="col-4">
-							<div class="{{getState}}">
-								{{getState}}
-							</div>
-						</div>
+
+						{{#if isLast}}<hr>{{/if}}
+
 					</div>
-
-					<div class="more-info">
-						<ul>
-							<li>Exp: {{formatDate}} {{getDirection}} {{isWeekly}}</li>
-							<li>{{formatPrice}} BET {{tags}}</li>
-						</ul>
-					</div>
-
-					{{#if isLast}}<hr>{{/if}}
-
-				</div>
-			{{/each}}
+				{{/each}}
+			{{else}}
+				<li class="empty">
+					No alerts to display
+				</li>
+			{{/if}}
 		</div>
 	</div>
 </template>
