@@ -3,8 +3,20 @@ Template.wiseGuyAlerts.helpers
 		return Template.instance().alerts()
 
 	groupDate: ->
-		return moment(WiseGuyAlerts.findOne().ts).format('LL')
+		return moment(this.ts).format('LL')
 
+	isEqual: ->
+		previousDate = WiseGuyAlerts.find({ts: {$gt: @ts}}, {sort: {ts: 1}, limit:1}).fetch()
+		if previousDate.length is 0 
+			return true
+		unless previousDate[0].ts.getDay() is @ts.getDay()
+			return true
+
+	isLast: ->
+		unless WiseGuyAlerts.find({ts: {$lt: @ts}}, {sort: {ts: -1}, limit:1}).fetch()[0].ts.getDay() is @ts.getDay()
+			return false
+		return true
+		
 	timestamp: ->
 		return moment(this.ts).format('HH:mm:ss')
 
