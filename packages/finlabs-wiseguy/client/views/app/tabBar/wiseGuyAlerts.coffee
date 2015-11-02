@@ -16,10 +16,15 @@ Template.wiseGuyAlerts.helpers
 			return true
 
 	isLast: ->
-		unless WiseGuyAlerts.find({ts: {$lt: @ts}}, {sort: {ts: -1}, limit:1}).fetch()[0].ts.getDay() is @ts.getDay()
+		nextDate = WiseGuyAlerts.find({ts: {$lt: @ts}}, {sort: {ts: -1}, limit:1}).fetch()
+		if nextDate.length is 0
+			return false
+		unless nextDate[0].ts.getDay() is @ts.getDay()
 			return false
 		return true
 		
+		
+
 	timestamp: ->
 		return moment(this.ts).format('HH:mm:ss')
 
