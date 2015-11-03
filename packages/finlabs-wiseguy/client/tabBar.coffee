@@ -1,6 +1,6 @@
 FinLabs.WiseGuy.tabBarItem =
     i18nTitle: "finlabs-wiseguy:WiseGuy_Alerts"
-    icon: "icon-chart-line"
+    icon: "icon-bell"
     id: "wiseguy"
     template: "wiseGuyAlerts"
     order: 10

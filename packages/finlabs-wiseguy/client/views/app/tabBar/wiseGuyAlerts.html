@@ -36,7 +36,12 @@
 
 						<div class="more-info">
 							<ul>
-								<li>Exp: {{formatDate}} {{getDirection}} {{isWeekly}}</li>
+								<li>
+									{{formatDate}} {{getDirection}}
+									{{#if weekly}}
+									<span class="wiseguy-weekly">(Weekly)</span>
+									{{/if}}
+								</li>
 								<li>{{formatPrice}} BET {{tags}}</li>
 							</ul>
 						</div>
