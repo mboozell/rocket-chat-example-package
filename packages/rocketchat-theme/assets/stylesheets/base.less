@@ -3710,17 +3710,97 @@ a.github-fork {
 	}
 }
 
-@media all and(max-width: 780px) {
-	#rocket-chat {
-		.burger {
-			visibility: visible;
-			display: inline-block;
+// START EB ZONE
+// Most of this is copied from the media query down below
+// I commented out duplicate code from the media query below
+#rocket-chat {
+	.burger {
+		visibility: visible;
+		display: inline-block;
+	}
+	.side-nav {
+		top: 0;
+		// .transform(translateX(-100%));
+		.transition(transform .3s ease-out);
+	}
+	.main-content {
+		left: 0;
+		.transition(transform .2s linear);
+
+		&.notransition {
+			.transition(transform .0s);
 		}
+	}
+	.fixed-title h2 {
+		margin-left: 45px;
+	}
+	.flex-tab {
+		top: 0;
+	}
+	.messages-box {
+		padding: 0 10px;
+	}
+	&.menu-opened {
 		.side-nav {
-			top: 0;
-			// .transform(translateX(-100%));
-			.transition(transform .3s ease-out);
+			.transform(translateX(0));
 		}
+		.burger {
+			i {
+				&:nth-child(1) {
+					opacity: 1;
+					width: 10px;
+					.transform-origin(50%, 50%, 0);
+					.transform(translateY(3px) rotate(-45deg));
+				}
+				&:nth-child(2) {
+					//.transform(rotate(180deg));
+				}
+				&:nth-child(3) {
+					opacity: 1;
+					width: 10px;
+					.transform-origin(50%, 50%, 0);
+					.transform(translateY(-3px) rotate(45deg));
+				}
+			}
+		}
+		.main-content {
+			.transform(translateX(@rooms-box-width));
+		}
+	}
+	&.menu-closed {
+		.side-nav {display: none;}
+	}
+}
+
+.sweet-alert {
+	h2 {
+		font-size: 20px;
+		line-height: 30px;
+		margin: 10px 0;
+	}
+	button {
+		margin-top: 6px;
+		padding: 10px 22px;
+	}
+	p {
+		max-height: 40px;
+		overflow: hidden;
+	}
+}
+
+// END OF EB ZONE
+
+@media all and(max-width: 780px) {
+	//#rocket-chat {
+	//	.burger {
+	//		visibility: visible;
+	//		display: inline-block;
+	//	}
+	//	.side-nav {
+	//		top: 0;
+	//		// .transform(translateX(-100%));
+	//		.transition(transform .3s ease-out);
+	//	}
 		.main-content {
 			left: 0;
 			.transition(transform .2s linear);
@@ -3730,59 +3810,59 @@ a.github-fork {
 				.transition(transform .0s);
 			}
 		}
-		.fixed-title h2 {
-			margin-left: 45px;
-		}
-		.flex-tab {
-			top: 0;
-		}
-		.messages-box {
-			padding: 0 10px;
-		}
-		&.menu-opened {
-			.side-nav {
-				.transform(translateX(0));
-			}
-			.burger {
-				i {
-					&:nth-child(1) {
-						opacity: 1;
-						width: 10px;
-						.transform-origin(50%, 50%, 0);
-						.transform(translateY(3px) rotate(-45deg));
-					}
-					&:nth-child(2) {
-						//.transform(rotate(180deg));
-					}
-					&:nth-child(3) {
-						opacity: 1;
-						width: 10px;
-						.transform-origin(50%, 50%, 0);
-						.transform(translateY(-3px) rotate(45deg));
-					}
-				}
-			}
-			.main-content {
-				.transform(translateX(@rooms-box-width));
-			}
-		}
-	}
+	//	.fixed-title h2 {
+	//		margin-left: 45px;
+	//	}
+	//	.flex-tab {
+	//		top: 0;
+	//	}
+	//	.messages-box {
+	//		padding: 0 10px;
+	//	}
+	//	&.menu-opened {
+	//		.side-nav {
+	//			.transform(translateX(0));
+	//		}
+	//		.burger {
+	//			i {
+	//				&:nth-child(1) {
+	//					opacity: 1;
+	//					width: 10px;
+	//					.transform-origin(50%, 50%, 0);
+	//					.transform(translateY(3px) rotate(-45deg));
+	//				}
+	//				&:nth-child(2) {
+	//					//.transform(rotate(180deg));
+	//				}
+	//				&:nth-child(3) {
+	//					opacity: 1;
+	//					width: 10px;
+	//					.transform-origin(50%, 50%, 0);
+	//					.transform(translateY(-3px) rotate(45deg));
+	//				}
+	//			}
+	//		}
+	//		.main-content {
+	//			.transform(translateX(@rooms-box-width));
+	//		}
+	//	}
+   //}
 
-	.sweet-alert {
-		h2 {
-			font-size: 20px;
-			line-height: 30px;
-			margin: 10px 0;
-		}
-		button {
-			margin-top: 6px;
-			padding: 10px 22px;
-		}
-		p {
-			max-height: 40px;
-			overflow: hidden;
-		}
-	}
+  //.sweet-alert {
+	//	h2 {
+	//		font-size: 20px;
+	//		line-height: 30px;
+	//		margin: 10px 0;
+	//	}
+	//	button {
+	//		margin-top: 6px;
+	//		padding: 10px 22px;
+	//	}
+	//	p {
+	//		max-height: 40px;
+	//		overflow: hidden;
+	//	}
+//	}
 }
 
 @media all and(max-width: 500px) {
