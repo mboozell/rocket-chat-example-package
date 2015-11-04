@@ -3710,97 +3710,104 @@ a.github-fork {
 	}
 }
 
-// START EB ZONE
-// Most of this is copied from the media query down below
-// I commented out duplicate code from the media query below
-#rocket-chat {
-	.burger {
-		visibility: visible;
-		display: inline-block;
-	}
-	.side-nav {
-		top: 0;
-		// .transform(translateX(-100%));
-		.transition(transform .3s ease-out);
-	}
-	.main-content {
-		left: 0;
-		.transition(transform .2s linear);
+// ** START EB ZONE *********************************
 
-		&.notransition {
-			.transition(transform .0s);
-		}
-	}
-	.fixed-title h2 {
-		margin-left: 45px;
-	}
-	.flex-tab {
-		top: 0;
-	}
-	.messages-box {
-		padding: 0 10px;
-	}
-	&.menu-opened {
-		.side-nav {
-			.transform(translateX(0));
-		}
+// Hack to allow sidebar collapse on all viewport sizes -- 
+// Due to the 'menu-closed' class being attached at all times since
+// it is used to hide the sidebar at viewport sizes below 780px
+// I had to reverse the logistics of the menu-closed/menu-opened classes
+
+@media all and(min-width: 780px) {
+	#rocket-chat {
 		.burger {
-			i {
-				&:nth-child(1) {
-					opacity: 1;
-					width: 10px;
-					.transform-origin(50%, 50%, 0);
-					.transform(translateY(3px) rotate(-45deg));
-				}
-				&:nth-child(2) {
-					//.transform(rotate(180deg));
-				}
-				&:nth-child(3) {
-					opacity: 1;
-					width: 10px;
-					.transform-origin(50%, 50%, 0);
-					.transform(translateY(-3px) rotate(45deg));
+			visibility: visible;
+			display: inline-block;
+		}
+		.main-content {
+			.transition(all .2s linear);
+
+			&.notransition {
+				.transition(transform .0s);
+			}
+
+			&.flex-opened {
+				right: @flex-tab-width;
+				.flex-tab {
+					right: 40px;
+					.transform(translateX(0));
 				}
 			}
 		}
-		.main-content {
-			.transform(translateX(@rooms-box-width));
+		.fixed-title h2 {
+			margin-left: 45px;
+		}
+		&.menu-closed {
+			.side-nav {
+				.transform(translateX(0));
+			}
+			.burger {
+				i {
+					&:nth-child(1) {
+						opacity: 1;
+						width: 10px;
+						.transform-origin(50%, 50%, 0);
+						.transform(translateY(3px) rotate(-45deg));
+					}
+					&:nth-child(2) {
+						.transform(rotate(180deg));
+					}
+					&:nth-child(3) {
+						opacity: 1;
+						width: 10px;
+						.transform-origin(50%, 50%, 0);
+						.transform(translateY(-3px) rotate(45deg));
+					}
+				}
+			}
+			.main-content {
+				left: @rooms-box-width;
+			}
+		}
+		&.menu-opened {
+			.side-nav {
+				.transform(translateX(-100%));
+			}
+			.main-content {
+				left: 0;
+			}
+		}
+   }
+
+  .sweet-alert {
+		h2 {
+			font-size: 20px;
+			line-height: 30px;
+			margin: 10px 0;
+		}
+		button {
+			margin-top: 6px;
+			padding: 10px 22px;
+		}
+		p {
+			max-height: 40px;
+			overflow: hidden;
 		}
 	}
-	&.menu-closed {
-		.side-nav {display: none;}
-	}
 }
 
-.sweet-alert {
-	h2 {
-		font-size: 20px;
-		line-height: 30px;
-		margin: 10px 0;
-	}
-	button {
-		margin-top: 6px;
-		padding: 10px 22px;
-	}
-	p {
-		max-height: 40px;
-		overflow: hidden;
-	}
-}
-
-// END OF EB ZONE
+// ** END OF EB ZONE *********************************
 
 @media all and(max-width: 780px) {
-	//#rocket-chat {
-	//	.burger {
-	//		visibility: visible;
-	//		display: inline-block;
-	//	}
-	//	.side-nav {
-	//		top: 0;
-	//		// .transform(translateX(-100%));
-	//		.transition(transform .3s ease-out);
-	//	}
+	#rocket-chat {
+		.burger {
+			visibility: visible;
+			display: inline-block;
+		}
+		.side-nav {
+			top: 0;
+			// .transform(translateX(-100%));
+			.transition(transform .3s ease-out);
+		}
 		.main-content {
 			left: 0;
 			.transition(transform .2s linear);
@@ -3810,59 +3817,59 @@ a.github-fork {
 				.transition(transform .0s);
 			}
 		}
-	//	.fixed-title h2 {
-	//		margin-left: 45px;
-	//	}
-	//	.flex-tab {
-	//		top: 0;
-	//	}
-	//	.messages-box {
-	//		padding: 0 10px;
-	//	}
-	//	&.menu-opened {
-	//		.side-nav {
-	//			.transform(translateX(0));
-	//		}
-	//		.burger {
-	//			i {
-	//				&:nth-child(1) {
-	//					opacity: 1;
-	//					width: 10px;
-	//					.transform-origin(50%, 50%, 0);
-	//					.transform(translateY(3px) rotate(-45deg));
-	//				}
-	//				&:nth-child(2) {
-	//					//.transform(rotate(180deg));
-	//				}
-	//				&:nth-child(3) {
-	//					opacity: 1;
-	//					width: 10px;
-	//					.transform-origin(50%, 50%, 0);
-	//					.transform(translateY(-3px) rotate(45deg));
-	//				}
-	//			}
-	//		}
-	//		.main-content {
-	//			.transform(translateX(@rooms-box-width));
-	//		}
-	//	}
-   //}
+		.fixed-title h2 {
+			margin-left: 45px;
+		}
+		.flex-tab {
+			top: 0;
+		}
+		.messages-box {
+			padding: 0 10px;
+		}
+		&.menu-opened {
+			.side-nav {
+				.transform(translateX(0));
+			}
+			.burger {
+				i {
+					&:nth-child(1) {
+						opacity: 1;
+						width: 10px;
+						.transform-origin(50%, 50%, 0);
+						.transform(translateY(3px) rotate(-45deg));
+					}
+					&:nth-child(2) {
+						.transform(rotate(180deg));
+					}
+					&:nth-child(3) {
+						opacity: 1;
+						width: 10px;
+						.transform-origin(50%, 50%, 0);
+						.transform(translateY(-3px) rotate(45deg));
+					}
+				}
+			}
+			.main-content {
+				.transform(translateX(@rooms-box-width));
+			}
+		}
+   }
 
-  //.sweet-alert {
-	//	h2 {
-	//		font-size: 20px;
-	//		line-height: 30px;
-	//		margin: 10px 0;
-	//	}
-	//	button {
-	//		margin-top: 6px;
-	//		padding: 10px 22px;
-	//	}
-	//	p {
-	//		max-height: 40px;
-	//		overflow: hidden;
-	//	}
-//	}
+  .sweet-alert {
+		h2 {
+			font-size: 20px;
+			line-height: 30px;
+			margin: 10px 0;
+		}
+		button {
+			margin-top: 6px;
+			padding: 10px 22px;
+		}
+		p {
+			max-height: 40px;
+			overflow: hidden;
+		}
+	}
 }
 
 @media all and(max-width: 500px) {
