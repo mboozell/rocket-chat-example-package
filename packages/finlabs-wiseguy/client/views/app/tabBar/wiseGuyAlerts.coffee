@@ -52,7 +52,7 @@ Template.wiseGuyAlerts.onCreated ->
 		instance.ready.set subscription.ready()
 
 	@alerts = ->
-		return WiseGuyAlerts.find({}).fetch()
+		return WiseGuyAlerts.find({}, {sort: ts: -1}).fetch()
 
 Template.wiseGuyAlerts.onRendered ->
 
