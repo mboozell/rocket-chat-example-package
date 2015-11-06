@@ -37,6 +37,9 @@ Template.wiseGuyAlerts.helpers
 			return "Fri #{@exp_date.getMonth() + 1}/#{@exp_date.getDate()}"
 		"#{@exp_date.toDateString().substr(4,3)} #{@exp_date.toDateString().substr(11,4)}"
 
+	getStrike: ->
+		@order.toFixed 1
+
 	getDirection: ->
 		if @direction is 1 then 'CALLS' else 'PUTS'
 
