@@ -16,3 +16,7 @@ Meteor.methods
 			message = RocketChat.callbacks.run 'beforeSaveMessage', message
 
 			ChatMessage.insert message
+
+			FinLabs.Analytics.track('Sent Message', {
+				message: message.msg
+				})
