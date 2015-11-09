@@ -24,14 +24,17 @@ RocketChat.TabBar = new class
 		return data.get()
 
 	openFlex = (callback) ->
+		FinLabs.Analytics.track "Open Flex Bar", template: template.get()
 		return if animating is true
 		toggleFlex 1, callback
 
 	closeFlex = (callback) ->
+		FinLabs.Analytics.track "Close Flex Bar", template: template.get()
 		return if animating is true
 		toggleFlex -1, callback
 
 	toggleFlex = (status, callback) ->
+		FinLabs.Analytics.track "Toggle Flex Bar", template: template.get()
 		return if animating is true
 		animating = true
 

@@ -1,5 +1,6 @@
 Meteor.methods
 	unpinMessage: (message) ->
+		FinLabs.Analytics.track 'Unpin Message'
 		if not Meteor.userId()
 			throw new Meteor.Error 203, t('User_logged_out')
 

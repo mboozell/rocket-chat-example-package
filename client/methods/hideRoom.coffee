@@ -1,5 +1,6 @@
 Meteor.methods
 	hideRoom: (rid) ->
+		FinLabs.Analytics.track 'Hide Room' 
 		if not Meteor.userId()
 			throw new Meteor.Error 203, t('User_logged_out')
 

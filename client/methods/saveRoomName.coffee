@@ -1,5 +1,6 @@
 Meteor.methods
 	saveRoomName: (rid, name) ->
+		FinLabs.Analytics.track 'Save Room Name'
 		if not Meteor.userId()
 			throw new Meteor.Error 203, t('User_logged_out')
 

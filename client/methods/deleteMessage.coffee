@@ -1,5 +1,6 @@
 Meteor.methods
 	deleteMessage: (message) ->
+		FinLabs.Analytics.track 'Delete Message', message: message.msg
 		if not Meteor.userId()
 			throw new Meteor.Error 203, t('general.User_logged_out')
 
@@ -9,7 +10,6 @@ Meteor.methods
 
 		unless hasPermission or (deleteAllowed and deleteOwn)
 			throw new Meteor.Error 'message-deleting-not-allowed', t('Message_deleting_not_allowed')
-
 
 		Tracker.nonreactive ->
 			ChatMessage.remove

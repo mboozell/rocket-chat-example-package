@@ -1,5 +1,6 @@
 Meteor.methods
 	updateMessage: (message) ->
+		FinLabs.Analytics.track 'Update Message'
 		if not Meteor.userId()
 			throw new Meteor.Error 203, t('User_logged_out')
 
