@@ -14,6 +14,7 @@ readAsArrayBuffer = (file, callback) ->
 
 
 @fileUpload = (files) ->
+	FinLabs.Analytics.track "Upload Image"
 	roomId = Session.get('openedRoom')
 	files = [].concat files
 
