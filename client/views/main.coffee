@@ -229,8 +229,7 @@ Template.main.onRendered ->
 		# Uncaught TypeError: Cannot read property 'checkMenu' of null
 		# The same code copied and pasted in works tho
 		# ---> Template.instance().checkMenu()
-		Session.set 'viewportWidth', document.body.clientWidth
-		viewportWidth = Session.get 'viewportWidth'
+		viewportWidth = document.body.clientWidth
 		if (viewportWidth > 780 && !menu.isOpen()) || (viewportWidth < 780 && menu.isOpen())
 			Session.set 'menuClosed', false
 		else
@@ -240,8 +239,7 @@ Template.main.onCreated ->
 	instance = @
 
 	@checkMenu = ->
-		Session.set 'viewportWidth', document.body.clientWidth
-		viewportWidth = Session.get 'viewportWidth'
+		viewportWidth = document.body.clientWidth
 		if (viewportWidth > 780 && !menu.isOpen()) || (viewportWidth < 780 && menu.isOpen())
 			Session.set 'menuClosed', false
 		else
