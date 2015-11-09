@@ -152,10 +152,7 @@ Template.main.events
 		chatContainer = $("#rocket-chat")
 		menu.toggle()
 		# Make sure burger alerts do not display if side-menu is open
-		if (document.body.clientWidth > 780 && !menu.isOpen()) || (document.body.clientWidth < 780 && menu.isOpen())
-			Session.set 'menuClosed', false
-		else
-			Session.set 'menuClosed', true
+		Template.instance().checkMenu()
 
 	'touchstart': (e, t) ->
 		if document.body.clientWidth > 780
@@ -224,16 +221,27 @@ Template.main.onRendered ->
 		$('html').addClass "rtl"
 
 	# Display Burger Unread Message Alerts only if side-menu is closed
-	viewportWidth = document.body.clientWidth
-	if (viewportWidth > 780 && !menu.isOpen()) || (viewportWidth < 780 && menu.isOpen())
-		Session.set 'menuClosed', false
-	else
-		Session.set 'menuClosed', true
+	Template.instance().checkMenu()
 
- # Handle Update on Resize
+ 	# Handle Update on Resize
 	$(window).resize ->
+		# The instance does not work within the resize - Return Error:
+		# Uncaught TypeError: Cannot read property 'checkMenu' of null
+		# The same code copied and pasted in works tho
+		# ---> Template.instance().checkMenu()
 		Session.set 'viewportWidth', document.body.clientWidth
-		viewportWidth = document.body.clientWidth
+		viewportWidth = Session.get 'viewportWidth'
+		if (viewportWidth > 780 && !menu.isOpen()) || (viewportWidth < 780 && menu.isOpen())
+			Session.set 'menuClosed', false
+		else
+			Session.set 'menuClosed', true
+
+Template.main.onCreated ->
+	instance = @
+
+	@checkMenu = ->
+		Session.set 'viewportWidth', document.body.clientWidth
+		viewportWidth = Session.get 'viewportWidth'
 		if (viewportWidth > 780 && !menu.isOpen()) || (viewportWidth < 780 && menu.isOpen())
 			Session.set 'menuClosed', false
 		else
