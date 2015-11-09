@@ -223,17 +223,9 @@ Template.main.onRendered ->
 	# Display Burger Unread Message Alerts only if side-menu is closed
 	Template.instance().checkMenu()
 
- 	# Handle Update on Resize
-	$(window).resize ->
-		# The instance does not work within the resize - Return Error:
-		# Uncaught TypeError: Cannot read property 'checkMenu' of null
-		# The same code copied and pasted in works tho
-		# ---> Template.instance().checkMenu()
-		viewportWidth = document.body.clientWidth
-		if (viewportWidth > 780 && !menu.isOpen()) || (viewportWidth < 780 && menu.isOpen())
-			Session.set 'menuClosed', false
-		else
-			Session.set 'menuClosed', true
+	$(window).resize ((instance)->
+		-> instance.checkMenu()
+	)(Template.instance())
 
 Template.main.onCreated ->
 	instance = @
