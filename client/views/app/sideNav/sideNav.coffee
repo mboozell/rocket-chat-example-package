@@ -65,6 +65,7 @@ Template.sideNav.events
 		event.preventDefault()
 		user = Meteor.user()
 		Meteor.logout ->
+			FinLabs.Analytics.track	"Logout"
 			FlowRouter.go 'home'
 			Meteor.call('logoutCleanUp', user)
 
