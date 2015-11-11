@@ -49,7 +49,7 @@ RocketChat.settings.add 'FileUpload_MediaTypeWhiteList', 'image/*', { type: 'str
 
 RocketChat.settings.addGroup 'General'
 RocketChat.settings.add 'Site_Url', __meteor_runtime_config__?.ROOT_URL, { type: 'string', group: 'General', i18nDescription: 'Site_Url_Description', public: true }
-RocketChat.settings.add 'Site_Name', 'Rocket.Chat', { type: 'string', group: 'General', public: true }
+RocketChat.settings.add 'Site_Name', 'Steam Room', { type: 'string', group: 'General', public: true }
 RocketChat.settings.add 'Allow_Invalid_SelfSigned_Certs', false, { type: 'boolean', group: 'General' }
 RocketChat.settings.add 'Disable_Favorite_Rooms', false, { type: 'boolean', group: 'General' }
 RocketChat.settings.add 'CDN_PREFIX', '', { type: 'string', group: 'General' }
@@ -80,7 +80,7 @@ RocketChat.settings.add 'Message_ShowDeletedStatus', false, { type: 'boolean', g
 RocketChat.settings.add 'Message_KeepHistory', false, { type: 'boolean', group: 'Message', public: true }
 RocketChat.settings.add 'Message_MaxAllowedSize', 5000, { type: 'int', group: 'Message', public: true }
 RocketChat.settings.add 'Message_ShowFormattingTips', true, { type: 'boolean', group: 'Message', public: true }
-RocketChat.settings.add 'Message_AudioRecorderEnabled', true, { type: 'boolean', group: 'Message', public: true }
+RocketChat.settings.add 'Message_AudioRecorderEnabled', true, { type: 'boolean', group: 'Message', public: true, i18nDescription: 'Message_AudioRecorderEnabledDescription' }
 
 RocketChat.settings.addGroup 'Meta'
 RocketChat.settings.add 'Meta_language', '', { type: 'string', group: 'Meta' }
@@ -107,8 +107,8 @@ RocketChat.settings.add 'Layout_Home_Title', 'Home', { type: 'string', group: 'L
 RocketChat.settings.add 'Layout_Home_Body', 'Welcome to Rocket.Chat <br> Go to APP SETTINGS -> Layout to customize this intro.', { type: 'string', multiline: true, group: 'Layout', public: true, section: 'Content' }
 RocketChat.settings.add 'Layout_Terms_of_Service', 'Terms of Service <br> Go to APP SETTINGS -> Layout to customize this page.', { type: 'string', multiline: true, group: 'Layout', public: true, section: 'Content' }
 RocketChat.settings.add 'Layout_Privacy_Policy', 'Privacy Policy <br> Go to APP SETTINGS -> Layout to customize this page.', { type: 'string', multiline: true, group: 'Layout', public: true, section: 'Content' }
-RocketChat.settings.add 'Layout_Sidenav_Footer', '<div><a href="https://github.com/RocketChat/Rocket.Chat" class="logo" target="_blank"> <img src="/images/logo/logo.svg?v=3" /></a><div class="github-tagline"><span class="octicon octicon-pencil" style="color: #994C00"></span> with <span class="octicon octicon-heart" style="color: red"></span> on <span class="octicon octicon-mark-github"></span></div></div>', { type: 'string', group: 'Layout', public: true, i18nDescription: 'Layout_Sidenav_Footer_description' }
-RocketChat.settings.add 'Layout_Login_Header', '<a class="logo" href="/"><img src="/images/logo/logo.svg?v=3" /></a>', { type: 'string', multiline: true, group: 'Layout', public: true, section: 'Login' }
+RocketChat.settings.add 'Layout_Sidenav_Footer', '<div><p class="logo">sang lucci</p></div>', { type: 'string', group: 'Layout', public: true, i18nDescription: 'Layout_Sidenav_Footer_description' }
+RocketChat.settings.add 'Layout_Login_Header', '<div><p class="logo">sang lucci</p></div>', { type: 'string', multiline: true, group: 'Layout', public: true, section: 'Login' }
 RocketChat.settings.add 'Layout_Login_Terms', 'By proceeding to create your account and use Rocket.Chat, you are agreeing to our <a href="/terms-of-service">Terms of Service</a> and <a href="/privacy-policy">Privacy Policy</a>. If you do not agree, you cannot use Rocket.Chat.', { type: 'string', multiline: true, group: 'Layout', public: true, section: 'Login' }
 
 RocketChat.settings.add 'Statistics_opt_out', false, { type: 'boolean', group: false }

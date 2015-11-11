@@ -145,13 +145,14 @@ Template.main.helpers
 		console.log 'layout.helpers flexOpenedRTC2' if window.rocketDebug
 		return 'layout2' if (Session.get('rtcLayoutmode') > 1)
 
-
 Template.main.events
 
 	"click .burger": ->
 		console.log 'room click .burger' if window.rocketDebug
 		chatContainer = $("#rocket-chat")
 		menu.toggle()
+		# Make sure burger alerts do not display if side-menu is open
+		Template.instance().checkMenu()
 
 	'touchstart': (e, t) ->
 		if document.body.clientWidth > 780
@@ -218,3 +219,20 @@ Template.main.onRendered ->
 	# RTL Support - Need config option on the UI
 	if isRtl localStorage.getItem "userLanguage"
 		$('html').addClass "rtl"
+
+	# Display Burger Unread Message Alerts only if side-menu is closed
+	Template.instance().checkMenu()
+
+	$(window).resize ((instance)->
+		-> instance.checkMenu()
+	)(Template.instance())
+
+Template.main.onCreated ->
+	instance = @
+
+	@checkMenu = ->
+		viewportWidth = document.body.clientWidth
+		if (viewportWidth > 780 && !menu.isOpen()) || (viewportWidth < 780 && menu.isOpen())
+			Session.set 'menuClosed', false
+		else
+			Session.set 'menuClosed', true
