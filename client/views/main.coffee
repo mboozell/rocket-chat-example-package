@@ -10,6 +10,7 @@ Template.body.onRendered ->
 
 		unread = Session.get('unread')
 		if e.keyCode is 27 and e.shiftKey is true and unread? and unread isnt ''
+			e.preventDefault()
 			e.stopPropagation()
 			swal
 				title: t('Clear_all_unreads_question')
@@ -151,6 +152,8 @@ Template.main.events
 		console.log 'room click .burger' if window.rocketDebug
 		chatContainer = $("#rocket-chat")
 		menu.toggle()
+		# Make sure burger alerts do not display if side-menu is open
+		Template.instance().checkMenu()
 
 	'touchstart': (e, t) ->
 		if document.body.clientWidth > 780
@@ -217,3 +220,20 @@ Template.main.onRendered ->
 	# RTL Support - Need config option on the UI
 	if isRtl localStorage.getItem "userLanguage"
 		$('html').addClass "rtl"
+
+	# Display Burger Unread Message Alerts only if side-menu is closed
+	Template.instance().checkMenu()
+
+	$(window).resize ((instance)->
+		-> instance.checkMenu()
+	)(Template.instance())
+
+Template.main.onCreated ->
+	instance = @
+
+	@checkMenu = ->
+		viewportWidth = document.body.clientWidth
+		if (viewportWidth > 780 && !menu.isOpen()) || (viewportWidth < 780 && menu.isOpen())
+			Session.set 'menuClosed', false
+		else
+			Session.set 'menuClosed', true
