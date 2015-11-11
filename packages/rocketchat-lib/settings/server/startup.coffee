@@ -49,7 +49,7 @@ RocketChat.settings.add 'FileUpload_MediaTypeWhiteList', 'image/*', { type: 'str
 
 RocketChat.settings.addGroup 'General'
 RocketChat.settings.add 'Site_Url', __meteor_runtime_config__?.ROOT_URL, { type: 'string', group: 'General', i18nDescription: 'Site_Url_Description', public: true }
-RocketChat.settings.add 'Site_Name', 'Rocket.Chat', { type: 'string', group: 'General', public: true }
+RocketChat.settings.add 'Site_Name', 'Steam Room', { type: 'string', group: 'General', public: true }
 RocketChat.settings.add 'Allow_Invalid_SelfSigned_Certs', false, { type: 'boolean', group: 'General' }
 RocketChat.settings.add 'Disable_Favorite_Rooms', false, { type: 'boolean', group: 'General' }
 RocketChat.settings.add 'CDN_PREFIX', '', { type: 'string', group: 'General' }
