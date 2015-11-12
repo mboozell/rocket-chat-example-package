@@ -250,7 +250,7 @@ Template.main.onCreated ->
 
 		if day < 6 and # Mon - Fri
 			time >= 14*60 + 30 and # after open
-			time <= 21*60 # before  close
+			time < 21*60 # before  close
 				Session.set 'Markets_Open', true
 		else
 			Session.set 'Markets_Open', false
