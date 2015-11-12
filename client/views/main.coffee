@@ -146,7 +146,7 @@ Template.main.helpers
 		return 'layout2' if (Session.get('rtcLayoutmode') > 1)
 
 	isMarketOpen: ->
-		return 'after-hours' if Session.equals('Markets_Open', true)
+		return 'after-hours' if Session.equals('Markets_Open', false)
 
 Template.main.events
 
@@ -251,7 +251,7 @@ Template.main.onCreated ->
 		if day < 6 and # Mon - Fri
 			time >= 14*60 + 30 and # after open
 			time <= 21*60 # before  close
-				Session.set 'Markets_Open', false
+				Session.set 'Markets_Open', true
 		else
-			Session.set 'Markets_Open', true
+			Session.set 'Markets_Open', false
 	, 5000
