@@ -1,8 +1,8 @@
-FinLabs.models.Transaction = new class extends RocketChat.models._Base
+FinLabs.models.Subscription = new class extends RocketChat.models._Base
 	constructor: ->
-		@_initModel 'payment_transactions'
+		@_initModel 'payment_subscriptions'
 
-		@tryEnsureIndex { 'transactionId': 1 }, { unique: 1 }
+		@tryEnsureIndex { 'subscriptionId': 1 }, { unique: 1 }
 		@tryEnsureIndex { 'user': 1 }
 		@tryEnsureIndex { 'customer': 1 }
 
@@ -14,9 +14,9 @@ FinLabs.models.Transaction = new class extends RocketChat.models._Base
 
 		return @findOne query, options
 
-	findOneByTransactionId: (_id, options) ->
+	findOneBySubscriptionId: (_id, options) ->
 		query =
-			transactionId: _id
+			subscriptionId: _id
 
 		return @findOne query, options
 
@@ -34,11 +34,11 @@ FinLabs.models.Transaction = new class extends RocketChat.models._Base
 
 	# INSERT
 
-	createFromStripe: (userId, charge) ->
-		charge.transactionId = charge.id
-		delete charge.id
-		charge.user = userId
-		return @insert charge
+	createFromStripe: (userId, subscription) ->
+		subscription.subscriptionId = subscription.id
+		delete subscription.id
+		subscription.user = userId
+		return @insert subscription
 
 	# REMOVE
 	removeById: (_id) ->

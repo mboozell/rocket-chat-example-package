@@ -1,6 +1,6 @@
 FinLabs.models.Customer = new class extends RocketChat.models._Base
 	constructor: ->
-		@_initModel 'customers'
+		@_initModel 'payment_customers'
 
 		@tryEnsureIndex { 'user': 1 }, { unique: 1 }
 		@tryEnsureIndex { 'customerId': 1 }, { unique: 1 }

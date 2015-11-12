@@ -47,6 +47,7 @@ Package.onUse(function(api) {
 		'server/methods/chargeCard.coffee',
 		'server/models/Customer.coffee',
 		'server/models/Transaction.coffee',
+		'server/models/Subscription.coffee',
 	], 'server');
 
 	api.addFiles([

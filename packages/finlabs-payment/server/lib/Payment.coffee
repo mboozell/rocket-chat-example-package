@@ -8,10 +8,12 @@ FinLabs.payment.Util = class
 		stripeKey = RocketChat.settings.get 'Stripe_Secret_Key'
 		@stripe = new stripe(stripeKey)
 
-	createTransaction: (user, token, price, action, metadata) ->
-		customer = FinLabs.models.Customer.findOneByUser user._id
-		if not customer
-			customer = @createCustomer user, token
+	getPlan: (planId) ->
+		_retrievePlan = (callback) => @stripe.plans.retrieve planId, callback
+		(Meteor.wrapAsync _retrievePlan)()
+
+	createTransaction: (user, price, action, token, metadata) ->
+		customer = @getCustomer user, token
 		{customerId} = customer
 		data =
 			amount: price
@@ -22,6 +24,21 @@ FinLabs.payment.Util = class
 		_chargeCustomer = (callback) => @stripe.charges.create data, callback
 		charge = (Meteor.wrapAsync _chargeCustomer)()
 		FinLabs.models.Transaction.createFromStripe user._id, charge
+
+	createSubscription: (user, plan, token, metadata) ->
+		customer = @getCustomer user, token
+		{customerId} = customer
+		data =
+			plan: plan
+		_createSubscription = (callback) => @stripe.customers.createSubscription customerId, data, callback
+		subscription = (Meteor.wrapAsync _createSubscription)()
+		FinLabs.models.Subscription.createFromStripe user._id, subscription
+
+	getCustomer: (user, token) ->
+		customer = FinLabs.models.Customer.findOneByUser user._id
+		unless customer
+			customer = @createCustomer user, token
+		return customer
 
 	createCustomer: (user, token, callback) ->
 		data =
