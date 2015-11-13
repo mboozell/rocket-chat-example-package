@@ -148,6 +148,7 @@ Template.main.helpers
 	isMarketOpen: ->
 		return 'after-hours' if Session.equals('Markets_Open', false)
 
+
 Template.main.events
 
 	"click .burger": ->
@@ -234,6 +235,7 @@ Template.main.onRendered ->
 Template.main.onCreated ->
 	instance = @
 
+
 	@checkMenu = ->
 		viewportWidth = document.body.clientWidth
 		if (viewportWidth > 780 && !menu.isOpen()) || (viewportWidth < 780 && menu.isOpen())
@@ -241,17 +243,30 @@ Template.main.onCreated ->
 		else
 			Session.set 'menuClosed', true
 
-	Meteor.setInterval ->
+	@checkMarketsOpen = ->
 		now = new Date()
 		day = now.getUTCDay()
 		hours = now.getUTCHours()
 		minutes = now.getUTCMinutes()
 		time = hours*60 + minutes
+		marketsWereOpen = Session.get 'Markets_Open'
 
 		if day < 6 and # Mon - Fri
 			time >= 14*60 + 30 and # after open
 			time < 21*60 # before  close
-				Session.set 'Markets_Open', true
+				marketsAreOpen = true
 		else
-			Session.set 'Markets_Open', false
+			marketsAreOpen = false
+		if marketsWereOpen != marketsAreOpen
+			Session.set 'Markets_Open', marketsAreOpen
+
+	@checkMarketsOpen()
+
+	Meteor.setInterval ->
+		marketsWereOpen = Session.get 'Markets_Open'
+		instance.checkMarketsOpen()
+		marketsAreOpen = Session.get 'Markets_Open'
+		if marketsWereOpen != marketsAreOpen
+			$('#marketOpenCloseNotification')[0].play()
+
 	, 5000
