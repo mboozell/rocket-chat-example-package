@@ -12,6 +12,10 @@ FinLabs.payment.Util = class
 		_retrievePlan = (callback) => @stripe.plans.retrieve planId, callback
 		(Meteor.wrapAsync _retrievePlan)()
 
+	getEvent: (eventId) ->
+		_retrieveEvent = (callback) => @stripe.events.retrieve eventId, callback
+		(Meteor.wrapAsync _retrieveEvent)()
+
 	createTransaction: (user, price, action, token, metadata) ->
 		customer = @getCustomer user, token
 		{customerId} = customer
@@ -19,7 +23,7 @@ FinLabs.payment.Util = class
 			amount: price
 			currency: "usd"
 			customer: customerId
-			description: "#{action} for #{user.name} at #{user.emails[0].address}"
+			description: "#{action} for #{user.name} at #{user.emails[0].address} [chat]"
 			metadata: metadata
 		_chargeCustomer = (callback) => @stripe.charges.create data, callback
 		charge = (Meteor.wrapAsync _chargeCustomer)()
@@ -42,7 +46,7 @@ FinLabs.payment.Util = class
 
 	createCustomer: (user, token, callback) ->
 		data =
-			description: "#{user.name} at #{user.emails[0].address}"
+			description: "#{user.name} at #{user.emails[0].address} [chat]"
 			source: token.id
 		_createCustomer = (callback) =>  @stripe.customers.create data, callback
 		customer = (Meteor.wrapAsync _createCustomer)()

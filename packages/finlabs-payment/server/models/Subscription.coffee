@@ -40,6 +40,24 @@ FinLabs.models.Subscription = new class extends RocketChat.models._Base
 		subscription.user = userId
 		return @insert subscription
 
+	updateBySubscriptionId: (subscriptionId, fields) ->
+		query =
+			subscriptionId: subscriptionId
+		update =
+			$set: fields
+		return @update query, update
+
+	updateOrAdd: (subscription) ->
+		subscription.subscriptionId = subscription.id
+		delete subscription.id
+		updates = @updateBySubscriptionId subscription.subscriptionId, subscription
+		if updates
+			console.log "Updated #{updates} documents"
+			return updates
+		user = FinLabs.models.Customer.findOneByCustomerId subscription.customer
+		console.log user
+		# @TODO FINISH HIM
+
 	# REMOVE
 	removeById: (_id) ->
 		return @remove _id
