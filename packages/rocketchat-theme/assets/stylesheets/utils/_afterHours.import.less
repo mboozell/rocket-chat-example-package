@@ -1,112 +1,121 @@
+@after-hours-primary: #353C42;
+@after-hours-secondary: #30373c;
+@after-hours-dark: darken(@after-hours-secondary, 4%);
+@after-hours-darker: darken(@after-hours-secondary, 8%);
+@after-hours-light: lighten(@after-hours-primary, 3%);
+@after-hours-font-1: #fff;
+@after-hours-font-2: #aaa;
+@after-hours-accent: #2c75c9;
+
 .after-hours {
-  color: #aaa;
+  color: @after-hours-font-2;
 
   &#rocket-chat {
-    background-color: #353C42;
+    background-color: @after-hours-primary;
   }
 
   .burger i {
-    background-color: #fff;
+    background-color: @after-hours-font-1;
   }
 
   .message .user, .message .user:hover {
-    color: #fff;
+    color: @after-hours-font-1;
   }
 
   .fixed-title {
-    background: #30373C;
-    border-bottom-color: #2C3136;
+    background: @after-hours-secondary;
+    border-bottom-color: @after-hours-dark;
   }
 
   .messages-container {
-    background-color: #353C42;
+    background-color: @after-hours-primary;
 
     .footer {
-      background: #30373C;
-      border-top-color: #2C3136;
+      background: @after-hours-secondary;
+      border-top-color: @after-hours-dark;
     }
 
     .message-form {
 
       textarea {
-        background-color: #353C42;
-        border-color: #212529;
-        color: #DDD;
+        background-color: @after-hours-primary;
+        border-color: @after-hours-darker;
+        color: @after-hours-font-2;
       }
 
       .users-typing {
-        color: #aaa;
-        background: #30373C;
+        color: @after-hours-font-2;
+        background: @after-hours-secondary;
       }
 
       .formatting-tips {
-        color: #aaa;
+        color: @after-hours-font-2;
       }
 
       &>div>.file {
-        background-color: #24282B;
-        border-color: #212529;
+        background-color: @after-hours-dark;
+        border-color: @after-hours-darker;
       }
 
       &>div>.file:hover {
-        background-color: #1E2225;
-        border-color: #212529;
+        background-color: @after-hours-darker;
+        border-color: @after-hours-darker;
       }
     }
 
     .wrapper::-webkit-scrollbar-thumb {
-      background-color: #272C2F;
+      background-color: @after-hours-darker;
       -webkit-border-radius: 50px;
     }
   }
 
   .flex-tab {
-    background-color: #30373C;
-    border-left-color: #2C3136;
+    background-color: @after-hours-secondary;
+    border-left-color: @after-hours-dark;
 
     .content {
-      background-color: #353C42;
+      background-color: @after-hours-primary;
     }
 
     .control {
-      background-color: #30373C;
+      background-color: @after-hours-secondary;
     }
   }
 
   .flex-tab-bar {
-    background: #30373C;
-    border-left: 1px solid #2C3136;
+    background: @after-hours-secondary;
+    border-left: 1px solid @after-hours-dark;
 
     .tab-button {
-      background: #30373C;
-      border-bottom: 1px solid #171A1D;
+      background: @after-hours-secondary;
+      border-bottom: 1px solid @after-hours-darker;
       &:hover {
-        background: #3C444A;
+        background: @after-hours-light;
       }
       &.active {
-        background-color: #2c75c9;
-        border-right: 3px solid #2C75C9;
-        color: #fff;
+        background-color: @after-hours-accent;
+        border-right: 3px solid @after-hours-accent;
+        color: @after-hours-font-1;
       }
     }
   }
 
   .message.new-day {
     &:before {
-      background-color: #30373C;
+      background-color: @after-hours-dark;
     }
     &:after {
-      border-top-color: #292F33;
+      border-top-color: @after-hours-dark;
     }
   }
 
   .wiseguy-wrap {
     .new-day {
       &:before {
-        background-color: #30373C;
+        background-color: @after-hours-dark;
       }
       &:after {
-        border-top-color: #292F33;
+        border-top-color: @after-hours-dark;
       }
     }
   }
@@ -114,53 +123,65 @@
   .wiseguy-alert-list {
 
     hr {
-      border-color: #2B3135;
+      border-color: @after-hours-darker;
     }
 
     .wiseguy-alert {
 
       .wisecon {
-        border-color: #2B3135;
-        color: #5F6D77;
+        border-color: @after-hours-dark;
+        color: @after-hours-font-2;
       }
 
       .bearish, .bullish {
-        color: #353C42;
+        color: @after-hours-primary;
+      }
+
+      .ticker {
+        color: @after-hours-font-1;
       }
     }
 
     .wiseguy-alert:hover .wisecon {
-      background-color: #40484E;
+      background-color: @after-hours-light;
     }
   }
 
-  textarea, select, input[type='text'], input[type='number'], input[type='email'], input[type='password'] {
-    border-color: #212529;
-    background-color: #353C42;
+  textarea, select, input[type='text'], 
+  input[type='number'], 
+  input[type='email'], 
+  input[type='password'] {
+    border-color: @after-hours-darker;
+    background-color: @after-hours-primary;
   }
 
   .scrollable::-webkit-scrollbar-thumb {
-    background-color: #272C2F;
+    background-color: @after-hours-darker;
     -webkit-border-radius: 50px;
   }
 
   .page-static {
 
     label {
-      color: #fff
+      color: @after-hours-font-1
     }
 
     input {
-      color: #ccc;
+      color: @after-hours-font-2;
     }
 
     .avatar-suggestion-item {
-      background-color: #30373C;
-      border-color: #2C3136;
+      background-color: @after-hours-secondary;
+      border-color: @after-hours-dark;
 
       .avatar {
-        background-color: #292F33;
+        background-color: @after-hours-dark;
       }
+    }
+
+    // Settings Option Groups Border Color
+    .content .section .section-content {
+      border-color: @after-hours-dark
     }
 
   }
