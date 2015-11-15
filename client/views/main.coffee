@@ -251,7 +251,7 @@ Template.main.onCreated ->
 		time = hours*60 + minutes
 		marketsWereOpen = Session.get 'Markets_Open'
 
-		if day < 6 and # Mon - Fri
+		if day > 0 and day < 6 and # Mon - Fri
 			time >= 14*60 + 30 and # after open
 			time < 21*60 # before  close
 				marketsAreOpen = true
