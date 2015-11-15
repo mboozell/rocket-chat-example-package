@@ -55,6 +55,7 @@
       &>div>.file {
         background-color: @after-hours-dark;
         border-color: @after-hours-darker;
+        .transition(all 0.5s ease-in-out);
       }
 
       &>div>.file:hover {
@@ -147,12 +148,13 @@
     }
   }
 
-  textarea, select, input[type='text'], 
-  input[type='number'], 
-  input[type='email'], 
+  textarea, select, input[type='text'],
+  input[type='number'],
+  input[type='email'],
   input[type='password'] {
     border-color: @after-hours-darker;
     background-color: @after-hours-primary;
+    .transition(all .5s ease-in-out);
   }
 
   .scrollable::-webkit-scrollbar-thumb {
