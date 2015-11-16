@@ -16,8 +16,14 @@ FinLabs.payment.Util = class
 		_retrieveEvent = (callback) => @stripe.events.retrieve eventId, callback
 		(Meteor.wrapAsync _retrieveEvent)()
 
+	getSubscriptions: (user) ->
+		customer = @getCustomer(user)
+		{customerId} = customer
+		_retrieveSubscriptions = (callback) => @stripe.customers.listSubscriptions customerId, callback
+		(Meteor.wrapAsync _retrieveSubscriptions)().data
+
 	createTransaction: (user, price, action, token, metadata) ->
-		customer = @getCustomer user, token
+		customer = @getOrCreateCustomer user, token
 		{customerId} = customer
 		data =
 			amount: price
@@ -30,7 +36,7 @@ FinLabs.payment.Util = class
 		FinLabs.models.Transaction.createFromStripe user._id, charge
 
 	createSubscription: (user, plan, token, metadata) ->
-		customer = @getCustomer user, token
+		customer = @getOrCreateCustomer user, token
 		{customerId} = customer
 		data =
 			plan: plan
@@ -38,8 +44,11 @@ FinLabs.payment.Util = class
 		subscription = (Meteor.wrapAsync _createSubscription)()
 		FinLabs.models.Subscription.createFromStripe user._id, subscription
 
-	getCustomer: (user, token) ->
-		customer = FinLabs.models.Customer.findOneByUser user._id
+	getCustomer: (user) ->
+		FinLabs.models.Customer.findOneByUser user._id
+
+	getOrCreateCustomer: (user, token) ->
+		customer = @getCustomer(user)
 		unless customer
 			customer = @createCustomer user, token
 		return customer

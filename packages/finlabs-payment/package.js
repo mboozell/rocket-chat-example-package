@@ -17,6 +17,7 @@ Package.onUse(function(api) {
 
 	api.use([
 		"nimble:restivus",
+		"http",
 	], 'server');
 
 	api.use([
@@ -46,6 +47,8 @@ Package.onUse(function(api) {
 	api.addFiles([
 		'server/startup.coffee',
 		'server/lib/Payment.coffee',
+		'server/lib/checkPlanSettings.coffee',
+		'server/lib/isSubscribed.coffee',
 		'server/methods/chargeChatSubscription.coffee',
 		'server/models/Customer.coffee',
 		'server/models/Transaction.coffee',

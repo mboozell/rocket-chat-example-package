@@ -11,17 +11,7 @@ Meteor.startup ->
 	checkSubscriptionPrice = (record) ->
 		name = record._id
 		if Match.test name, 'Subscription_Plan'
-			planId = RocketChat.settings.get 'Subscription_Plan'
-			key = RocketChat.settings.get 'Stripe_Secret_Key'
-			if planId and key
-				paymentUtil = new FinLabs.payment.Util()
-				try
-					plan = paymentUtil.getPlan planId
-					RocketChat.models.Settings.updateValueById 'Subscription_Price', (plan.amount / 100.0)
-					RocketChat.models.Settings.updateValueById 'Subscription_Interval', plan.interval
-					RocketChat.models.Settings.updateValueById 'Subscription_Trial_Days', plan.trial_period_days
-				catch
-					RocketChat.models.Settings.updateValueById 'Subscription_Price', -1
+			FinLabs.payment.checkPlanSettings()
 
 	RocketChat.models.Settings.find().observe
 		added: checkSubscriptionPrice
@@ -30,8 +20,10 @@ Meteor.startup ->
 
 Meteor.startup ->
 	Accounts.onLogin () ->
-		user = Meteor.user()
-		query =
-			user: user._id
-		subscriptions = FinLabs.models.Subscription.find()
-		# console.log subscriptions
+		userId = Meteor.user()._id
+		planId = RocketChat.settings.get "Subscription_Plan"
+		subscribed = FinLabs.payment.isSubscribed(userId, planId)
+
+		if not subscribed
+			RocketChat.authz.removeUsersFromRoles userId, 'user'
+			RocketChat.authz.addUsersToRoles userId, 'unpaid-user'

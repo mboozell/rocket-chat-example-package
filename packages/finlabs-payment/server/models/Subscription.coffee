@@ -32,6 +32,15 @@ FinLabs.models.Subscription = new class extends RocketChat.models._Base
 
 		return @findOne query, options
 
+	findActiveByUserAndPlan: (userId, planId) ->
+		now = Date.now()
+		query =
+			user: userId
+			current_period_end: { $lte: now }
+			"plan.id": planId
+
+		@find query
+
 	# INSERT
 
 	createFromStripe: (userId, subscription) ->
@@ -54,9 +63,9 @@ FinLabs.models.Subscription = new class extends RocketChat.models._Base
 		if updates
 			console.log "Updated #{updates} documents"
 			return updates
-		user = FinLabs.models.Customer.findOneByCustomerId subscription.customer
-		console.log user
-		# @TODO FINISH HIM
+		customer = FinLabs.models.Customer.findOneByCustomerId subscription.customer
+		subscription.user = customer.user
+		return @insert subscription
 
 	# REMOVE
 	removeById: (_id) ->

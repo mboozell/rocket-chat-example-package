@@ -53,6 +53,7 @@ rocketchat:me
 rocketchat:mentions
 rocketchat:message-star
 rocketchat:oembed
+# rocketchat:sharedsecret
 rocketchat:slashcommands-invite
 rocketchat:slashcommands-join
 rocketchat:slashcommands-leave

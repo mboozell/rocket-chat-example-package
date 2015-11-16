@@ -8,7 +8,7 @@ eventLog = new class
 		@db = new Meteor.Collection("rocketchat_payment_events")
 
 	exists: (eventId) ->
-		@db.findOne eventId: eventId
+		@db.findOne eventId: eventId, completed: false
 
 	add: (event) ->
 		event.eventId = event.id
@@ -23,6 +23,9 @@ eventLog = new class
 eventHandlers =
 	subscription: (subscription) ->
 		FinLabs.models.Subscription.updateOrAdd(subscription)
+	plan: (plan) ->
+		console.log plan
+		FinLabs.payment.checkPlanSettings()
 
 
 Api.addRoute 'payment/webhook/stripe', authRequired: false,
