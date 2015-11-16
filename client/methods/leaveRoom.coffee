@@ -1,6 +1,5 @@
 Meteor.methods
 	leaveRoom: (rid) ->
-		FinLabs.Analytics.track 'Leave Room'
 		if not Meteor.userId()
 			throw new Meteor.Error 203, t('User_logged_out')
 
@@ -11,3 +10,8 @@ Meteor.methods
 		ChatRoom.update rid,
 			$pull:
 				usernames: Meteor.user().username
+
+		FinLabs.Analytics.track( 'Leave Room', {
+			roomId: rid
+			username: Meteor.users.findOne(this.userId).username
+			})
