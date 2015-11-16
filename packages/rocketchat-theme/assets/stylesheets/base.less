@@ -20,6 +20,12 @@
 	-ms-user-select: none;
 	user-select: none;
 }
+.allow-text-selection {
+	-webkit-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
+}
 
 :focus {
 	outline: 0 !important;
@@ -888,7 +894,7 @@ a.github-fork {
 	height: auto;
 	opacity: 1;
 	visibility: visible;
-	.transition(opacity .2s ease-out);
+	.transition(all .5s ease-in-out);
 	&.animated-hidden {
 		visibility: hidden;
 		opacity: 0;
@@ -1307,6 +1313,7 @@ a.github-fork {
 		}
 	}
 	.footer {
+		display: none;
 		position: absolute;
 		bottom: 0;
 		left: 0;
@@ -1562,6 +1569,7 @@ a.github-fork {
 	left: 0;
 	width: 100%;
 	height: @header-min-height+1px;
+	.transition(all .5s ease-in-out);
 	&.visible {
 		h2 {
 			overflow: visible;
@@ -1720,6 +1728,9 @@ a.github-fork {
 }
 
 .page-settings {
+	.settings-description {
+		.allow-text-selection;
+	}
 	.rocket-form {
 		max-width: none;
 		width: 100%;
@@ -1994,6 +2005,7 @@ a.github-fork {
 	height: 100%;
 	top: 0;
 	left: 0;
+	.transition(all .5s ease-in-out);
 
 	.edit-room-title {
 		margin-left: 4px;
@@ -2021,6 +2033,7 @@ a.github-fork {
 		left: 0;
 		width: 100%;
 		min-height: @footer-min-height;
+		.transition(all .5s ease-in-out);
 	}
 	.message-popup-position {
 		position: relative;
@@ -2453,9 +2466,24 @@ a.github-fork {
 		display: block;
 		width: 40px;
 		height: 40px;
+		&.thumb-small {
+			position: initial;
+			width: 20px;
+			height: 20px;
+			display: inline-block;
+			vertical-align: bottom;
+			.avatar {
+				border-radius: 50%;
+			}
+		}
 	}
 	.info {
 		font-size: 12px;
+		.edited {
+			border-left: 1px dotted #BAB8B8;
+			padding-left: 3px;
+			margin-left: 3px;
+		}
 	}
 	.private {
 		margin-left: 10px;
@@ -2467,7 +2495,7 @@ a.github-fork {
 		.user {
 			display: none;
 		}
-		.thumb {
+		.thumb:not(.thumb-small) {
 			display: none;
 		}
 		.info {
@@ -2480,6 +2508,9 @@ a.github-fork {
 			}
 			.edited {
 				display: block;
+				border-left: 0;
+				margin-left: 0;
+				padding-left: 0;
 			}
 			.private {
 				display: none;
@@ -2551,7 +2582,7 @@ a.github-fork {
 .compact {
 	.message {
 		padding: 5px 20px 5px 70px;
-		.thumb .avatar {
+		.thumb:not(.thumb-small) .avatar {
 			margin-top: -15px;
 		}
 	}
@@ -2566,6 +2597,7 @@ a.github-fork {
 	background: #FCFCFC;
 	border-left: 1px solid #eaeaea;
 	z-index: 13;
+	.transition(all .5s ease-in-out);
 
 	.tab-button {
 		cursor: pointer;
@@ -2573,6 +2605,7 @@ a.github-fork {
 		background: #FCFCFC;
 		border-bottom: 1px solid #eaeaea;
 		text-align: center;
+		.transition(all .5s ease-in-out);
 
 		&:hover {
 			background: #EAEAEA;
@@ -3475,7 +3508,7 @@ a.github-fork {
 	}
 	.logo {
 		//display: block;
-		margin: 50px;
+		margin: 50px 0;
 		font-family: 'Oswald';
 		text-transform: uppercase;
 		font-size: 3em;
@@ -3726,7 +3759,7 @@ a.github-fork {
 
 // ** START EB ZONE *********************************
 
-// Hack to allow sidebar collapse on all viewport sizes -- 
+// Hack to allow sidebar collapse on all viewport sizes --
 // Due to the 'menu-closed' class being attached at all times since
 // it is used to hide the sidebar at viewport sizes below 780px
 // I had to reverse the logistics of the menu-closed/menu-opened classes

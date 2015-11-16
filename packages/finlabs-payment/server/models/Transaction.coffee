@@ -1,6 +1,6 @@
 FinLabs.models.Transaction = new class extends RocketChat.models._Base
 	constructor: ->
-		@_initModel 'transactions'
+		@_initModel 'payment_transactions'
 
 		@tryEnsureIndex { 'transactionId': 1 }, { unique: 1 }
 		@tryEnsureIndex { 'user': 1 }

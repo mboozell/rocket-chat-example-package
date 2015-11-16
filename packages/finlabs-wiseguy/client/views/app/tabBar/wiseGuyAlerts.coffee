@@ -34,8 +34,11 @@ Template.wiseGuyAlerts.helpers
 
 	formatDate: ->
 		if @weekly
-			return "Fri #{@exp_date.getMonth() + 1}/#{@exp_date.getDate()}"
-		"#{@exp_date.toDateString().substr(4,3)} #{@exp_date.toDateString().substr(11,4)}"
+			return "Fri #{@exp_date.getMonth() + 1}/#{@exp_date.getDate() + 1}"
+		"#{@exp_date.toDateString().substr(4,3)}#{@exp_date.toDateString().substr(13,2)}"
+
+	getStrike: ->
+		@order.toFixed 1
 
 	getDirection: ->
 		if @direction is 1 then 'CALLS' else 'PUTS'
@@ -52,7 +55,7 @@ Template.wiseGuyAlerts.onCreated ->
 		instance.ready.set subscription.ready()
 
 	@alerts = ->
-		return WiseGuyAlerts.find({}).fetch()
+		return WiseGuyAlerts.find({}, {sort: ts: -1}).fetch()
 
 Template.wiseGuyAlerts.onRendered ->
 

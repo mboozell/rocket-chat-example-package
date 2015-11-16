@@ -37,10 +37,8 @@
 						<div class="more-info">
 							<ul>
 								<li>
-									{{formatDate}} {{getDirection}}
-									{{#if weekly}}
-									<span class="wiseguy-weekly">(Weekly)</span>
-									{{/if}}
+									{{formatDate}} {{#if weekly}}<span class="wiseguy-weekly">(Weekly)</span>{{/if}}
+									{{getStrike}} {{getDirection}}
 								</li>
 								<li>{{formatPrice}} BET {{tags}}</li>
 							</ul>

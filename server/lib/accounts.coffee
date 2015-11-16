@@ -8,7 +8,7 @@ if RocketChat.settings.get('Account_AllowedDomainsList')
 		for domain in domainWhiteList
 			if email.match(domain + '$')
 				ret = true
-				break;
+				break
 
 		return ret
 
@@ -69,7 +69,9 @@ Accounts.insertUserDoc = _.wrap Accounts.insertUserDoc, (insertUserDoc) ->
 	if firstUser?._id is _id
 		roleName = 'admin'
 	else if RocketChat.settings.get 'Require_Payment'
-		roleName = 'unpaid-user'
+		planId = RocketChat.settings.get 'Subscription_Plan'
+		unless FinLabs.payment.isSubscribed _id, planId
+			roleName = 'unpaid-user'
 
 	RocketChat.authz.addUsersToRoles(_id, roleName)
 	RocketChat.callbacks.run 'afterCreateUser', options, user

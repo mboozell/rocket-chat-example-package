@@ -10,6 +10,7 @@ Template.body.onRendered ->
 
 		unread = Session.get('unread')
 		if e.keyCode is 27 and e.shiftKey is true and unread? and unread isnt ''
+			e.preventDefault()
 			e.stopPropagation()
 			swal
 				title: t('Clear_all_unreads_question')
@@ -145,12 +146,18 @@ Template.main.helpers
 		console.log 'layout.helpers flexOpenedRTC2' if window.rocketDebug
 		return 'layout2' if (Session.get('rtcLayoutmode') > 1)
 
+	isMarketOpen: ->
+		return 'after-hours' if Session.equals('Markets_Open', false)
+
+
 Template.main.events
 
 	"click .burger": ->
 		console.log 'room click .burger' if window.rocketDebug
 		chatContainer = $("#rocket-chat")
 		menu.toggle()
+		# Make sure burger alerts do not display if side-menu is open
+		Template.instance().checkMenu()
 
 	'touchstart': (e, t) ->
 		if document.body.clientWidth > 780
@@ -217,3 +224,50 @@ Template.main.onRendered ->
 	# RTL Support - Need config option on the UI
 	if isRtl localStorage.getItem "userLanguage"
 		$('html').addClass "rtl"
+
+	# Display Burger Unread Message Alerts only if side-menu is closed
+	Template.instance().checkMenu()
+
+	$(window).resize ((instance)->
+		-> instance.checkMenu()
+	)(Template.instance())
+
+
+Template.main.onCreated ->
+	instance = @
+
+
+	@checkMenu = ->
+		viewportWidth = document.body.clientWidth
+		if (viewportWidth > 780 && !menu.isOpen()) || (viewportWidth < 780 && menu.isOpen())
+			Session.set 'menuClosed', false
+		else
+			Session.set 'menuClosed', true
+
+	@checkMarketsOpen = ->
+		now = new Date()
+		day = now.getUTCDay()
+		hours = now.getUTCHours()
+		minutes = now.getUTCMinutes()
+		time = hours*60 + minutes
+		marketsWereOpen = Session.get 'Markets_Open'
+
+		if day > 0 and day < 6 and # Mon - Fri
+			time >= 14*60 + 30 and # after open
+			time < 21*60 # before  close
+				marketsAreOpen = true
+		else
+			marketsAreOpen = false
+		if marketsWereOpen != marketsAreOpen
+			Session.set 'Markets_Open', marketsAreOpen
+
+	@checkMarketsOpen()
+
+	Meteor.setInterval ->
+		marketsWereOpen = Session.get 'Markets_Open'
+		instance.checkMarketsOpen()
+		marketsAreOpen = Session.get 'Markets_Open'
+		if marketsWereOpen != marketsAreOpen
+			$('#marketOpenCloseNotification')[0].play()
+
+	, 5000

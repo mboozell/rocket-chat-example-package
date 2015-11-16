@@ -1,9 +1,10 @@
 Meteor.startup ->
 	Meteor.defer ->
-
-		if not RocketChat.models.Rooms.findOneById('GENERAL')?
-			RocketChat.models.Rooms.createWithIdTypeAndName 'GENERAL', 'c', 'general',
-				default: true
+		
+		if RocketChat.settings.get 'General_Channels_Enabled'
+			if not RocketChat.models.Rooms.findOneById('GENERAL')?
+				RocketChat.models.Rooms.createWithIdTypeAndName 'GENERAL', 'c', 'general',
+					default: true
 
 		if process.env.ADMIN_EMAIL? and process.env.ADMIN_PASS?
 			re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
