@@ -40,6 +40,7 @@ RocketChat.settings.add 'Accounts_AllowUserProfileChange', true, { type: 'boolea
 RocketChat.settings.add 'Accounts_AllowUserAvatarChange', true, { type: 'boolean', group: 'Accounts', section: 'General', public: true }
 RocketChat.settings.add 'Accounts_AllowUsernameChange', true, { type: 'boolean', group: 'Accounts', section: 'General', public: true }
 RocketChat.settings.add 'Accounts_AllowPasswordChange', true, { type: 'boolean', group: 'Accounts', section: 'General', public: true }
+RocketChat.settings.add 'Accounts_RequireNameForSignUp', true, { type: 'boolean', group: 'Accounts', section: 'General', public: true }
 
 RocketChat.settings.addGroup 'FileUpload'
 RocketChat.settings.add 'FileUpload_Enabled', true, { type: 'boolean', group: 'FileUpload', public: true }
@@ -53,7 +54,7 @@ RocketChat.settings.add 'Site_Name', 'Steam Room', { type: 'string', group: 'Gen
 RocketChat.settings.add 'Allow_Invalid_SelfSigned_Certs', false, { type: 'boolean', group: 'General' }
 RocketChat.settings.add 'Disable_Favorite_Rooms', false, { type: 'boolean', group: 'General' }
 RocketChat.settings.add 'CDN_PREFIX', '', { type: 'string', group: 'General' }
-RocketChat.settings.add 'General_Channels_Enabled', true, { type: 'boolean', group: 'General', public: true }
+RocketChat.settings.add 'General_Channels_Enabled', false, { type: 'boolean', group: 'General', public: true }
 
 RocketChat.settings.addGroup 'API'
 RocketChat.settings.add 'API_Analytics', '', { type: 'string', group: 'API', public: true }

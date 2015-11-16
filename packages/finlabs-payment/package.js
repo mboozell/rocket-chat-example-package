@@ -15,7 +15,10 @@ Package.onUse(function(api) {
 		'finlabs:lib@0.0.1'
 	]);
 
-	api.use([], 'server');
+	api.use([
+		"nimble:restivus",
+		"http",
+	], 'server');
 
 	api.use([
 		'templating',
@@ -44,9 +47,14 @@ Package.onUse(function(api) {
 	api.addFiles([
 		'server/startup.coffee',
 		'server/lib/Payment.coffee',
-		'server/methods/chargeCard.coffee',
+		'server/lib/plans.coffee',
+		'server/lib/checkPlanSettings.coffee',
+		'server/lib/isSubscribed.coffee',
+		'server/methods/chargeChatSubscription.coffee',
 		'server/models/Customer.coffee',
 		'server/models/Transaction.coffee',
+		'server/models/Subscription.coffee',
+		'server/restapi/v1/webhooks.coffee'
 	], 'server');
 
 	api.addFiles([

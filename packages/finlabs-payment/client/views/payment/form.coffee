@@ -1,16 +1,34 @@
 Template.paymentForm.helpers
+
 	userName: ->
 		Meteor.user().name
+
 	stripeLoaded: ->
-		Template.instance().stripeLoaded.get()
-	errors: ->
-		errors = Template.instance().errors.get()
+		Template.instance().stripeLoaded()
+
+	paymentErrors: ->
+		errors = Template.instance().paymentErrors.get()
 		return errors
-	isLoading: ->
-		Template.instance().isLoading.get()
+
+	paymentIsLoading: ->
+		Template.instance().paymentIsLoading.get()
+
 	buttonLabel: ->
 		instance = Template.instance()
-		t if instance.stripeLoaded() and instance.isLoading.get() then "Processing" else "Pay Securely"
+		if instance.stripeLoaded() and instance.paymentIsLoading.get()
+			"Processing"
+		else if RocketChat.settings.get 'Subscription_Trial_Days'
+			"Start My #{RocketChat.settings.get 'Subscription_Trial_Days'} Day Free Trial"
+		else
+			"Pay Securely"
+
+	paymentPrice: ->
+		RocketChat.settings.get('Subscription_Price').toFixed(2)
+
+	paymentPeriod: ->
+		if RocketChat.settings.get 'Subscription_Interval'
+			"/#{RocketChat.settings.get 'Subscription_Interval'}"
+
 
 Template.paymentForm.events
 
@@ -26,35 +44,34 @@ Template.paymentForm.events
 	'submit #payment-form': (e, instance) ->
 		e.preventDefault()
 		if instance.stripeLoaded()
-			instance.isLoading.set true
-			form = {
+			instance.paymentIsLoading = true
+			form =
 				name: $('input[name="name"]').val()
 				number: $('input[name="number"]').val().replace /\s/g, ''
 				cvc: $('input[name="cvc"]').val()
 				exp_month: $('input[name="exp-month"]').val()
 				exp_year: $('input[name="exp-year"]').val()
-			}
 			Stripe.card.createToken form, (status, token) ->
 				if token.error
-					instance.isLoading.set false
+					instance.paymentIsLoading = false
 					{error} = token
 					console.log error
 					errors = {}
 					errors[error.param] = true
-					instance.errors.set(errors)
+					instance.paymentErrors.set(errors)
 					return toastr.error error.message
-				Meteor.call 'chargeRegistrationFee', token, (error, response) ->
+				Meteor.call 'chargeChatSubscription', token, (error, response) ->
 					if error
-						instance.isLoading.set false
+						instance.paymentIsLoading = false
 						toastr.error "Credit Card could not be processed!"
 
 	'keyup input': (e, instance) ->
-		instance.errors.set {}
+		instance.paymentErrors.set {}
 
 Template.paymentForm.onCreated ->
 	instance = @
-	@errors = new ReactiveVar {}
-	@isLoading = new ReactiveVar true
+	@paymentErrors = new ReactiveVar {}
+	@paymentIsLoading = new ReactiveVar true
 
 	$.ajaxSetup(cache: true)
 
@@ -64,10 +81,8 @@ Template.paymentForm.onCreated ->
 Template.paymentForm.onRendered ->
 	$.getScript('https://js.stripe.com/v2/')
 		.done =>
-			@isLoading.set false
+			@paymentIsLoading.set false
 			Stripe.setPublishableKey RocketChat.settings.get 'Stripe_Public_Key'
 		.fail ->
 			toastr.error t "Stripe Couldn't Load"
 
-	if not @data.price
-		toastr.error t "No Price Set"

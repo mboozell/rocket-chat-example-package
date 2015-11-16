@@ -29,5 +29,3 @@ In cases when further troubleshooting is necessary the relevant log files are:
 - Upstart log file: `/var/log/upstart/sl-chat-development.log` (or -qa/-production)
 - Node output log file: `/var/log/sanglucci/ENVIRONMENT_NAME/SangLucci.RocketChat.log`
 
-
-
