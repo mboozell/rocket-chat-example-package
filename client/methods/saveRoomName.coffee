@@ -24,9 +24,3 @@ Meteor.methods
 				name: name
 
 		return name
-
-		FinLabs.Analytics.track( 'Save Room Name', {
-			roomId: rid
-			roomName: name
-			username: Meteor.users.findOne(this.userId).username
-			})

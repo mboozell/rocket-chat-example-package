@@ -1,6 +1,5 @@
 Meteor.methods
 	updateMessage: (message) ->
-		FinLabs.Analytics.track 'Update Message'
 		if not Meteor.userId()
 			throw new Meteor.Error 203, t('User_logged_out')
 
@@ -41,3 +40,11 @@ Meteor.methods
 					"editedAt": message.editedAt
 					"editedBy": message.editedBy
 					msg: message.msg
+
+		FinLabs.Analytics.track( 'Update Message', {
+			originalMessage: originalMessage.msg
+			updatedMessage: message.msg
+			editedAt: message.editedAt
+			editedBy: message.editedBy.username
+			room: ChatRoom.findOne().name
+			})

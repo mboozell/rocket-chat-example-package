@@ -1,6 +1,5 @@
 Meteor.methods
 	toogleFavorite: (rid, f) ->
-		FinLabs.Analytics.track 'Toggle Favorite'
 		console.dir rid
 		if not Meteor.userId()
 			throw new Meteor.Error 203, t('User_logged_out')
@@ -11,3 +10,8 @@ Meteor.methods
 		,
 			$set:
 				f: f
+
+		FinLabs.Analytics.track( 'Toggle Favorite', {
+			room: ChatRoom.findOne().name
+			toggleOn: f
+			})

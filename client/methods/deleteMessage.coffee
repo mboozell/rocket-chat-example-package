@@ -1,6 +1,5 @@
 Meteor.methods
 	deleteMessage: (message) ->
-		FinLabs.Analytics.track 'Delete Message', message: message.msg
 		if not Meteor.userId()
 			throw new Meteor.Error 203, t('general.User_logged_out')
 
@@ -15,3 +14,9 @@ Meteor.methods
 			ChatMessage.remove
 				_id: message._id
 				'u._id': Meteor.userId()
+
+		FinLabs.Analytics.track( 'Delete Message', {
+			message: message.msg
+			username: Meteor.user().name
+			room: ChatRoom.findOne().name
+			})

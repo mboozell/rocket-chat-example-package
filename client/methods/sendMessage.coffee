@@ -19,5 +19,6 @@ Meteor.methods
 
 			FinLabs.Analytics.track('Sent Message', {
 				message: message.msg
-				username: Meteor.users.findOne(this.userId).username
+				username: Meteor.user().name
+				room: ChatRoom.findOne().name
 				})

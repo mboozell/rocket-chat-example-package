@@ -14,7 +14,6 @@ readAsArrayBuffer = (file, callback) ->
 
 
 @fileUpload = (files) ->
-	FinLabs.Analytics.track "Upload Image"
 	roomId = Session.get('openedRoom')
 	files = [].concat files
 
@@ -98,6 +97,13 @@ readAsArrayBuffer = (file, callback) ->
 										item = _.findWhere(uploading, {id: self.id})
 										Session.set 'uploading', _.without(uploading, item)
 								, 2000
+
+							FinLabs.Analytics.track( "Upload Image", {
+								roomId: ChatRoom.findOne().name
+								username: Meteor.user().username
+								fileName: file.name
+								fileUrl: file.url
+								})
 
 					upload.id = Random.id()
 

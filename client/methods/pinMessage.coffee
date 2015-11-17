@@ -22,5 +22,6 @@ Meteor.methods
 
 		FinLabs.Analytics.track( 'Pin Message', {
 			message: message
-			username: Meteor.users.findOne(this.userId).username
+			username: Meteor.user().username
+			room: ChatRoom.find().name
 			})
