@@ -30,9 +30,19 @@
   .messages-container {
     background-color: @after-hours-primary;
 
+    .messages-box .editing .body {
+        background-color: @after-hours-accent;
+        color: @after-hours-font-1;
+    }
+
     .footer {
       background: @after-hours-secondary;
       border-top-color: @after-hours-dark;
+
+      .editing-commands a {
+        color: @after-hours-accent;
+        border-color: @after-hours-accent;
+      }
     }
 
     .message-form {
