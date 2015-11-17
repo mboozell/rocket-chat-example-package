@@ -15,4 +15,6 @@ Meteor.methods
 			room: ChatRoom.findOne(rid).name
 			toggleOn: f
 			roomType: ChatRoom.findOne(rid).t
+			username: Meteor.user().username
+			users: ChatRoom.findOne(rid).usernames
 			})

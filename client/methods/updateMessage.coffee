@@ -32,8 +32,6 @@ Meteor.methods
 
 			message = RocketChat.callbacks.run 'beforeSaveMessage', message
 
-			rid = Session.get 'openedRoom'
-
 			ChatMessage.update
 				_id: message.id
 				'u._id': Meteor.userId()
@@ -43,11 +41,13 @@ Meteor.methods
 					"editedBy": message.editedBy
 					msg: message.msg
 
-		FinLabs.Analytics.track( 'Update Message', {
-			originalMessage: originalMessage.msg
-			updatedMessage: message.msg
-			editedAt: message.editedAt
-			editedBy: message.editedBy.username
-			room: ChatRoom.findOne(rid).name
-			roomType: ChatRoom.findOne(rid).t
-			})
+			rid = Session.get 'openedRoom'
+
+			FinLabs.Analytics.track( 'Update Message', {
+				originalMessage: originalMessage.msg
+				updatedMessage: message.msg
+				editedAt: message.editedAt
+				editedBy: message.editedBy.username
+				room: ChatRoom.findOne(rid).name
+				roomType: ChatRoom.findOne(rid).t
+				})

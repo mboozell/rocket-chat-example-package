@@ -20,8 +20,11 @@ Meteor.methods
 					pinned: message.pinned
 					pts: message.pts
 
+		rid = Session.get 'openedRoom'
+
 		FinLabs.Analytics.track( 'Pin Message', {
 			message: message
 			username: Meteor.user().username
-			room: ChatRoom.find().name
+			room: ChatRoom.findOne(rid).name
+			roomType: ChatRoom.findOne(rid).t
 			})

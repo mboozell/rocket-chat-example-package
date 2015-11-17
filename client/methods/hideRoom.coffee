@@ -11,8 +11,6 @@ Meteor.methods
 				alert: false
 				open: false
 
-		rid: Session.get 'currentRoom'
-
 		FinLabs.Analytics.track( 'Hide Room', {
 			room: ChatRoom.findOne(rid).name
 			username: Meteor.user().name
