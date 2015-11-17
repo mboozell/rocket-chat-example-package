@@ -11,6 +11,7 @@ Meteor.methods
         open: true
 
     FinLabs.Analytics.track( 'Open Room', {
-      room: ChatRoom.findOne().name
+      room: ChatRoom.findOne(rid).name
       username: Meteor.user().name
+      users: ChatRoom.findOne(rid).usernames
       })

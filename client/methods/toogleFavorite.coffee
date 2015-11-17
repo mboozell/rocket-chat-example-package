@@ -12,6 +12,7 @@ Meteor.methods
 				f: f
 
 		FinLabs.Analytics.track( 'Toggle Favorite', {
-			room: ChatRoom.findOne().name
+			room: ChatRoom.findOne(rid).name
 			toggleOn: f
+			roomType: ChatRoom.findOne(rid).t
 			})

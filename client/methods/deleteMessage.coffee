@@ -6,6 +6,7 @@ Meteor.methods
 		hasPermission = RocketChat.authz.hasAtLeastOnePermission('delete-message', message.rid)
 		deleteAllowed = RocketChat.settings.get 'Message_AllowDeleting'
 		deleteOwn = message?.u?._id is Meteor.userId()
+		rid = Session.get 'openedRoom'
 
 		unless hasPermission or (deleteAllowed and deleteOwn)
 			throw new Meteor.Error 'message-deleting-not-allowed', t('Message_deleting_not_allowed')
@@ -18,5 +19,7 @@ Meteor.methods
 		FinLabs.Analytics.track( 'Delete Message', {
 			message: message.msg
 			username: Meteor.user().name
-			room: ChatRoom.findOne().name
+			room: ChatRoom.findOne(rid).name
+			roomType: ChatRoom.findOne(rid).t
+			users: ChatRoom.findOne(rid).usernames
 			})

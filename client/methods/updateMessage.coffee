@@ -32,6 +32,8 @@ Meteor.methods
 
 			message = RocketChat.callbacks.run 'beforeSaveMessage', message
 
+			rid = Session.get 'openedRoom'
+
 			ChatMessage.update
 				_id: message.id
 				'u._id': Meteor.userId()
@@ -46,5 +48,6 @@ Meteor.methods
 			updatedMessage: message.msg
 			editedAt: message.editedAt
 			editedBy: message.editedBy.username
-			room: ChatRoom.findOne().name
+			room: ChatRoom.findOne(rid).name
+			roomType: ChatRoom.findOne(rid).t
 			})

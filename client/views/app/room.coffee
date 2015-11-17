@@ -652,7 +652,7 @@ renameRoom = (rid, name) ->
 				roomName: name
 				username: Meteor.user().name
 				})
-				
+
 		if error
 			if error.error is 'name-invalid'
 				toastr.error t('Invalid_room_name', name)
