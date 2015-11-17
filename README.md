@@ -26,6 +26,6 @@ The deployment script will exit if any command exits with an error and its outpu
 
 In cases when further troubleshooting is necessary the relevant log files are:
 
-- Upstart log file: `/var/log/upstart/sl-chat-development.log` (or -qa/-production)
+- Upstart log file: `/var/log/upstart/SangLucci.RocketChat-ENRIVONRMENT_NAME` 
 - Node output log file: `/var/log/sanglucci/ENVIRONMENT_NAME/SangLucci.RocketChat.log`
 
