@@ -154,6 +154,7 @@
   input[type='password'] {
     border-color: @after-hours-darker;
     background-color: @after-hours-primary;
+    color: @after-hours-font-2;
     .transition(all .5s ease-in-out);
   }
 
@@ -183,8 +184,23 @@
 
     // Settings Option Groups Border Color
     .content .section .section-content {
-      border-color: @after-hours-dark
+      border-color: @after-hours-dark;
     }
 
+  }
+
+  .first-unread {
+    &.first-unread-opaque {
+    	.body {
+    		&::before {
+    			background-color: @after-hours-darker;
+    		}
+
+    		&::after {
+          color: @after-hours-font-2;
+          background-color: @after-hours-dark;
+    		}
+    	}
+    }
   }
 }
