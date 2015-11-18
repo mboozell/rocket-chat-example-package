@@ -58,6 +58,12 @@ Template.loginForm.helpers
 	loginTerms: ->
 		return RocketChat.settings.get 'Layout_Login_Terms'
 
+	isLoginRestricted: ->
+		if RocketChat.settings.get 'Local_Login_Restrictred'
+			unless Template.instance().inviteKey or Template.instance().adminKey
+				return true
+		return false 
+
 Template.loginForm.events
 	'submit #login-card': (event, instance) ->
 		event.preventDefault()
@@ -137,6 +143,7 @@ Template.loginForm.events
 Template.loginForm.onCreated ->
 	instance = @
 	@inviteKey = FlowRouter.getQueryParam('invite')
+	@adminKey = FlowRouter.getQueryParam('admin')
 	@state = new ReactiveVar if @inviteKey then 'register' else 'login'
 
 	@validate = ->
@@ -207,3 +214,4 @@ Template.loginForm.onRendered ->
 				$('input[name=email]').val(result.email)
 			if result.name
 				$('input[name=name]').val(result.name)
+
