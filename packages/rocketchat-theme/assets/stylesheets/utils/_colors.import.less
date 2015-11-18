@@ -1093,7 +1093,7 @@ a.github-fork {
 }
 
 #login-card {
-	background-color: #FAFAFA;
+	background-color: #30373C;
 	h2 {
 		color: @primary-font-color;
 		&.error {
@@ -1106,9 +1106,9 @@ a.github-fork {
 		}
 	}
 	a {
-		color: @primary-background-color;
+		color: lighten(@primary-background-color, 50%);
 		&:active {
-			color: @primary-background-color;
+			color: lighten(@primary-background-color, 50%);
 		}
 		&:hover {
 			color: darken(@primary-background-color, 10%);
@@ -1118,6 +1118,7 @@ a.github-fork {
 		input {
 			background-color: transparent;
 			border-bottom-color: #DFDFDF;
+			color: #fff;
 			&.error {
 				border-bottom-color: #b40202;
 				&::-webkit-input-placeholder {
