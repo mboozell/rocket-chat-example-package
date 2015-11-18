@@ -40,6 +40,11 @@ class CustomOAuth
 				callback = options
 				options = null
 
+			# _callback = (args...) ->
+			# 	console.log 'loginCALLBACK'
+			# 	console.log args
+			# 	callback args...
+
 			credentialRequestCompleteCallback = Accounts.oauth.credentialRequestCompleteHandler(callback)
 			self.requestCredential(options, credentialRequestCompleteCallback)
 

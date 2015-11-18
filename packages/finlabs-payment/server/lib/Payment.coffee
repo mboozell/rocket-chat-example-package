@@ -8,24 +8,54 @@ FinLabs.payment.Util = class
 		stripeKey = RocketChat.settings.get 'Stripe_Secret_Key'
 		@stripe = new stripe(stripeKey)
 
-	createTransaction: (user, token, price, action, metadata) ->
-		customer = FinLabs.models.Customer.findOneByUser user._id
-		if not customer
-			customer = @createCustomer user, token
+	getPlan: (planId) ->
+		_retrievePlan = (callback) => @stripe.plans.retrieve planId, callback
+		(Meteor.wrapAsync _retrievePlan)()
+
+	getEvent: (eventId) ->
+		_retrieveEvent = (callback) => @stripe.events.retrieve eventId, callback
+		(Meteor.wrapAsync _retrieveEvent)()
+
+	getSubscriptions: (user) ->
+		customer = @getCustomer(user)
+		{customerId} = customer
+		_retrieveSubscriptions = (callback) => @stripe.customers.listSubscriptions customerId, callback
+		(Meteor.wrapAsync _retrieveSubscriptions)().data
+
+	createTransaction: (user, price, action, token, metadata) ->
+		customer = @getOrCreateCustomer user, token
 		{customerId} = customer
 		data =
 			amount: price
 			currency: "usd"
 			customer: customerId
-			description: "#{action} for #{user.name} at #{user.emails[0].address}"
+			description: "#{action} for #{user.name} at #{user.emails[0].address} [chat]"
 			metadata: metadata
 		_chargeCustomer = (callback) => @stripe.charges.create data, callback
 		charge = (Meteor.wrapAsync _chargeCustomer)()
 		FinLabs.models.Transaction.createFromStripe user._id, charge
 
+	createSubscription: (user, plan, token, metadata) ->
+		customer = @getOrCreateCustomer user, token
+		{customerId} = customer
+		data =
+			plan: plan
+		_createSubscription = (callback) => @stripe.customers.createSubscription customerId, data, callback
+		subscription = (Meteor.wrapAsync _createSubscription)()
+		FinLabs.models.Subscription.createFromStripe user._id, subscription
+
+	getCustomer: (user) ->
+		FinLabs.models.Customer.findOneByUser user._id
+
+	getOrCreateCustomer: (user, token) ->
+		customer = @getCustomer(user)
+		unless customer
+			customer = @createCustomer user, token
+		return customer
+
 	createCustomer: (user, token, callback) ->
 		data =
-			description: "#{user.name} at #{user.emails[0].address}"
+			description: "#{user.name} at #{user.emails[0].address} [chat]"
 			source: token.id
 		_createCustomer = (callback) =>  @stripe.customers.create data, callback
 		customer = (Meteor.wrapAsync _createCustomer)()

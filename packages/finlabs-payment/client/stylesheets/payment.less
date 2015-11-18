@@ -1,9 +1,9 @@
 @payment-form-border-radius: 16px;
 
 .payment-form-header {
-	background: #018FFD;
+	// background: #018FFD;
 	overflow: auto;
-	color: #FFF;
+	// color: #FFF;
 	border-top-left-radius: @payment-form-border-radius;
 	border-top-right-radius: @payment-form-border-radius;
 }
@@ -27,9 +27,13 @@
 	}
 }
 
+.payment-form-period {
+	font-size: 50%;
+}
+
 .payment-form-body {
 	overflow: auto;
-	background: #FFF;
+	// background: #FFF;
 	padding: 14px 0;
 	border-bottom-left-radius: @payment-form-border-radius;
 	border-bottom-right-radius: @payment-form-border-radius;
@@ -46,6 +50,10 @@
 
 	&.spans-1-3 {
 		width: 33.3333%;
+	}
+
+	&.spans-2-3 {
+		width: 66.6666%;
 	}
 
 	&.no-payment-form-label {
@@ -65,7 +73,7 @@
 button.payment-form-submit-button.button {
 	color: #FFF;
 	background-color: #43C761;
-	width: 100%;
+	// width: 100%;
 	border-radius: 4px;
 	font-size: 14px;
 	padding: 12px;
