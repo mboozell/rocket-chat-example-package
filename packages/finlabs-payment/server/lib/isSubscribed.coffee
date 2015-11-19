@@ -22,4 +22,3 @@ FinLabs.payment.isSubscribed = (userId, planId) ->
 			return true
 
 	return false
-

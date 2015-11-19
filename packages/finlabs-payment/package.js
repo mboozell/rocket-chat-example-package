@@ -47,8 +47,8 @@ Package.onUse(function(api) {
 	api.addFiles([
 		'server/startup.coffee',
 		'server/lib/util.coffee',
+		'server/lib/stripeEvents.coffee',
 		'server/lib/products.coffee',
-		'server/lib/checkPlanSettings.coffee',
 		'server/lib/isSubscribed.coffee',
 		'server/methods/chargeChatSubscription.coffee',
 		'server/models/Customer.coffee',

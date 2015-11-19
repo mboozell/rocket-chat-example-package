@@ -25,6 +25,13 @@ FinLabs.models.Purchase = new class extends RocketChat.models._Base
 
 		return @findOne query, options
 
+	findAllWithUserAndProduct: (userId, productId, options) ->
+		query =
+			user: userId
+			product: productId
+
+		return @find query, options
+
 	# INSERT
 
 	createOneWithUserAndProduct: (userId, product) ->

@@ -41,6 +41,9 @@ FinLabs.models.Subscription = new class extends RocketChat.models._Base
 
 		@find query
 
+	userHasActivePlan: (userId, planId) ->
+		@findActiveByUserAndPlan(userId, planId).count() > 0
+
 	# INSERT
 
 	createFromStripe: (userId, subscription) ->
