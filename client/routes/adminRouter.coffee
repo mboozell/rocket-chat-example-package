@@ -24,13 +24,12 @@ FlowRouter.route '/admin/statistics',
 	action: ->
 		BlazeLayout.render 'main', {center: 'adminStatistics'}
 
-FlowRouter.route '/admin/integrations',
-	name: 'admin-integrations'
+FlowRouter.route '/admin/products',
+	name: 'admin-products'
 	triggersEnter: [tabReset]
 	triggersExit: [tabReset]
 	action: ->
-		BlazeLayout.render 'main', {center: 'adminIntegrations'}
-
+		BlazeLayout.render 'main', {center: 'adminroducts'}
 
 FlowRouter.route '/admin/:group?',
 	name: 'admin'

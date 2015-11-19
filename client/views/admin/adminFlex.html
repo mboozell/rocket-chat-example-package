@@ -29,6 +29,11 @@
 						<a href="{{pathFor 'admin-integrations'}}" class="admin-link">{{_ "Integrations"}}</a>
 					</li>
 				{{/if}}
+				{{#if hasPermission 'view-product-administration'}}
+					<li>
+						<a href="{{pathFor 'admin-products'}}" class="admin-link">{{_ "Products"}}</a>
+					</li>
+				{{/if}}
 
 				<h3 class="add-room">
 					{{_ "Settings"}}

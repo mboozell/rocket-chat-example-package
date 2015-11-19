@@ -1,10 +1,10 @@
-Template.adminIntegrations.helpers
+Template.adminProducts.helpers
 	isReady: ->
 		return Template.instance().ready.get()
 	integrations: ->
 		return Template.instance().integrations()
 
-Template.adminIntegrations.onCreated ->
+Template.adminProducts.onCreated ->
 	instance = @
 	@ready = new ReactiveVar false
 
@@ -15,7 +15,7 @@ Template.adminIntegrations.onCreated ->
 	@integrations = ->
 		Integrations.find()
 
-Template.adminIntegrations.events
+Template.adminProducts.events
 	'click .submit .button': (e, instance) ->
 		console.log(instance.integrations())
 		form = $('input[name="integration_name"]')
