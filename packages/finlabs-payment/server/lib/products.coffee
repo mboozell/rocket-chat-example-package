@@ -11,4 +11,10 @@ FinLabs.payment.products = new class
 				channels.push channel._id
 		FinLabs.models.Product.addOrUpdate name, roles, channels, payments, options
 
+Meteor.startup ->
 
+	FinLabs.models.Product.find().observe
+		changed: (product) ->
+			purchases = FinLabs.models.Purchase.findAllByProduct product._id
+			for purchase in purchases
+				FinLabs.payment.purchases.checkPurchase purchase

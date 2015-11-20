@@ -13,9 +13,9 @@ Meteor.startup ->
 		return true
 
 	RocketChat.callbacks.add 'afterCreateUser', (options, user) ->
-		console.log "OPTIONS"
-		console.log options
-		console.log "USER"
-		console.log user
+		if user.services.wordpress
+			products = FinLabs.models.Product.findByPaymentType('wordpress').fetch()
+			for product in products
+				FinLabs.models.Purchase.createInactive user._id, product._id
 		return user
 	, RocketChat.callbacks.priority.HIGH

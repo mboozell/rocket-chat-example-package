@@ -13,17 +13,17 @@ FinLabs.models.Purchase = new class extends RocketChat.models._Base
 
 		return @findOne query, options
 
-	findOneByProduct: (_id, options) ->
+	findAllByProduct: (_id, options) ->
 		query =
 			product: _id
 
-		return @findOne query, options
+		return @find query, options
 
-	findOneByUser: (_id, options) ->
+	findAllByUser: (_id, options) ->
 		query =
 			user: _id
 
-		return @findOne query, options
+		return @find query, options
 
 	findAllWithUserAndProduct: (userId, productId, options) ->
 		query =
@@ -34,12 +34,20 @@ FinLabs.models.Purchase = new class extends RocketChat.models._Base
 
 	# INSERT
 
-	createOneWithUserAndProduct: (userId, product) ->
-		# possibly create a base product id?
+	createActive: (userId, product) ->
 		purchase =
 			product: product
 			user: userId
 			active: true
+			ts: new Date()
+
+		return @insert purchase
+
+	createInactive: (userId, product) ->
+		purchase =
+			product: product
+			user: userId
+			active: false
 			ts: new Date()
 
 		return @insert purchase
