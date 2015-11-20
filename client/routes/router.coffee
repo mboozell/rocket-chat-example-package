@@ -107,6 +107,6 @@ FlowRouter.route '/room-not-found/:type/:name',
 
 FlowRouter.route '/fxos',
 	name: 'firefox-os-install'
-	
+
 	action: ->
 		BlazeLayout.render 'fxOsInstallPrompt'

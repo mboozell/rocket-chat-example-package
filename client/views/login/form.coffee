@@ -117,6 +117,7 @@ Template.loginForm.events
 					loginMethod = 'loginWithLDAP'
 
 				Meteor[loginMethod] formData.emailOrUsername, formData.pass, (error) ->
+					FinLabs.Analytics.track	"Login", login_info: formData.emailOrUsername
 					RocketChat.Button.reset(button)
 					if error?
 						if error.error is 'no-valid-email'

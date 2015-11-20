@@ -146,6 +146,10 @@ Template.main.helpers
 		console.log 'layout.helpers flexOpenedRTC2' if window.rocketDebug
 		return 'layout2' if (Session.get('rtcLayoutmode') > 1)
 
+	isMarketOpen: ->
+		return 'after-hours' if Session.equals('Markets_Open', false)
+
+
 Template.main.events
 
 	"click .burger": ->
@@ -228,8 +232,10 @@ Template.main.onRendered ->
 		-> instance.checkMenu()
 	)(Template.instance())
 
+
 Template.main.onCreated ->
 	instance = @
+
 
 	@checkMenu = ->
 		viewportWidth = document.body.clientWidth
@@ -237,3 +243,31 @@ Template.main.onCreated ->
 			Session.set 'menuClosed', false
 		else
 			Session.set 'menuClosed', true
+
+	@checkMarketsOpen = ->
+		now = new Date()
+		day = now.getUTCDay()
+		hours = now.getUTCHours()
+		minutes = now.getUTCMinutes()
+		time = hours*60 + minutes
+		marketsWereOpen = Session.get 'Markets_Open'
+
+		if day > 0 and day < 6 and # Mon - Fri
+			time >= 14*60 + 30 and # after open
+			time < 21*60 # before  close
+				marketsAreOpen = true
+		else
+			marketsAreOpen = false
+		if marketsWereOpen != marketsAreOpen
+			Session.set 'Markets_Open', marketsAreOpen
+
+	@checkMarketsOpen()
+
+	Meteor.setInterval ->
+		marketsWereOpen = Session.get 'Markets_Open'
+		instance.checkMarketsOpen()
+		marketsAreOpen = Session.get 'Markets_Open'
+		if marketsWereOpen != marketsAreOpen
+			$('#marketOpenCloseNotification')[0].play()
+
+	, 5000

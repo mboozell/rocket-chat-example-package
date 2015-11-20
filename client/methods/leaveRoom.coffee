@@ -11,3 +11,8 @@ Meteor.methods
 			$pull:
 				usernames: Meteor.user().username
 
+		FinLabs.Analytics.track( 'Leave Room', {
+			room: ChatRoom.findOne(rid).name
+			username: Meteor.user().name
+			roomType: ChatRoom.findOne(rid).t
+			})

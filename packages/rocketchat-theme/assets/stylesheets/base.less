@@ -894,7 +894,7 @@ a.github-fork {
 	height: auto;
 	opacity: 1;
 	visibility: visible;
-	.transition(opacity .2s ease-out);
+	.transition(all .5s ease-in-out);
 	&.animated-hidden {
 		visibility: hidden;
 		opacity: 0;
@@ -1569,6 +1569,7 @@ a.github-fork {
 	left: 0;
 	width: 100%;
 	height: @header-min-height+1px;
+	.transition(all .5s ease-in-out);
 	&.visible {
 		h2 {
 			overflow: visible;
@@ -2004,6 +2005,7 @@ a.github-fork {
 	height: 100%;
 	top: 0;
 	left: 0;
+	.transition(all .5s ease-in-out);
 
 	.edit-room-title {
 		margin-left: 4px;
@@ -2031,6 +2033,7 @@ a.github-fork {
 		left: 0;
 		width: 100%;
 		min-height: @footer-min-height;
+		.transition(all .5s ease-in-out);
 	}
 	.message-popup-position {
 		position: relative;
@@ -2594,6 +2597,7 @@ a.github-fork {
 	background: #FCFCFC;
 	border-left: 1px solid #eaeaea;
 	z-index: 13;
+	.transition(all .5s ease-in-out);
 
 	.tab-button {
 		cursor: pointer;
@@ -2601,6 +2605,7 @@ a.github-fork {
 		background: #FCFCFC;
 		border-bottom: 1px solid #eaeaea;
 		text-align: center;
+		.transition(all .5s ease-in-out);
 
 		&:hover {
 			background: #EAEAEA;
@@ -3831,8 +3836,8 @@ a.github-fork {
 			padding: 10px 22px;
 		}
 		p {
-			max-height: 40px;
-			overflow: hidden;
+			//max-height: 40px;
+			//overflow: hidden;
 		}
 	}
 }
@@ -3908,8 +3913,8 @@ a.github-fork {
 			padding: 10px 22px;
 		}
 		p {
-			max-height: 40px;
-			overflow: hidden;
+			//max-height: 40px;
+			//overflow: hidden;
 		}
 	}
 }

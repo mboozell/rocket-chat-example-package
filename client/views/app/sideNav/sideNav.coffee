@@ -67,6 +67,9 @@ Template.sideNav.events
 		Meteor.logout ->
 			FlowRouter.go 'home'
 			Meteor.call('logoutCleanUp', user)
+			FinLabs.Analytics.track( "Logout", {
+				username: Meteor.user.username
+				})
 
 	'click #avatar': (event) ->
 		FlowRouter.go 'changeAvatar'

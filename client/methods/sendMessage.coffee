@@ -15,4 +15,14 @@ Meteor.methods
 
 			message = RocketChat.callbacks.run 'beforeSaveMessage', message
 
+			rid = Session.get 'openedRoom'
+
 			ChatMessage.insert message
+
+			FinLabs.Analytics.track('Sent Message', {
+				message: message.msg
+				username: Meteor.user().name
+				room: ChatRoom.findOne(rid).name
+				roomType: ChatRoom.findOne(rid).t
+				users: ChatRoom.findOne(rid).usernames
+				})

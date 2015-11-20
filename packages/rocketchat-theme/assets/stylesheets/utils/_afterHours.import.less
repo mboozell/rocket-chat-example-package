@@ -1,0 +1,243 @@
+@after-hours-primary: #353C42;
+@after-hours-secondary: #30373c;
+@after-hours-dark: darken(@after-hours-secondary, 4%);
+@after-hours-darker: darken(@after-hours-secondary, 8%);
+@after-hours-light: lighten(@after-hours-primary, 3%);
+@after-hours-font-1: #fff;
+@after-hours-font-2: #aaa;
+@after-hours-accent: #2c75c9;
+
+.after-hours {
+  color: @after-hours-font-2;
+
+  a:hover {
+    color: @after-hours-font-1;
+  }
+
+  &#rocket-chat {
+    background-color: @after-hours-primary;
+  }
+
+  .burger i {
+    background-color: @after-hours-font-1;
+  }
+
+  .message .user, .message .user:hover {
+    color: @after-hours-font-1;
+  }
+
+  .fixed-title {
+    background: @after-hours-secondary;
+    border-bottom-color: @after-hours-dark;
+  }
+
+  .messages-container {
+    background-color: @after-hours-primary;
+
+    .messages-box .editing .body {
+        background-color: @after-hours-accent;
+        color: @after-hours-font-1;
+    }
+
+    .footer {
+      background: @after-hours-secondary;
+      border-top-color: @after-hours-dark;
+
+      .editing-commands a {
+        color: @after-hours-accent;
+        border-color: @after-hours-accent;
+      }
+    }
+
+    .message-form {
+
+      textarea {
+        background-color: @after-hours-primary;
+        border-color: @after-hours-darker;
+        color: @after-hours-font-2;
+      }
+
+      .users-typing {
+        color: @after-hours-font-2;
+        background: @after-hours-secondary;
+      }
+
+      .formatting-tips {
+        color: @after-hours-font-2;
+      }
+
+      &>div>.file {
+        background-color: @after-hours-dark;
+        border-color: @after-hours-darker;
+        .transition(all 0.5s ease-in-out);
+      }
+
+      &>div>.file:hover {
+        background-color: @after-hours-darker;
+        border-color: @after-hours-darker;
+      }
+    }
+
+    .wrapper::-webkit-scrollbar-thumb {
+      background-color: @after-hours-darker;
+      -webkit-border-radius: 50px;
+    }
+  }
+
+  .flex-tab {
+    background-color: @after-hours-secondary;
+    border-left-color: @after-hours-dark;
+
+    .content {
+      background-color: @after-hours-secondary;
+    }
+
+    .control {
+      background-color: @after-hours-secondary;
+    }
+  }
+
+  .flex-tab-bar {
+    background: @after-hours-secondary;
+    border-left: 1px solid @after-hours-dark;
+
+    .tab-button {
+      background: @after-hours-secondary;
+      border-bottom: 1px solid @after-hours-darker;
+      &:hover {
+        background: @after-hours-light;
+      }
+      &.active {
+        background-color: @after-hours-accent;
+        border-right: 3px solid @after-hours-accent;
+        color: @after-hours-font-1;
+      }
+    }
+  }
+
+  .message.new-day {
+    &:before {
+      background-color: @after-hours-dark;
+    }
+    &:after {
+      border-top-color: @after-hours-dark;
+    }
+  }
+
+  .wiseguy-wrap {
+    .new-day {
+      &:before {
+        background-color: @after-hours-dark;
+      }
+      &:after {
+        border-top-color: @after-hours-dark;
+      }
+    }
+  }
+
+  .wiseguy-alert-list {
+
+    hr {
+      border-color: @after-hours-darker;
+    }
+
+    .wiseguy-alert {
+
+      .wisecon {
+        border-color: @after-hours-dark;
+        color: @after-hours-font-2;
+      }
+
+      .bearish, .bullish {
+        color: @after-hours-primary;
+      }
+
+      .ticker {
+        color: @after-hours-font-1;
+      }
+    }
+
+    .wiseguy-alert:hover .wisecon {
+      background-color: @after-hours-light;
+    }
+  }
+
+  textarea, select, input[type='text'],
+  input[type='number'],
+  input[type='email'],
+  input[type='password'] {
+    border-color: @after-hours-darker;
+    background-color: @after-hours-primary;
+    color: @after-hours-font-2;
+    .transition(all .5s ease-in-out);
+  }
+
+  .scrollable::-webkit-scrollbar-thumb {
+    background-color: @after-hours-darker;
+    -webkit-border-radius: 50px;
+  }
+
+  .page-static {
+
+    label {
+      color: @after-hours-font-1
+    }
+
+    input {
+      color: @after-hours-font-2;
+    }
+
+    .avatar-suggestion-item {
+      background-color: @after-hours-secondary;
+      border-color: @after-hours-dark;
+
+      .avatar {
+        background-color: @after-hours-dark;
+      }
+    }
+
+    // Settings Option Groups Border Color
+    .content .section .section-content {
+      border-color: @after-hours-dark;
+    }
+
+  }
+
+  .page-container {
+    .content::-webkit-scrollbar-thumb {
+      background-color: @after-hours-darker;
+    }
+  }
+
+  .page-list {
+    .list table tbody tr {
+      &:nth-child(odd) {
+        background-color: @after-hours-dark;
+      }
+    }
+    .results p {
+      color: #fff;
+    }
+  }
+
+  .first-unread {
+    &.first-unread-opaque {
+    	.body {
+    		&::before {
+    			background-color: @after-hours-darker;
+    		}
+
+    		&::after {
+          color: @after-hours-font-2;
+          background-color: @after-hours-dark;
+    		}
+    	}
+    }
+  }
+
+  .user-view {
+    h3, p, .input-line>label {
+      color: #fff;
+    }
+  }
+}
