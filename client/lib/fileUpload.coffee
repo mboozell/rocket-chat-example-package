@@ -98,7 +98,18 @@ readAsArrayBuffer = (file, callback) ->
 										Session.set 'uploading', _.without(uploading, item)
 								, 2000
 
+							rid = Session.get 'openedRoom'
+
+							FinLabs.Analytics.track( "Upload Image", {
+								room: ChatRoom.findOne(rid).name
+								username: Meteor.user().username
+								file: file
+								roomType: ChatRoom.findOne(rid).t
+								})
+
 					upload.id = Random.id()
+
+
 
 					# // Reactive method to get upload progress
 					Tracker.autorun (c) ->

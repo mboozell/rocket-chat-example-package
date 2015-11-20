@@ -41,7 +41,7 @@ class @ChatMessages
 
 	edit: (element, index) ->
 		id = element.getAttribute("id")
-		message = ChatMessage.findOne { _id: id } 
+		message = ChatMessage.findOne { _id: id }
 		hasPermission = RocketChat.authz.hasAtLeastOnePermission('edit-message', message.rid)
 		editAllowed = RocketChat.settings.get 'Message_AllowEditing'
 		editOwn = message?.u?._id is Meteor.userId()

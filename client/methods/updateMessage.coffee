@@ -40,3 +40,14 @@ Meteor.methods
 					"editedAt": message.editedAt
 					"editedBy": message.editedBy
 					msg: message.msg
+
+			rid = Session.get 'openedRoom'
+
+			FinLabs.Analytics.track( 'Update Message', {
+				originalMessage: originalMessage.msg
+				updatedMessage: message.msg
+				editedAt: message.editedAt
+				editedBy: message.editedBy.username
+				room: ChatRoom.findOne(rid).name
+				roomType: ChatRoom.findOne(rid).t
+				})
