@@ -14,12 +14,18 @@ Meteor.methods
 		userData =
 			email: email
 			password: pass
+			invitation: invitation
 
 		userId = Accounts.createUser userData
 
 		RocketChat.models.Users.setName userId, name
 
+		emailEnabled = RocketChat.settings.get('MAIL_URL') or
+			(RocketChat.settings.get('SMTP_Host') and
+			RocketChat.settings.get('SMTP_Username') and
+			RocketChat.settings.get('SMTP_Password'))
+
 		if invitation.email
 			RocketChat.models.Users.setEmailVerified userId
-		else if userData.email
+		else if userData.email and emailEnabled
 			Accounts.sendVerificationEmail(userId, email)

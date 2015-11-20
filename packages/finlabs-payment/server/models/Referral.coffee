@@ -26,6 +26,6 @@ FinLabs.models.Referral = new class extends RocketChat.models._Base
 			user: userId
 			product: productId
 
-		_.assign referral, options
+		_.extend referral, options
 
 		return @insert referral

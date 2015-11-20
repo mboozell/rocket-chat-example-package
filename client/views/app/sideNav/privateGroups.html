@@ -1,6 +1,10 @@
 <template name="privateGroups">
 	<h3 class="add-room {{isActive}}">
-		{{_ "Private_Groups"}}
+		{{#if generalChannelsEnabled}}
+			{{_ "Private_Groups"}}
+		{{else}}
+			{{_ "Channels"}}
+		{{/if}}
 		{{#if hasPermission 'create-p'}}
 			<i class="icon-plus"></i>
 		{{/if}}

@@ -24,6 +24,9 @@ FinLabs.payment.purchases =
 		return false
 
 	userHasBaseProduct: (userId) ->
+		if RocketChat.authz.hasRole userId, 'admin'
+			return true
+
 		products = FinLabs.models.Product.findBase().fetch()
 		for product in products
 			if @userHas userId, product._id

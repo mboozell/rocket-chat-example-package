@@ -1,7 +1,5 @@
 stripe = Npm.require('stripe')
 
-FinLabs.payment = {}
-
 FinLabs.payment.Util = class
 
 	constructor: () ->

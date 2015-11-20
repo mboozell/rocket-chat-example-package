@@ -21,7 +21,7 @@ Meteor.startup ->
 		{ _id: 'view-user-administration',
 		roles : ['admin']}
 
-		{ _id: 'view-integration-administration',
+		{ _id: 'view-product-administration',
 		roles : ['admin']}
 
 		{ _id: 'view-full-other-user-info',

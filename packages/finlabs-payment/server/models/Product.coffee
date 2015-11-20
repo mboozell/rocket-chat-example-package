@@ -15,7 +15,7 @@ FinLabs.models.Product = new class extends RocketChat.models._Base
 
 	findOneByKey: (key, options) ->
 		query =
-			key: key
+			apiKey: key
 
 		return @findOne query, options
 
@@ -27,21 +27,31 @@ FinLabs.models.Product = new class extends RocketChat.models._Base
 
 	# INSERT
 
-	createOne: (name, roles = [], channels = [], payments = [], options = {}) ->
+	createOne: (name, roles, channels, payments, options) ->
 		product =
 			name: name
 			roles: roles
 			channels: roles
 			payments: payments
+			apiKey: Random.secret()
 			ts: new Date()
 
-		_.assign product, options
+		_.extend product, options
 
 		return @insert product
 
-	createOneBase: (name, roles = [], channels = [], payments = [], options = {}) ->
-		_.assign options, baseProduct: true
-		@createOne name, roles, channels, payments, options
+	addOrUpdate: (name, roles, channels, payments, options) ->
+		product =
+			name: name
+			roles: roles
+			channels: roles
+			payments: payments
+			apiKey: Random.secret()
+			ts: new Date()
+
+		_.extend product, options
+
+		return @upsert name: name, product
 
 	# UPDATE
 
