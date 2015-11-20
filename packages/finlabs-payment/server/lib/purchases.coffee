@@ -45,7 +45,7 @@ FinLabs.payment.purchases =
 
 	enablePurchase: (purchase) ->
 		user = Meteor.users.findOne purchase.user
-		product = FinLabs.payment.Product.findOneById purchase.product
+		product = FinLabs.models.Product.findOneById purchase.product
 		RocketChat.authz.addUsersToRoles purchase.user, product.roles
 		for roomId in product.channels
 			room = RocketChat.models.Rooms.findOneById roomId
@@ -63,7 +63,7 @@ FinLabs.payment.purchases =
 
 	disablePurchase: (purchase) ->
 		user = Meteor.users.findOne purchase.user
-		product = FinLabs.payment.Product.findOneById purchase.product
+		product = FinLabs.models.Product.findOneById purchase.product
 		RocketChat.authz.removeUsersFromRoles purchase.user, product.roles
 		for roomId in product.channels
 			room = RocketChat.models.Rooms.findOneById roomId
