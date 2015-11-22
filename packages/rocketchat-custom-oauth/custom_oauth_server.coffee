@@ -28,10 +28,10 @@ class CustomOAuth
 			return throw new Meteor.Error 'CustomOAuth: Options.serverURL is required and must be String'
 
 		if not Match.test options.tokenPath, String
-			options.tokenPath = '/oauth/token'
+			options.tokenPath = 'oauth/token'
 
 		if not Match.test options.identityPath, String
-			options.identityPath = '/me'
+			options.identityPath = 'me'
 
 		@serverURL = options.serverURL
 		@tokenPath = options.tokenPath
@@ -51,6 +51,17 @@ class CustomOAuth
 		if not config?
 			throw new ServiceConfiguration.ConfigError()
 
+		console.log @tokenPath,
+			headers:
+				Accept: 'application/json'
+				'User-Agent': @userAgent
+			params:
+				code: query.code
+				client_id: config.clientId
+				client_secret: OAuth.openSecret(config.secret)
+				redirect_uri: OAuth._redirectUri(@name, config)
+				grant_type: 'authorization_code'
+				state: query.state
 		response = undefined
 		try
 			response = HTTP.post @tokenPath,
@@ -69,6 +80,7 @@ class CustomOAuth
 			error = new Error("Failed to complete OAuth handshake with #{@name} at #{@tokenPath}. " + err.message)
 			throw _.extend error, {response: err.response}
 
+		console.log response
 		if response.data.error #if the http response was a json object with an error attribute
 			throw new Error("Failed to complete OAuth handshake with #{@name} at #{@tokenPath}. " + response.data.error)
 		else

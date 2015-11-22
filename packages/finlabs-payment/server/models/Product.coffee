@@ -39,7 +39,7 @@ FinLabs.models.Product = new class extends RocketChat.models._Base
 		product =
 			name: name
 			roles: roles
-			channels: roles
+			channels: channels
 			payments: payments
 			apiKey: Random.secret()
 			ts: new Date()
@@ -52,7 +52,7 @@ FinLabs.models.Product = new class extends RocketChat.models._Base
 		product =
 			name: name
 			roles: roles
-			channels: roles
+			channels: channels
 			payments: payments
 			apiKey: Random.secret()
 			ts: new Date()

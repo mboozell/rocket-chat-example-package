@@ -37,7 +37,6 @@ FinLabs.payment.purchases =
 
 	checkPurchase: (purchase) ->
 		self = FinLabs.payment.purchases
-		console.log purchase
 		if purchase.active
 			self.enablePurchase purchase
 		unless self.userHas purchase.user, purchase.product
@@ -52,7 +51,7 @@ FinLabs.payment.purchases =
 			RocketChat.callbacks.run 'beforeJoinRoom', user, room
 			RocketChat.models.Rooms.addUsernameById roomId, user.username
 			if not RocketChat.models.Subscriptions.findOneByRoomIdAndUserId roomId, user._id
-				RocketChat.models.Subscription.createWithRoomAndUser room, user,
+				RocketChat.models.Subscriptions.createWithRoomAndUser room, user,
 					ts: new Date()
 					open: true
 					alert: true
