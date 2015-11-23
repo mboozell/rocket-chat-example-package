@@ -83,6 +83,14 @@ RocketChat.models.Messages = new class extends RocketChat.models._Base
 
 		return @find query, options
 
+	findJoinedByUser: (userId, roomId, options) ->
+		query =
+			t: 'uj'
+			rid: roomId
+			"u._id": userId
+
+		return @find query, options
+
 	findStarredByUserAtRoom: (userId, roomId, options) ->
 		query =
 			_hidden: { $ne: true }

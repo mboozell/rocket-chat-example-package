@@ -44,7 +44,7 @@ FinLabs.payment.purchases =
 
 	checkAllPurchases: (userId) ->
 		self = FinLabs.payment.purchases
-		purchases = FinLabs.models.Purchase.findAllByUser userId
+		purchases = FinLabs.models.Purchase.findAllByUser(userId).fetch()
 		for purchase in purchases
 			self.checkPurchase purchase
 
@@ -56,14 +56,15 @@ FinLabs.payment.purchases =
 		for roomId in product.channels
 			room = RocketChat.models.Rooms.findOneById roomId
 			RocketChat.callbacks.run 'beforeJoinRoom', user, room
-			RocketChat.models.Rooms.addUsernameById roomId, user.username
+			if user.username
+				RocketChat.models.Rooms.addUsernameById roomId, user.username
 			if not RocketChat.models.Subscriptions.findOneByRoomIdAndUserId roomId, user._id
 				RocketChat.models.Subscriptions.createWithRoomAndUser room, user,
 					ts: new Date()
 					open: true
 					alert: true
 					unread: 1
-				RocketChat.models.Messages.createUserJoinWithRoomIdAndUser roomId, user
+				# RocketChat.models.Messages.createUserJoinWithRoomIdAndUser roomId, user
 			Meteor.defer ->
 				RocketChat.callbacks.run 'afterJoinRoom', user, room
 
@@ -73,7 +74,8 @@ FinLabs.payment.purchases =
 		RocketChat.authz.removeUsersFromRoles purchase.user, product.roles
 		for roomId in product.channels
 			room = RocketChat.models.Rooms.findOneById roomId
-			RocketChat.models.Rooms.removeUsernameById roomId, user.username
+			if user.username
+				RocketChat.models.Rooms.removeUsernameById roomId, user.username
 			RocketChat.models.Subscriptions.removeByRoomIdAndUserId roomId, user._id
 			Meteor.defer ->
 				RocketChat.callbacks.run 'afterLeaveRoom', user, room
