@@ -45,7 +45,9 @@ class CustomOAuth
 		if not config?
 			throw new ServiceConfiguration.ConfigError()
 
-		tokenPath = @serverURL + @tokenPath
+		unless serverURL
+			serverURL = config.serverURL
+		tokenPath = serverURL + @tokenPath
 
 		# console.log tokenPath,
 		# 	headers:
@@ -87,8 +89,14 @@ class CustomOAuth
 			return response.data.access_token
 
 	getIdentity: (accessToken) ->
+		config = ServiceConfiguration.configurations.findOne service: @name
+		if not config?
+			throw new ServiceConfiguration.ConfigError()
 
-		identityPath = @serverURL + @identityPath
+		serverURL = @serverURL
+		unless serverURL
+			serverURL = config.serverURL
+		identityPath = serverURL + @identityPath
 
 		# console.log identityPath
 		# console.log accessToken
