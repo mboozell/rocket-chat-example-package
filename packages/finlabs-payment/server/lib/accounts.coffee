@@ -28,3 +28,6 @@ Meteor.startup ->
 
 	Accounts.onLogin ->
 		FinLabs.payment.purchases.checkAllPurchases Meteor.userId()
+
+	RocketChat.callbacks.add 'afterSetUsername', (user) ->
+		FinLabs.payment.purchases.checkAllPurchases user._id

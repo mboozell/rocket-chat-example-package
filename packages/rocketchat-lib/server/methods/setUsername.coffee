@@ -22,6 +22,8 @@ Meteor.methods
 		unless RocketChat.setUsername user, username
 			throw new Meteor.Error 'could-not-change-username', "Could not change username"
 
+		RocketChat.callbacks.run 'afterSetUsername', user, username
+
 		return username
 
 # Limit setting username once per minute
