@@ -41,6 +41,9 @@ FinLabs.models.Subscription = new class extends RocketChat.models._Base
 
 		@find query
 
+	userHasActivePlan: (userId, planId) ->
+		@findActiveByUserAndPlan(userId, planId).count() > 0
+
 	# INSERT
 
 	createFromStripe: (userId, subscription) ->
@@ -50,6 +53,7 @@ FinLabs.models.Subscription = new class extends RocketChat.models._Base
 		return @insert subscription
 
 	updateBySubscriptionId: (subscriptionId, fields) ->
+		fields.updatedAt = new Date()
 		query =
 			subscriptionId: subscriptionId
 		update =
@@ -58,11 +62,13 @@ FinLabs.models.Subscription = new class extends RocketChat.models._Base
 
 	updateOrAdd: (subscription) ->
 		subscription.subscriptionId = subscription.id
+		subscription.updatedAt = new Date()
 		delete subscription.id
 		updates = @updateBySubscriptionId subscription.subscriptionId, subscription
 		if updates
 			console.log "Updated #{updates} documents"
 			return updates
+		subscription.createdAt = subscription.updatedAt()
 		customer = FinLabs.models.Customer.findOneByCustomerId subscription.customer
 		subscription.user = customer.user
 		return @insert subscription

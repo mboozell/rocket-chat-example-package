@@ -35,7 +35,8 @@ Accounts.onCreateUser (options, user) ->
 	RocketChat.callbacks.run 'beforeCreateUser', options, user
 
 	user.status = 'offline'
-	user.active = not RocketChat.settings.get 'Accounts_ManuallyApproveNewUsers'
+	if user.active is undefined
+		user.active = not RocketChat.settings.get 'Accounts_ManuallyApproveNewUsers'
 
 	if not user?.name? or user.name is ''
 		if options.profile?.name?
@@ -68,12 +69,10 @@ Accounts.insertUserDoc = _.wrap Accounts.insertUserDoc, (insertUserDoc) ->
 	roleName = 'user'
 	if firstUser?._id is _id
 		roleName = 'admin'
-	else if RocketChat.settings.get 'Require_Payment'
-		planId = RocketChat.settings.get 'Subscription_Plan'
-		unless FinLabs.payment.isSubscribed _id, planId
-			roleName = 'unpaid-user'
 
 	RocketChat.authz.addUsersToRoles(_id, roleName)
+
+	user._id = _id
 	RocketChat.callbacks.run 'afterCreateUser', options, user
 	return _id
 

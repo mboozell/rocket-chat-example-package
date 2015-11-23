@@ -19,6 +19,7 @@ updateServices = ->
 				data =
 					clientId: RocketChat.models.Settings.findOneById("#{service._id}_id")?.value
 					secret: RocketChat.models.Settings.findOneById("#{service._id}_secret")?.value
+					serverURL: RocketChat.models.Settings.findOneById("#{service._id}_url")?.value
 
 
 				if /Accounts_OAuth_Custom_/.test service._id

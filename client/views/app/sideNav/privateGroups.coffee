@@ -20,6 +20,9 @@ Template.privateGroups.helpers
 	isActive: ->
 		return 'active' if ChatSubscription.findOne({ t: { $in: ['p']}, f: { $ne: true }, open: true, rid: Session.get('openedRoom') }, { fields: { _id: 1 } })?
 
+	generalChannelsEnabled: ->
+		return RocketChat.settings.get "General_Channels_Enabled"
+
 Template.privateGroups.events
 	'click .add-room': (e, instance) ->
 		if RocketChat.authz.hasAtLeastOnePermission('create-p')

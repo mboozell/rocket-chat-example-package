@@ -2,11 +2,16 @@ Template.adminInviteUser.helpers
 	isAdmin: ->
 		return RocketChat.authz.hasRole(Meteor.userId(), 'admin')
 	emailEnabled: ->
-		return RocketChat.settings.get('MAIL_URL') or (RocketChat.settings.get('SMTP_Host') and RocketChat.settings.get('SMTP_Username') and RocketChat.settings.get('SMTP_Password'))
+		return RocketChat.settings.get('MAIL_URL') or
+			(RocketChat.settings.get('SMTP_Host') and
+			RocketChat.settings.get('SMTP_Username') and
+			RocketChat.settings.get('SMTP_Password'))
 	inviteEmails: ->
 		return Template.instance().inviteEmails.get()
 	inviteUrl: ->
 		return Template.instance().inviteUrl.get()
+	paymentRequired: ->
+		RocketChat.settings.get "Require_Payment"
 
 Template.adminInviteUser.events
 	'click .send': (e, instance) ->
@@ -35,12 +40,16 @@ Template.adminInviteUser.events
 		RocketChat.TabBar.closeFlex()
 
 	'click .generate': (e, instance) ->
-		name = $('#inviteName').val()
 		email = $('#inviteEmail').val()
+		options =
+			name: $('#inviteName').val()
+		if RocketChat.settings.get "Require_Payment"
+			options.freeAccount = $("#freeAccount").prop("checked")
+
 		if not instance.isValidEmail(email)
 			toastr.error t("Email not valid")
 		else
-			Meteor.call 'createInvitation', email, name, (error, result) ->
+			Meteor.call 'createInvitation', email, options, (error, result) ->
 				if result
 					instance.inviteUrl.set(result.url)
 					instance.clearGenerateForm()
