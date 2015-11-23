@@ -37,12 +37,6 @@ class CustomOAuth
 		@tokenPath = options.tokenPath
 		@identityPath = options.identityPath
 
-		if not /^https?:\/\/.+/.test @tokenPath
-			@tokenPath = @serverURL + @tokenPath
-
-		if not /^https?:\/\/.+/.test @identityPath
-			@identityPath = @serverURL + @identityPath
-
 		if Match.test options.addAutopublishFields, Object
 			Accounts.addAutopublishFields options.addAutopublishFields
 
@@ -51,23 +45,22 @@ class CustomOAuth
 		if not config?
 			throw new ServiceConfiguration.ConfigError()
 
-		if not /^https?:\/\/.+/.test @tokenPath
-			@tokenPath = @serverURL + @tokenPath
+		tokenPath = @serverURL + @tokenPath
 
-		console.log @tokenPath,
-			headers:
-				Accept: 'application/json'
-				'User-Agent': @userAgent
-			params:
-				code: query.code
-				client_id: config.clientId
-				client_secret: OAuth.openSecret(config.secret)
-				redirect_uri: OAuth._redirectUri(@name, config)
-				grant_type: 'authorization_code'
-				state: query.state
+		# console.log tokenPath,
+		# 	headers:
+		# 		Accept: 'application/json'
+		# 		'User-Agent': @userAgent
+		# 	params:
+		# 		code: query.code
+		# 		client_id: config.clientId
+		# 		client_secret: OAuth.openSecret(config.secret)
+		# 		redirect_uri: OAuth._redirectUri(@name, config)
+		# 		grant_type: 'authorization_code'
+		# 		state: query.state
 		response = undefined
 		try
-			response = HTTP.post @tokenPath,
+			response = HTTP.post tokenPath,
 				headers:
 					Accept: 'application/json'
 					'User-Agent': @userAgent
@@ -83,7 +76,11 @@ class CustomOAuth
 			error = new Error("Failed to complete OAuth handshake with #{@name} at #{@tokenPath}. " + err.message)
 			throw _.extend error, {response: err.response}
 
-		console.log response
+		unless response.data
+			if response.content
+				response.data = JSON.parse response.content
+		# console.log response.data
+
 		if response.data.error #if the http response was a json object with an error attribute
 			throw new Error("Failed to complete OAuth handshake with #{@name} at #{@tokenPath}. " + response.data.error)
 		else
@@ -91,15 +88,22 @@ class CustomOAuth
 
 	getIdentity: (accessToken) ->
 
-		if not /^https?:\/\/.+/.test @identityPath
-			@identityPath = @serverURL + @identityPath
+		identityPath = @serverURL + @identityPath
 
+		# console.log identityPath
+		# console.log accessToken
 		try
-			response = HTTP.get @identityPath,
+			response = HTTP.get identityPath,
 				headers:
 					'User-Agent': @userAgent # http://doc.gitlab.com/ce/api/users.html#Current-user
 				params:
 					access_token: accessToken
+
+			# console.log response
+			unless response.data
+				if response.content
+					response.data = JSON.parse response.content
+			# console.log response.data
 
 			return response.data
 
