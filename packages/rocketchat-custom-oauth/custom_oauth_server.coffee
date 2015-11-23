@@ -11,7 +11,6 @@ class CustomOAuth
 
 		Services[@name] = @
 
-		console.log options
 		@configure options
 
 		@userAgent = "Meteor"
@@ -52,6 +51,9 @@ class CustomOAuth
 		if not config?
 			throw new ServiceConfiguration.ConfigError()
 
+		if not /^https?:\/\/.+/.test @tokenPath
+			@tokenPath = @serverURL + @tokenPath
+
 		console.log @tokenPath,
 			headers:
 				Accept: 'application/json'
@@ -88,6 +90,10 @@ class CustomOAuth
 			return response.data.access_token
 
 	getIdentity: (accessToken) ->
+
+		if not /^https?:\/\/.+/.test @identityPath
+			@identityPath = @serverURL + @identityPath
+
 		try
 			response = HTTP.get @identityPath,
 				headers:

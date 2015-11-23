@@ -100,7 +100,7 @@ FinLabs.payment.purchases =
 			user = Meteor.users.findOne userId
 			if user.services.wordpress
 				access_token = user.services.wordpress.accessToken
-				url = RocketChat.settings.get 'API_Wordpress_URL'
+				url = RocketChat.settings.get 'Accounts_OAuth_Wordpress_url'
 				url += if url[url.length-1] != '/' then '/' else ''
 				url += "wp-json/finlabs/v1/user/subscribed"
 				try
