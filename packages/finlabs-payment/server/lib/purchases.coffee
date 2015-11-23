@@ -1,6 +1,9 @@
 FinLabs.payment.purchases =
 
 	userHas: (userId, productId) ->
+		if RocketChat.authz.hasRole userId, 'admin'
+			return true
+
 		self = FinLabs.payment.purchases
 		purchases = FinLabs.models.Purchase.findAllWithUserAndProduct(userId, productId).fetch()
 		if purchases.length < 1
@@ -26,9 +29,6 @@ FinLabs.payment.purchases =
 
 	userHasBaseProduct: (userId) ->
 		self = FinLabs.payment.purchases
-		if RocketChat.authz.hasRole userId, 'admin'
-			return true
-
 		products = FinLabs.models.Product.findBase().fetch()
 		for product in products
 			if self.userHas userId, product._id
@@ -41,6 +41,13 @@ FinLabs.payment.purchases =
 			self.enablePurchase purchase
 		unless self.userHas purchase.user, purchase.product
 			self.disablePurchase purchase
+
+	checkAllPurchases: (userId) ->
+		self = FinLabs.payment.purchases
+		purchases = FinLabs.models.Purchase.findAllByUser userId
+		for purchase in purchases
+			self.checkPurchase purchase
+
 
 	enablePurchase: (purchase) ->
 		user = Meteor.users.findOne purchase.user

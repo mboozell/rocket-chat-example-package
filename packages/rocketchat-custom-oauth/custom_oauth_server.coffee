@@ -11,6 +11,7 @@ class CustomOAuth
 
 		Services[@name] = @
 
+		console.log options
 		@configure options
 
 		@userAgent = "Meteor"

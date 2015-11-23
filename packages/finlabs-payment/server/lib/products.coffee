@@ -13,8 +13,21 @@ FinLabs.payment.products = new class
 
 Meteor.startup ->
 
+	updatePurchases = (product) ->
+		admins = RocketChat.authz.getUsersInRole 'admin'
+		for admin in admins
+			FinLabs.models.Purchase.createActive user._id, product._id
+
+		isWordpressProduct = _.findWhere(product.payments, {type: 'wordpress'})
+		if isWordpressProduct
+			wordpressUsers = RocketChat.models.Users.findUsersHavingService 'wordpress'
+			for user in wordpressUsers
+				FinLabs.models.Purchase.createInactive user._id, product._id
+
+		purchases = FinLabs.models.Purchase.findAllByProduct product._id
+		for purchase in purchases
+			FinLabs.payment.purchases.checkPurchase purchase
+
 	FinLabs.models.Product.find().observe
-		changed: (product) ->
-			purchases = FinLabs.models.Purchase.findAllByProduct product._id
-			for purchase in purchases
-				FinLabs.payment.purchases.checkPurchase purchase
+		changed: updatePurchases
+		added: updatePurchases

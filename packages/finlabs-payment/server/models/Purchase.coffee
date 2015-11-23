@@ -34,23 +34,31 @@ FinLabs.models.Purchase = new class extends RocketChat.models._Base
 
 	# INSERT
 
-	createActive: (userId, product) ->
+	createActive: (userId, productId) ->
+		query =
+			user: userId
+			product: productId
+
 		purchase =
-			product: product
+			product: productId
 			user: userId
 			active: true
 			ts: new Date()
 
-		return @insert purchase
+		return @upsert query, purchase
 
-	createInactive: (userId, product) ->
+	createInactive: (userId, productId) ->
+		query =
+			user: userId
+			product: productId
+
 		purchase =
-			product: product
+			product: productId
 			user: userId
 			active: false
 			ts: new Date()
 
-		return @insert purchase
+		return @upsert query, purchase
 
 	# UPDATE
 
