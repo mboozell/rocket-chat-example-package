@@ -34,18 +34,17 @@
 				<div class="submit">
 					<button data-loading-text="{{_ "Please_wait"}}..." class='button primary login'><span>{{btnLoginSave}}</span></button>
 				</div>
-				<!--
 				<div class="register {{showRegisterLink}}">
 					<a href="">{{_ 'Register'}}</a>
 				</div>
-				-->
 				<div class="forgot-password {{showForgotPasswordLink}}">
 					<a href="">{{_ 'Forgot_password'}}</a>
 				</div>
+			{{else}}
+				<div class="register-external">
+					<a href="#">Register a new account</a>
+				</div>
 			{{/unless}}
-			<div class="register-external">
-				<a href="#">Register a new account</a>
-			</div>
 		{{/if}}
 		<div class="back-to-login {{showBackToLoginLink}}">
 			<a href="">{{_ 'Back_to_login'}}</a>
