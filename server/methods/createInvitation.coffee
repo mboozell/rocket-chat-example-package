@@ -1,5 +1,5 @@
 Meteor.methods
-	createInvitation: (email, name) ->
+	createInvitation: (email, options) ->
 		if not Meteor.userId()
 			throw new Meteor.Error 'invalid-user', "[methods] createInvitation -> Invalid user"
 
@@ -14,14 +14,8 @@ Meteor.methods
 		console.log '[methods] createInvitation -> '.green,
 			'userId:', Meteor.userId(), 'arguments:', arguments
 
-		key = Random.secret()
-
-		options = {}
-		if name
-			options.name = name
-
 		# create new room
-		invitation = RocketChat.models.Invitations.createOneWithEmailAndKey email, key, options
-		invitation.url = "#{Meteor.absoluteUrl()}register?invite=#{encodeURIComponent(key)}"
+		invitation = RocketChat.models.Invitations.createOneWithEmail email, options
+		invitation.url = "#{Meteor.absoluteUrl()}register?invite=#{encodeURIComponent(invitation.key)}"
 
 		return invitation

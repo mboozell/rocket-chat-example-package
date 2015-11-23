@@ -1,7 +1,5 @@
 stripe = Npm.require('stripe')
 
-FinLabs.payment = {}
-
 FinLabs.payment.Util = class
 
 	constructor: () ->
@@ -16,8 +14,8 @@ FinLabs.payment.Util = class
 		_retrieveEvent = (callback) => @stripe.events.retrieve eventId, callback
 		(Meteor.wrapAsync _retrieveEvent)()
 
-	getSubscriptions: (user) ->
-		customer = @getCustomer(user)
+	getSubscriptions: (userId) ->
+		customer = @getCustomer(userId)
 		{customerId} = customer
 		_retrieveSubscriptions = (callback) => @stripe.customers.listSubscriptions customerId, callback
 		(Meteor.wrapAsync _retrieveSubscriptions)().data
@@ -44,11 +42,11 @@ FinLabs.payment.Util = class
 		subscription = (Meteor.wrapAsync _createSubscription)()
 		FinLabs.models.Subscription.createFromStripe user._id, subscription
 
-	getCustomer: (user) ->
-		FinLabs.models.Customer.findOneByUser user._id
+	getCustomer: (userId) ->
+		FinLabs.models.Customer.findOneByUser userId
 
 	getOrCreateCustomer: (user, token) ->
-		customer = @getCustomer(user)
+		customer = @getCustomer(user._id)
 		unless customer
 			customer = @createCustomer user, token
 		return customer

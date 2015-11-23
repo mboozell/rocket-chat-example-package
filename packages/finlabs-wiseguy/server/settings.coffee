@@ -4,7 +4,7 @@ Meteor.startup ->
   permissions = [
 
     { _id: 'view-wiseguy-alerts',
-    roles : ['admin', 'moderator', 'user']}
+    roles : ['admin', 'moderator', 'wsj-user']}
 
   ]
 

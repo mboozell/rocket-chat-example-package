@@ -45,15 +45,19 @@ Package.onUse(function(api) {
 	api.addFiles([], ['server', 'client']);
 
 	api.addFiles([
-		'server/startup.coffee',
-		'server/lib/Payment.coffee',
-		'server/lib/plans.coffee',
-		'server/lib/checkPlanSettings.coffee',
-		'server/lib/isSubscribed.coffee',
+		'server/settings.coffee',
+		'server/lib/util.coffee',
+		'server/lib/accounts.coffee',
+		'server/lib/stripeEvents.coffee',
+		'server/lib/products.coffee',
+		'server/lib/purchases.coffee',
 		'server/methods/chargeChatSubscription.coffee',
 		'server/models/Customer.coffee',
 		'server/models/Transaction.coffee',
 		'server/models/Subscription.coffee',
+		'server/models/Product.coffee',
+		'server/models/Referral.coffee',
+		'server/models/Purchase.coffee',
 		'server/restapi/v1/webhooks.coffee'
 	], 'server');
 

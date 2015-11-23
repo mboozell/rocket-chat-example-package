@@ -34,7 +34,6 @@ Package.onUse(function(api) {
 	api.addFiles('server/models/Rooms.coffee', 'server');
 	api.addFiles('server/models/Messages.coffee', 'server');
 	api.addFiles('server/models/Reports.coffee', 'server');
-	api.addFiles('server/models/Integrations.coffee', 'server');
 	api.addFiles('server/models/Invitations.coffee', 'server');
 
 	// Settings

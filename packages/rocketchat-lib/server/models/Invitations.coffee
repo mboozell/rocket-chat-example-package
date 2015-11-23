@@ -33,10 +33,10 @@ RocketChat.models.Invitations = new class extends RocketChat.models._Base
 		return @findOne query, options
 
 	# INSERT
-	createOneWithEmailAndKey: (email, key, extraData) ->
+	createOneWithEmail: (email, extraData) ->
 		invitation =
 			email: email
-			key: key
+			key: Random.secret()
 			ts: new Date()
 
 		_.extend invitation, extraData

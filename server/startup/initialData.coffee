@@ -1,6 +1,6 @@
 Meteor.startup ->
 	Meteor.defer ->
-		
+
 		if RocketChat.settings.get 'General_Channels_Enabled'
 			if not RocketChat.models.Rooms.findOneById('GENERAL')?
 				RocketChat.models.Rooms.createWithIdTypeAndName 'GENERAL', 'c', 'general',

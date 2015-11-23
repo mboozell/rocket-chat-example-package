@@ -321,6 +321,18 @@ RocketChat.models.Rooms = new class extends RocketChat.models._Base
 		@insert room
 		return room
 
+	createWithTypeAndName: (type, name, extraData) ->
+		room =
+			ts: new Date()
+			t: type
+			name: name
+			usernames: []
+			msgs: 0
+
+		_.extend room, extraData
+
+		room._id = @insert room
+		return room
 
 	# REMOVE
 	removeById: (_id) ->

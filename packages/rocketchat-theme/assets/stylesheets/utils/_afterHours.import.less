@@ -10,6 +10,10 @@
 .after-hours {
   color: @after-hours-font-2;
 
+  a:hover {
+    color: @after-hours-font-1;
+  }
+
   &#rocket-chat {
     background-color: @after-hours-primary;
   }
@@ -30,9 +34,19 @@
   .messages-container {
     background-color: @after-hours-primary;
 
+    .messages-box .editing .body {
+        background-color: @after-hours-accent;
+        color: @after-hours-font-1;
+    }
+
     .footer {
       background: @after-hours-secondary;
       border-top-color: @after-hours-dark;
+
+      .editing-commands a {
+        color: @after-hours-accent;
+        border-color: @after-hours-accent;
+      }
     }
 
     .message-form {
@@ -154,6 +168,7 @@
   input[type='password'] {
     border-color: @after-hours-darker;
     background-color: @after-hours-primary;
+    color: @after-hours-font-2;
     .transition(all .5s ease-in-out);
   }
 
@@ -183,8 +198,46 @@
 
     // Settings Option Groups Border Color
     .content .section .section-content {
-      border-color: @after-hours-dark
+      border-color: @after-hours-dark;
     }
 
+  }
+
+  .page-container {
+    .content::-webkit-scrollbar-thumb {
+      background-color: @after-hours-darker;
+    }
+  }
+
+  .page-list {
+    .list table tbody tr {
+      &:nth-child(odd) {
+        background-color: @after-hours-dark;
+      }
+    }
+    .results p {
+      color: #fff;
+    }
+  }
+
+  .first-unread {
+    &.first-unread-opaque {
+    	.body {
+    		&::before {
+    			background-color: @after-hours-darker;
+    		}
+
+    		&::after {
+          color: @after-hours-font-2;
+          background-color: @after-hours-dark;
+    		}
+    	}
+    }
+  }
+
+  .user-view {
+    h3, p, .input-line>label {
+      color: #fff;
+    }
   }
 }

@@ -646,6 +646,13 @@ renameRoom = (rid, name) ->
 					FlowRouter.go 'group', name: name
 
 			toastr.success t('Room_name_changed_successfully')
+
+			FinLabs.Analytics.track( 'Save Room Name', {
+				roomId: rid
+				roomName: name
+				username: Meteor.user().name
+				})
+
 		if error
 			if error.error is 'name-invalid'
 				toastr.error t('Invalid_room_name', name)

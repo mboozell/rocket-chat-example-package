@@ -99,6 +99,12 @@ RocketChat.models.Users = new class extends RocketChat.models._Base
 
 		return @find query, options
 
+	findUsersHavingService: (service, options) ->
+		query = {}
+		query["services.#{service}"] = $exists: true
+
+		return @find query, options
+
 
 	# UPDATE
 	updateLastLoginById: (_id) ->
