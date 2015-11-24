@@ -7,7 +7,7 @@ Meteor.startup ->
 		unless RocketChat.settings.get "Require_Payment"
 			return attempt.allowed
 
-		userId = attempt.user?.id
+		userId = attempt.user?._id
 		unless FinLabs.payment.purchases.userHasBaseProduct userId
 			throw new Meteor.Error 'unsubscribed-user', TAPi18n.__ 'User is not Subscribed'
 		return true
