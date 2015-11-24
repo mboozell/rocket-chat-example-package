@@ -1,11 +1,14 @@
 FinLabs.payment.purchases =
 
 	userHas: (userId, productId) ->
-		if RocketChat.authz.hasRole userId, 'admin'
-			return true
-
 		self = FinLabs.payment.purchases
 		purchases = FinLabs.models.Purchase.findAllWithUserAndProduct(userId, productId).fetch()
+
+		if RocketChat.authz.hasRole userId, 'admin'
+			if purchases.length < 1
+				FinLabs.models.Purchase.createActive userId, productId
+			return true
+
 		if purchases.length < 1
 			return false
 
@@ -30,6 +33,14 @@ FinLabs.payment.purchases =
 	userHasBaseProduct: (userId) ->
 		self = FinLabs.payment.purchases
 		products = FinLabs.models.Product.findBase().fetch()
+		for product in products
+			if self.userHas userId, product._id
+				return true
+		return false
+
+	checkAllUserProducts: (userId) ->
+		self = FinLabs.payment.purchases
+		products = FinLabs.models.Product.find().fetch()
 		for product in products
 			if self.userHas userId, product._id
 				return true

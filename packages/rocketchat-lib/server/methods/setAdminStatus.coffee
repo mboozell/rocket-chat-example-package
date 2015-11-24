@@ -13,4 +13,6 @@ Meteor.methods
 		else
 			RocketChat.authz.removeUsersFromRoles( userId, 'admin')
 
+		RocketChat.callbacks.run 'afterAdminStatusSet', userId, admin
+
 		return true
