@@ -216,8 +216,13 @@
           background-color: @after-hours-dark;
         }
       }
-      a .info h3 {
-        color: #fff;
+      a {
+        &:hover h3 {
+          color: #333;
+        }
+        .info h3 {
+          color: #fff;
+        }
       }
     }
     .results p {
