@@ -9,7 +9,7 @@ Meteor.startup ->
 
 	FinLabs.payment.products.add 'wsj-chat',
 		['wsj-user'],
-		['beta-testers'],
+		['steam-room'],
 		[
 			{
 				type: 'wordpress'

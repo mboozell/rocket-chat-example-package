@@ -45,6 +45,7 @@ class CustomOAuth
 		if not config?
 			throw new ServiceConfiguration.ConfigError()
 
+		serverURL = @serverURL
 		unless serverURL
 			serverURL = config.serverURL
 		tokenPath = serverURL + @tokenPath
