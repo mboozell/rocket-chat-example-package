@@ -29,3 +29,5 @@ Meteor.methods
 			RocketChat.models.Users.setEmailVerified userId
 		else if userData.email and emailEnabled
 			Accounts.sendVerificationEmail(userId, email)
+
+		return userId
