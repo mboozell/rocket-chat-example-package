@@ -27,15 +27,11 @@ Meteor.startup ->
 	, RocketChat.callbacks.priority.HIGH
 
 	Accounts.onLogin ->
-		FinLabs.payment.purchases.checkAllUserProducts Meteor.userId()
-		FinLabs.payment.purchases.checkAllPurchases Meteor.userId()
-
-	checkUserPurchases = (user) ->
-		FinLabs.payment.purchases.checkAllUserProducts user._id
+		FinLabs.payment.purchases.checkUser Meteor.userId()
 
 	RocketChat.models.Users.find().observe
 		changed: (newUser, oldUser) ->
 			if (newUser.services.wordpress != oldUser.services.wordpress or
 				newUser.roles.__global_roles__ != oldUser.roles.__global_roles__ or
 				newUser.username != oldUser.username)
-					checkUserPurchases newUser
+					FinLabs.payment.purchases.checkUser newUser._id
