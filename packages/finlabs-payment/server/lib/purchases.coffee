@@ -38,6 +38,11 @@ FinLabs.payment.purchases =
 				return true
 		return false
 
+	checkUser: (userId) ->
+		self = FinLabs.payment.purchases
+		self.checkAllUserProducts(userId)
+		self.checkAllPurchases(userId)
+
 	checkAllUserProducts: (userId) ->
 		self = FinLabs.payment.purchases
 		products = FinLabs.models.Product.find().fetch()
