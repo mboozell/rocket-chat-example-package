@@ -210,9 +210,19 @@
   }
 
   .page-list {
-    .list table tbody tr {
-      &:nth-child(odd) {
-        background-color: @after-hours-dark;
+    .list {
+      table tbody tr {
+        &:nth-child(odd) {
+          background-color: @after-hours-dark;
+        }
+      }
+      a {
+        &:hover h3 {
+          color: #333;
+        }
+        .info h3 {
+          color: #fff;
+        }
       }
     }
     .results p {
