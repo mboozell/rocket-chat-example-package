@@ -65,7 +65,7 @@ Template.loginForm.helpers
 		if RocketChat.settings.get 'Local_Login_Restricted'
 			unless Template.instance().inviteKey or Template.instance().adminKey
 				return true
-		return false 
+		return false
 
 Template.loginForm.events
 	'submit #login-card': (event, instance) ->
@@ -208,6 +208,9 @@ Template.loginForm.onRendered ->
 			when 'register'
 				Meteor.defer ->
 					$('input[name=name]').select().focus()
+
+	unless RocketChat.settings.get 'Local_Login_Restricted'
+		$('.localLogin').removeClass('hidden')
 
 	if @inviteKey
 		Meteor.call 'getInvitation', @inviteKey, (error, result) =>
