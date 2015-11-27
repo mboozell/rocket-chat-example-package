@@ -110,3 +110,7 @@ FlowRouter.route '/fxos',
 
 	action: ->
 		BlazeLayout.render 'fxOsInstallPrompt'
+
+FlowRouter.notFound =
+	action: (params, query) ->
+		FlowRouter.go 'home', params, query
