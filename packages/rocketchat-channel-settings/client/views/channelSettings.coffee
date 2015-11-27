@@ -1,6 +1,6 @@
 Template.channelSettings.helpers
-	notDirect: ->
-		return ChatRoom.findOne(@rid)?.t isnt 'd'
+	canMakeChannelPublic: ->
+		return ChatRoom.findOne(@rid)?.t isnt 'd' and RocketChat.settings.get 'General_Channels_Enabled'
 	roomType: ->
 		return ChatRoom.findOne(@rid)?.t
 
