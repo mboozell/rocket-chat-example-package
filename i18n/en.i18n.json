@@ -117,6 +117,7 @@
   "Direct_Messages" : "Direct Messages",
   "Disable_Favorite_Rooms" : "Disable Favorites",
   "Disable_New_Message_Notification" : "Disable New Message Notification",
+  "Disable_New_Wiseguy_Alert_Notification" : "Disable New Wiseguy Alert Notification",
   "Disable_New_Room_Notification" : "Disable New Room Notification",
   "Drop_to_upload_file" : "Drop to upload file",
   "Duplicate_channel_name" : "A Channel with name '%s' exists",
