@@ -1,7 +1,11 @@
 Api = new Restivus
 	useDefaultAuth: true
 	prettyJson: true
+	enableCors: false
 
+
+Api.addRoute 'info', authRequired: false,
+	get: -> RocketChatVersion
 
 
 Api.addRoute 'version', authRequired: false,
