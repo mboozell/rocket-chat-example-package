@@ -71,16 +71,16 @@ FinLabs.payment.purchases =
 		RocketChat.authz.addUsersToRoles purchase.user, product.roles
 		for roomId in product.channels
 			room = RocketChat.models.Rooms.findOneById roomId
-			RocketChat.callbacks.run 'beforeJoinRoom', user, room
 			if user.username
+				RocketChat.callbacks.run 'beforeJoinRoom', user, room
 				RocketChat.models.Rooms.addUsernameById roomId, user.username
-			if not RocketChat.models.Subscriptions.findOneByRoomIdAndUserId roomId, user._id
-				RocketChat.models.Subscriptions.createWithRoomAndUser room, user,
-					ts: new Date()
-					open: true
-					alert: true
-					unread: 1
-				# RocketChat.models.Messages.createUserJoinWithRoomIdAndUser roomId, user
+				if not RocketChat.models.Subscriptions.findOneByRoomIdAndUserId roomId, user._id
+					RocketChat.models.Subscriptions.createWithRoomAndUser room, user,
+						ts: new Date()
+						open: true
+						alert: true
+						unread: 1
+					RocketChat.models.Messages.createUserJoinWithRoomIdAndUser roomId, user
 			Meteor.defer ->
 				RocketChat.callbacks.run 'afterJoinRoom', user, room
 
