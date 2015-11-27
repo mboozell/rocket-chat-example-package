@@ -36,6 +36,7 @@ Template.accountPreferences.onCreated ->
 
 		data.disableNewRoomNotification = $('input[name=disableNewRoomNotification]:checked').val()
 		data.disableNewMessageNotification = $('input[name=disableNewMessageNotification]:checked').val()
+		data.disableNewWiseguyAlertNotification = $('input[name=disableNewWiseguyAlertNotification]:checked').val()
 		data.useEmojis = $('input[name=useEmojis]:checked').val()
 		data.convertAsciiEmoji = $('input[name=convertAsciiEmoji]:checked').val()
 		data.saveMobileBandwidth = $('input[name=saveMobileBandwidth]:checked').val()

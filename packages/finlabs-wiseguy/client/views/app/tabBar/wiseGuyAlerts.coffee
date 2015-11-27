@@ -5,6 +5,7 @@ Template.wiseGuyAlerts.helpers
 	hasAlerts: ->
 		return WiseGuyAlerts.find({}, { sort: { ts: -1 } }).count() > 0
 
+Template.wiseGuyAlert.helpers
 	groupDate: ->
 		return moment(@ts).format('LL')
 
@@ -57,11 +58,20 @@ Template.wiseGuyAlerts.onCreated ->
 	@alerts = ->
 		return WiseGuyAlerts.find({}, {sort: ts: -1}).fetch()
 
-Template.wiseGuyAlerts.onRendered ->
-
 Template.wiseGuyAlerts.events
 	'click .alert-wrap': (e) ->
 		e.preventDefault()
 		ct = $(e.currentTarget)
 		ct.children('.more-info').slideToggle('fast')
 		ct.children('.wiseguy-alert').toggleClass('wiseguy-plus')
+
+Template.wiseGuyAlert.onRendered ->
+	Meteor.defer ->
+		if !(Meteor.user()?.settings?.preferences?.disableNewWiseguyAlertNotification)
+			$('#wiseguyNotification')[0].play()
+
+		if !(RocketChat.TabBar.isFlexOpen('wiseGuyAlerts'))
+			element = $('.tab-button[data-template="wiseGuyAlerts"]')
+			element.addClass('blink').delay(2000).queue (next) ->
+				$(this).removeClass('blink')
+				next()
