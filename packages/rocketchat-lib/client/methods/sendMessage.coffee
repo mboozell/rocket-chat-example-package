@@ -20,7 +20,6 @@ Meteor.methods
 			ChatMessage.insert message
 
 			FinLabs.Analytics.track('Sent Message', {
-				message: message.msg
 				username: Meteor.user().name
 				room: ChatRoom.findOne(rid).name
 				roomType: ChatRoom.findOne(rid).t
