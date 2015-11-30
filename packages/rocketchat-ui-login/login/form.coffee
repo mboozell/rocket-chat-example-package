@@ -64,11 +64,19 @@ Template.loginForm.helpers
 	loginTerms: ->
 		return RocketChat.settings.get 'Layout_Login_Terms'
 
+<<<<<<< HEAD
 	loginEnabled: ->
 		if RocketChat.settings.get 'Local_Login_Restricted'
 			unless Template.instance().inviteKey or Template.instance().adminKey
 				return false
 		return true
+=======
+	registrationAllowed: ->
+		return RocketChat.settings.get('Accounts_RegistrationForm') is 'Public'
+
+	linkReplacementText: ->
+		return RocketChat.settings.get('Accounts_RegistrationForm_LinkReplacementText')
+>>>>>>> f3f16ed25e7aa0e2deebf24ef6599b223ac55334
 
 Template.loginForm.events
 	'submit #login-card': (event, instance) ->
