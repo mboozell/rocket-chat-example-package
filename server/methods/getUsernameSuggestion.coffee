@@ -15,8 +15,7 @@ usernameIsAvaliable = (username) ->
 	usernames = []
 	username = undefined
 
-	console.log 'generating username for', user
-	if RocketChat.settings.get 'UTF8_Names_slugify'
+	if RocketChat.settings.get 'UTF8_Names_Slugify'
 		usernames.push slug user.name
 	else
 		usernames.push user.name

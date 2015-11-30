@@ -120,6 +120,8 @@ FinLabs.payment.purchases =
 
 		wordpress: (userId, purchase, payment) ->
 			user = Meteor.users.findOne userId
+			if not user
+				return false
 			if user.services.wordpress
 				access_token = user.services.wordpress.accessToken
 				url = RocketChat.settings.get 'Accounts_OAuth_Wordpress_url'
