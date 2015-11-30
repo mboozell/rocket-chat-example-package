@@ -29,3 +29,6 @@ FinLabs.models.Referral = new class extends RocketChat.models._Base
 		_.extend referral, options
 
 		return @insert referral
+
+	removeByUser: (userId) ->
+		return @remove user: userId
