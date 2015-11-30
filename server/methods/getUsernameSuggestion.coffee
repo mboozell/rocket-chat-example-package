@@ -9,14 +9,13 @@ usernameIsAvaliable = (username) ->
 	if username is 'all'
 		return false
 
-	return not RocketChat.models.Users.findOneByUsername({$regex : new RegExp(username, "i") })
+	return not RocketChat.models.Users.findOneByUsername({$regex : new RegExp("^" + username + "$", "i") })
 
 @generateSuggestion = (user) ->
 	usernames = []
 	username = undefined
 
-	console.log 'generating username for', user
-	if RocketChat.settings.get 'UTF8_Names_slugify'
+	if RocketChat.settings.get 'UTF8_Names_Slugify'
 		usernames.push slug user.name
 	else
 		usernames.push user.name

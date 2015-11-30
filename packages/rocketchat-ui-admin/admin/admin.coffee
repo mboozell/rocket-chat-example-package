@@ -37,6 +37,8 @@ Template.admin.helpers
 	callbackURL: (section) ->
 		id = s.strRight(section, 'Custom OAuth: ').toLowerCase()
 		return Meteor.absoluteUrl('_oauth/' + id)
+	selectedOption: (_id, val) ->
+		return RocketChat.settings.get(_id) is val
 
 Template.admin.events
 	"click .submit .save": (e, t) ->
@@ -50,6 +52,8 @@ Template.admin.events
 				elem = t.$("[name=#{setting._id}]:checked")
 				if elem.length
 					value = if elem.val() is "1" then true else false
+			else if setting.type is 'select'
+				value = t.$("[name=#{setting._id}]").val()
 			else
 				value = _.trim(t.$("[name=#{setting._id}]").val())
 				if setting.type is 'int'

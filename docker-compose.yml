@@ -1,16 +1,16 @@
 mongo:
   image: mongo
 # volumes:
-#    - ./data/runtime/mongo:/data/mongo
+#    - ./data/runtime/db:/data/db
 #    - ./data/dump:/dump
-  command: mongod --smallfiles --replSet rs0 --oplogSize 128
+  command: mongod --smallfiles --oplogSize 128
 
 rocketchat:
   image: rocketchat/rocket.chat:develop
 # volumes:
 #    - ./uploads:/app/uploads
   environment:
-    - ROOT=3000
+    - PORT=3000
     - ROOT_URL=http://yourhost:3000
     - MONGO_URL=mongodb://mongo:27017/rocketchat
 # uncomment and set the line below if you need to support mobile apps
@@ -19,4 +19,3 @@ rocketchat:
     - mongo:mongo
   ports:
     - 3000:3000
-
