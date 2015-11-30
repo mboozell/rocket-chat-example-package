@@ -5,7 +5,6 @@ Template.wiseGuyAlerts.helpers
 	hasAlerts: ->
 		return WiseGuyAlerts.find({}, { sort: { ts: -1 } }).count() > 0
 
-Template.wiseGuyAlert.helpers
 	groupDate: ->
 		return moment(@ts).format('LL')
 
@@ -15,6 +14,8 @@ Template.wiseGuyAlert.helpers
 			return true
 		unless previousDate[0].ts.getDay() is @ts.getDay()
 			return true
+
+Template.wiseGuyAlert.helpers
 
 	isLast: ->
 		nextDate = WiseGuyAlerts.find({ts: {$lt: @ts}}, {sort: {ts: -1}, limit:1}).fetch()
@@ -67,7 +68,7 @@ Template.wiseGuyAlerts.events
 
 Template.wiseGuyAlert.onRendered ->
 	Meteor.defer ->
-		if !(Meteor.user()?.settings?.preferences?.disableNewWiseguyAlertNotification)
+		if Meteor.user()?.settings?.preferences?.enableNewWiseguyAlertNotification
 			$('#wiseguyNotification')[0].play()
 
 		if !(RocketChat.TabBar.isFlexOpen('wiseGuyAlerts'))
