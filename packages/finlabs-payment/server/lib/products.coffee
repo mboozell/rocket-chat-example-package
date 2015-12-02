@@ -1,6 +1,6 @@
 FinLabs.payment.products = new class
 
-	add: (name, roles, channelNames, payments, options) ->
+	add: (name, tools, channelNames, payments, options) ->
 		channels = []
 		for channelName in channelNames
 			channel = RocketChat.models.Rooms.findOneByName channelName
@@ -9,6 +9,12 @@ FinLabs.payment.products = new class
 			else
 				channel = RocketChat.models.Rooms.createWithTypeAndName 'p', channelName
 				channels.push channel._id
+		roles = []
+		for tool in tools
+			toolRoles = FinLabs.payment.tools.getRoles tool
+			if toolRoles
+				roles = _.union roles, toolRoles
+
 		FinLabs.models.Product.addOrUpdate name, roles, channels, payments, options
 
 Meteor.startup ->

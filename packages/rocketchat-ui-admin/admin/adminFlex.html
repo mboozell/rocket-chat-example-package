@@ -24,11 +24,11 @@
 						<a href="{{pathFor 'admin-users'}}" class="admin-link">{{_ "Users"}}</a>
 					</li>
 				{{/if}}
-				<!-- {{#if hasPermission 'view&#45;product&#45;administration'}} -->
-				<!-- 	<li> -->
-				<!-- 		<a href="{{pathFor 'admin&#45;products'}}" class="admin&#45;link">{{_ "Products"}}</a> -->
-				<!-- 	</li> -->
-				<!-- {{/if}} -->
+				{{#if hasPermission 'view-product-administration'}}
+					<li>
+						<a href="{{pathFor 'admin-products'}}" class="admin-link">{{_ "Products"}}</a>
+					</li>
+				{{/if}}
 
 				{{#each adminBoxOptions}}
 					{{#if permissionGranted}}

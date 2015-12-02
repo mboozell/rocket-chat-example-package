@@ -1,4 +1,5 @@
 Template.adminProducts.helpers
+
 	isReady: ->
 		return Template.instance().ready.get()
 	integrations: ->
