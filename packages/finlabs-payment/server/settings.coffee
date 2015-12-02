@@ -20,18 +20,19 @@ Meteor.startup ->
 
 Meteor.startup ->
 
-	# Note:
-	# 1.if we need to create a role that can only edit channel message, but not edit group message
-	# then we can define edit-<type>-message instead of edit-message
-	# 2. admin, moderator, and user roles should not be deleted as they are referened in the code.
 	permissions = [
 
 		{ _id: 'view-product-administration',
 		roles : ['admin']}
 
+		{ _id: 'create-product',
+		roles : ['admin']}
+
+		{ _id: 'view-products',
+		roles : ['admin']}
+
 	]
 
-	#alanning:roles
 	roles = _.pluck(Roles.getAllRoles().fetch(), 'name')
 
 	for permission in permissions

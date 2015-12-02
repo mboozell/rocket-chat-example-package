@@ -61,10 +61,14 @@ Package.onUse(function(api) {
 		'server/models/Tool.coffee',
 		'server/models/Referral.coffee',
 		'server/models/Purchase.coffee',
+		'server/publications/products.coffee',
 		'server/restapi/v1/webhooks.coffee'
 	], 'server');
 
 	api.addFiles([
+		'client/lib/collections.coffee',
+		'client/views/admin/adminProducts.html',
+		'client/views/admin/adminProducts.coffee',
 		'client/views/login/payment.html',
 		'client/views/login/payment.coffee',
 		'client/views/payment/form.html',

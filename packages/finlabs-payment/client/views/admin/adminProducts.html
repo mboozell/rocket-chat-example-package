@@ -3,7 +3,7 @@
 		<head class="fixed-title">
 			{{> burger}}
 			<h2>
-				<span class="room-title">{{_ "Integrations"}}</span>
+				<span class="room-title">{{_ "Products"}}</span>
 			</h2>
 		</head>
 		<div class="content">
@@ -12,35 +12,25 @@
 					<div class="section">
 						<div class="section-content">
 							<div class="input-line double-col">
-								<label>{{_ "Service Name"}}</label>
+								<label>{{_ "Product Name"}}</label>
 								<div>
-									<input type="text" name="integration_name" />
+									<input type="text" name="product_name" />
 								</div>
 							</div>
 						</div>
 					</div>
 				</fieldset>
 				<div class="submit">
-					<button class="button create">{{_ "Create New Integration"}}</button>
+					<button class="button create">{{_ "Create New Product"}}</button>
 				</div>
 			</div>
+			{{#each products}}
 			<div class="section">
 				<div class="section-content">
-					<h3>Current Integrations</h3>
-					<div class="integrations-list">
-						{{#each integrations}}
-						<div class="integration-item">
-							<div class="integration-name">
-								{{name}}
-							</div>
-							<div class="integration-key">
-								<pre>API_KEY: {{key}}</pre>
-							</div>
-						</div>
-						{{/each}}
-					</div>
+					<h3>{{name}}</h3>
 				</div>
 			</div>
+			{{/each}}
 		</div>
 	</section>
 </template>

@@ -2,26 +2,26 @@ Template.adminProducts.helpers
 
 	isReady: ->
 		return Template.instance().ready.get()
-	integrations: ->
-		return Template.instance().integrations()
+	products: ->
+		console.log Template.instance().products()
+		return Template.instance().products()
 
 Template.adminProducts.onCreated ->
 	instance = @
 	@ready = new ReactiveVar false
 
 	@autorun ->
-		subscription = instance.subscribe 'integrations'
+		subscription = instance.subscribe 'products'
 		instance.ready.set subscription.ready()
 
-	@integrations = ->
-		Integrations.find()
+	@products = ->
+		Products.find()
 
 Template.adminProducts.events
 	'click .submit .button': (e, instance) ->
-		console.log(instance.integrations())
-		form = $('input[name="integration_name"]')
+		form = $('input[name="product_name"]')
 		name = form.val()
-		Meteor.call 'createIntegration', name, (error, result) ->
+		Meteor.call 'createProduct', name, (error, result) ->
 			if result
 				form.val('')
 			if error

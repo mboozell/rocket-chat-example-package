@@ -84,12 +84,6 @@ Meteor.startup ->
 		{ _id: 'create-invitation',
 		roles : ['admin']}
 
-		{ _id: 'create-integration',
-		roles : ['admin']}
-
-		{ _id: 'view-integrations',
-		roles : ['admin']}
-
 		{ _id: 'basic',
 		roles : ['admin', 'site-moderator', 'moderator', 'user']}
 
