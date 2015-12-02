@@ -65,6 +65,8 @@ Template.loginForm.helpers
 		return RocketChat.settings.get 'Layout_Login_Terms'
 
 	loginEnabled: ->
+		if RocketChat.settings.get('Local_Login_Restricted') is undefined
+			return false
 		if RocketChat.settings.get 'Local_Login_Restricted'
 			unless Template.instance().inviteKey or Template.instance().adminKey
 				return false
