@@ -67,6 +67,8 @@ FinLabs.payment.purchases =
 
 	enablePurchase: (purchase) ->
 		user = Meteor.users.findOne purchase.user
+		if not user
+			return
 		product = FinLabs.models.Product.findOneById purchase.product
 		RocketChat.authz.addUsersToRoles purchase.user, product.roles
 		for roomId in product.channels
@@ -80,12 +82,14 @@ FinLabs.payment.purchases =
 						open: true
 						alert: true
 						unread: 1
-					RocketChat.models.Messages.createUserJoinWithRoomIdAndUser roomId, user
-			Meteor.defer ->
-				RocketChat.callbacks.run 'afterJoinRoom', user, room
+					# RocketChat.models.Messages.createUserJoinWithRoomIdAndUser roomId, user
+				Meteor.defer ->
+					RocketChat.callbacks.run 'afterJoinRoom', user, room
 
 	disablePurchase: (purchase) ->
 		user = Meteor.users.findOne purchase.user
+		if not user
+			return
 		product = FinLabs.models.Product.findOneById purchase.product
 		RocketChat.authz.removeUsersFromRoles purchase.user, product.roles
 		for roomId in product.channels
@@ -116,6 +120,8 @@ FinLabs.payment.purchases =
 
 		wordpress: (userId, purchase, payment) ->
 			user = Meteor.users.findOne userId
+			if not user
+				return false
 			if user.services.wordpress
 				access_token = user.services.wordpress.accessToken
 				url = RocketChat.settings.get 'Accounts_OAuth_Wordpress_url'

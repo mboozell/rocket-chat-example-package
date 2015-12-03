@@ -76,3 +76,6 @@ FinLabs.models.Subscription = new class extends RocketChat.models._Base
 	# REMOVE
 	removeById: (_id) ->
 		return @remove _id
+
+	removeByUser: (userId) ->
+		return @remove user: userId
