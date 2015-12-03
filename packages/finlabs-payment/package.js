@@ -54,6 +54,7 @@ Package.onUse(function(api) {
 		'server/lib/products.coffee',
 		'server/lib/purchases.coffee',
 		'server/methods/chargeChatSubscription.coffee',
+		'server/methods/updateProductBaseStatus.coffee',
 		'server/models/Customer.coffee',
 		'server/models/Transaction.coffee',
 		'server/models/Subscription.coffee',
@@ -62,11 +63,16 @@ Package.onUse(function(api) {
 		'server/models/Referral.coffee',
 		'server/models/Purchase.coffee',
 		'server/publications/products.coffee',
+		'server/publications/productChannels.coffee',
 		'server/restapi/v1/webhooks.coffee'
 	], 'server');
 
 	api.addFiles([
 		'client/lib/collections.coffee',
+		'client/views/admin/tabs/adminProductInfo.html',
+		'client/views/admin/tabs/adminProductInfo.coffee',
+		'client/views/admin/tabs/adminProductChannels.html',
+		'client/views/admin/tabs/adminProductChannels.coffee',
 		'client/views/admin/adminProducts.html',
 		'client/views/admin/adminProducts.coffee',
 		'client/views/login/payment.html',

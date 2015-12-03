@@ -76,3 +76,13 @@ FinLabs.models.Product = new class extends RocketChat.models._Base
 
 		return @update query, update
 
+	updateBaseStatus: (_id, isBaseProduct) ->
+		query =
+			_id: _id
+
+		update =
+			$set:
+				baseProduct: isBaseProduct
+
+		return @update query, update
+

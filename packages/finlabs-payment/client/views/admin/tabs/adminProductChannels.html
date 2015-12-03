@@ -1,0 +1,16 @@
+<template name="adminProductChannels">
+	<h1 class="product-info-title">{{name}}</h1>
+	<div>
+		{{#each channels}}
+		<div class="channel-list-item">
+			<i class="{{channelIcon}}"></i>
+			<span>{{name}}</span>
+			<a class="remove-channel">delete</a>
+		</div>
+		{{/each}}
+	</div>
+	<div>
+		<input name="new-channel-name" placeholder="Room Name">
+		<button class="button add-channel">{{_ "Add Room"}}</button>
+	</div>
+</template>

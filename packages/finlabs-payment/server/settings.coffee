@@ -31,6 +31,9 @@ Meteor.startup ->
 		{ _id: 'view-products',
 		roles : ['admin']}
 
+		{ _id: 'can-update-product',
+		roles : ['admin']}
+
 	]
 
 	roles = _.pluck(Roles.getAllRoles().fetch(), 'name')

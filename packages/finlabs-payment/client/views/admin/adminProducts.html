@@ -24,13 +24,32 @@
 					<button class="button create">{{_ "Create New Product"}}</button>
 				</div>
 			</div>
-			{{#each products}}
-			<div class="section">
-				<div class="section-content">
-					<h3>{{name}}</h3>
-				</div>
+			<h1>{{_ "Current Products"}}</h1>
+			<div class="list">
+				<table>
+					<thead>
+						<tr>
+							<th>{{_ "Product"}}</th>
+							<th>{{_ "# of Users"}}</th>
+							<th>{{_ "# of Channels"}}</th>
+						</tr>
+					</thead>
+					<tbody>
+					{{#each products}}
+						<tr class="product-info" data-productid="{{_id}}">
+							<td>{{name}}</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+					{{/each}}
+					</tbody>
+				</table>
 			</div>
-			{{/each}}
+		</div>
+	</section>
+	<section class="flex-tab">
+		<div class="user-view">
+			{{> Template.dynamic template=flexTemplate data=flexData}}
 		</div>
 	</section>
 </template>
