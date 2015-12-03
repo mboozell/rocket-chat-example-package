@@ -35,6 +35,8 @@ FinLabs.WiseGuy.parse =
 	weekly: (alert) ->
 		result = /\(Wkly\)/.exec(alert)
 		if result then true else false
+	ref_price: (alert) ->
+		/[A-Z]{1,4}=(\d|\.)*/.exec(alert)[0]
 
 FinLabs.WiseGuy.parseAll = (alert) ->
 	result = {}
