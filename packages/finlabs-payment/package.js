@@ -69,10 +69,10 @@ Package.onUse(function(api) {
 
 	api.addFiles([
 		'client/lib/collections.coffee',
-		'client/views/admin/tabs/adminProductInfo.html',
-		'client/views/admin/tabs/adminProductInfo.coffee',
-		'client/views/admin/tabs/adminProductChannels.html',
-		'client/views/admin/tabs/adminProductChannels.coffee',
+		'client/views/admin/productTabs/adminProductInfo.html',
+		'client/views/admin/productTabs/adminProductInfo.coffee',
+		'client/views/admin/productTabs/adminProductChannels.html',
+		'client/views/admin/productTabs/adminProductChannels.coffee',
 		'client/views/admin/adminProducts.html',
 		'client/views/admin/adminProducts.coffee',
 		'client/views/login/payment.html',
