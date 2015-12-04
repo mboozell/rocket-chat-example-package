@@ -68,6 +68,8 @@ RocketChat.settings.addGroup 'API'
 RocketChat.settings.add 'API_Analytics', '', { type: 'string', group: 'API', public: true }
 RocketChat.settings.add 'API_Embed', true, { type: 'boolean', group: 'API', public: true }
 RocketChat.settings.add 'API_EmbedDisabledFor', '', { type: 'string', group: 'API', public: true, i18nDescription: 'API_EmbedDisabledFor_Description' }
+RocketChat.settings.add 'Kadira_App_Id', '', { type: 'string', group: 'API' }
+RocketChat.settings.add 'Kadira_App_Secret', '', {type: 'string', group: 'API' }
 
 RocketChat.settings.addGroup 'SMTP'
 RocketChat.settings.add 'SMTP_Host', '', { type: 'string', group: 'SMTP' }
