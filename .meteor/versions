@@ -63,6 +63,7 @@ jparker:crypto-md5@0.1.1
 jparker:gravatar@0.4.1
 jquery@1.11.4
 kadira:blaze-layout@2.3.0
+kadira:debug@2.2.4
 kadira:flow-router@2.10.0
 kenton:accounts-sandstorm@0.1.8
 kevohagan:sweetalert@1.0.0
@@ -83,8 +84,10 @@ mdg:validation-error@0.1.0
 meteor@1.1.10
 meteor-base@1.0.1
 meteor-developer@1.1.5
+meteorhacks:inject-initial@1.0.3
 meteorhacks:kadira@2.26.3
 meteorhacks:meteorx@1.4.1
+meteorhacks:zones@1.6.0
 meteorspark:util@0.2.0
 minifiers@1.1.7
 minimongo@1.0.10
