@@ -1,4 +1,4 @@
-Template.adminProductChannels.helpers
+Template.adminProductUsers.helpers
 
 	channels: ->
 		ChatRoom.find _id: $in: @channels
@@ -21,7 +21,7 @@ Template.adminProductChannels.helpers
 		}
 
 
-Template.adminProductChannels.events
+Template.adminProductUsers.events
 
 	'click .add-channel': (e, instance) ->
 		e.preventDefault()

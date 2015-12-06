@@ -76,6 +76,26 @@ FinLabs.models.Product = new class extends RocketChat.models._Base
 
 		return @update query, update
 
+	addChannel: (_id, channelId) ->
+		query =
+			_id: _id
+
+		update =
+			$addToSet:
+				channels: channelId
+
+		return @update query, update
+
+	removeChannel: (_id, channelId) ->
+		query =
+			_id: _id
+
+		update =
+			$pull:
+				channels: channelId
+
+		return @update query, update
+
 	updateBaseStatus: (_id, isBaseProduct) ->
 		query =
 			_id: _id

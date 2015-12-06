@@ -29,6 +29,7 @@ Template.adminProducts.onCreated ->
 				RocketChat.TabBar.setData product
 				RocketChat.TabBar.addButton({ id: 'product-info', i18nTitle: t('Product_Info'), icon: 'icon-user', template: 'adminProductInfo', order: 1 })
 				RocketChat.TabBar.addButton({ id: 'product-channels', i18nTitle: t('Product_Channels'), icon: 'icon-user', template: 'adminProductChannels', order: 2 })
+				RocketChat.TabBar.addButton({ id: 'product-users', i18nTitle: t('Product_Users'), icon: 'icon-user', template: 'adminProductUsers', order: 2 })
 				return
 		RocketChat.TabBar.reset()
 
