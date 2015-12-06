@@ -1,7 +1,10 @@
 Template.adminProductUsers.helpers
 
 	users: ->
-		ChatRoom.find _id: $in: @channels
+		productId = Template.instance().data._id
+		purchases = FinLabs.models.Purchase.find product: productId, active: true
+		userIds = purchases.map (product) -> product.user
+		Meteor.users.find _id: $in: userIds
 
 	autocompleteSettings: ->
 		return {
@@ -24,7 +27,7 @@ Template.adminProductUsers.events
 		e.preventDefault()
 		productId = instance.data._id
 		userName = $('#new-user-name').val()
-		userId = Meteor.users.findOne(name: userName)._id
+		userId = Meteor.users.findOne(username: userName)._id
 		Meteor.call 'addProductUser', productId, userId, (error, result) ->
 				if result
 					toastr.success t('Product Update Successfully')

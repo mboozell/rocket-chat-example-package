@@ -27,7 +27,7 @@ Template.adminProducts.onCreated ->
 			if product
 				instance.subscribe 'productChannels', product._id
 				instance.subscribe 'productPurchases', product._id
-				instance.subscribe 'productUsers', product._id
+				instance.subscribe 'fullUserData'
 				RocketChat.TabBar.setData product
 				RocketChat.TabBar.addButton({ id: 'product-info', i18nTitle: t('Product_Info'), icon: 'icon-user', template: 'adminProductInfo', order: 1 })
 				RocketChat.TabBar.addButton({ id: 'product-channels', i18nTitle: t('Product_Channels'), icon: 'icon-user', template: 'adminProductChannels', order: 2 })
