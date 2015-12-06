@@ -31,6 +31,9 @@ Meteor.startup ->
 		{ _id: 'view-products',
 		roles : ['admin']}
 
+		{ _id: 'view-purchases',
+		roles : ['admin']}
+
 		{ _id: 'can-update-product',
 		roles : ['admin']}
 

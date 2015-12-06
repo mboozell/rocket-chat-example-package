@@ -1,16 +1,15 @@
 <template name="adminProductUsers">
 	<h1 class="product-info-title">{{name}}</h1>
 	<div>
-		{{#each channels}}
-		<div class="channel-list-item">
-			<i class="{{channelIcon}}"></i>
+		{{#each users}}
+		<div class="user-list-item">
 			<span>{{name}}</span>
-			<a class="remove-channel" data-channelid="{{_id}}">delete</a>
+			<a class="remove-user" data-userid="{{_id}}">delete</a>
 		</div>
 		{{/each}}
 	</div>
 	<div>
-		{{> inputAutocomplete settings=autocompleteSettings id="new-channel-name" class="required search" autocomplete="off"}}
-		<button class="button add-channel">{{_ "Add Room"}}</button>
+		{{> inputAutocomplete settings=autocompleteSettings id="new-user-name" class="required search" autocomplete="off"}}
+		<button class="button add-user">{{_ "Add User"}}</button>
 	</div>
 </template>

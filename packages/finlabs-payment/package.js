@@ -57,6 +57,8 @@ Package.onUse(function(api) {
 		'server/methods/updateProductBaseStatus.coffee',
 		'server/methods/addProductChannel.coffee',
 		'server/methods/removeProductChannel.coffee',
+		'server/methods/addProductUser.coffee',
+		'server/methods/removeProductUser.coffee',
 		'server/models/Customer.coffee',
 		'server/models/Transaction.coffee',
 		'server/models/Subscription.coffee',
@@ -66,6 +68,7 @@ Package.onUse(function(api) {
 		'server/models/Purchase.coffee',
 		'server/publications/products.coffee',
 		'server/publications/productChannels.coffee',
+		'server/publications/productPurchases.coffee',
 		'server/restapi/v1/webhooks.coffee'
 	], 'server');
 

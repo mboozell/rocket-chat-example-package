@@ -9,5 +9,4 @@ Meteor.publish 'productChannels', (productId) ->
 	console.log '[publish] productChannels'.green
 
 	product = FinLabs.models.Product.findOne productId
-	channels = RocketChat.models.Rooms.findAll product.channels
 	RocketChat.models.Rooms.findAll product.channels
