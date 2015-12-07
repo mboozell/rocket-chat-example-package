@@ -12,3 +12,4 @@ FinLabs.WiseGuy.saveAlert = (alert, key) ->
 
   FinLabs.models.WiseGuyAlerts.createOneWithApiKey data, key
 
+  FinLabs.models.WiseGuyAlerts.transition

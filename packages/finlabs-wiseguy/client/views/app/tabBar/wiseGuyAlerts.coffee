@@ -46,12 +46,16 @@ Template.wiseGuyAlerts.helpers
 	formatPrice: ->
 		if @price > 999 then (@price/1000).toFixed() + 'K' else @price
 
+	moreResults: ->
+		return !(WiseGuyAlerts.find().count() < Template.instance().numItems.get() )
+
 Template.wiseGuyAlerts.onCreated ->
 	instance = @
 	@ready = new ReactiveVar true
+	@numItems = new ReactiveVar 20
 
 	@autorun ->
-		subscription = instance.subscribe 'wiseGuyAlerts', 20
+		subscription = instance.subscribe 'wiseGuyAlerts', instance.numItems.get()
 		instance.ready.set subscription.ready()
 
 	@alerts = ->
@@ -65,3 +69,8 @@ Template.wiseGuyAlerts.events
 		ct = $(e.currentTarget)
 		ct.children('.more-info').slideToggle('fast')
 		ct.children('.wiseguy-alert').toggleClass('wiseguy-plus')
+
+	'click .load-alerts': (e, template) ->
+		e.preventDefault()
+		template.numItems.set(template.numItems.get() + 10)
+

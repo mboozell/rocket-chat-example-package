@@ -31,3 +31,6 @@ FinLabs.models.WiseGuyAlerts = new class extends RocketChat.models._Base
 
     return @remove query
 
+  # TRANSITION
+  transition: ->
+    console.log 'Testing'
