@@ -48,7 +48,7 @@ Template.paymentForm.events
 	'submit #payment-form': (e, instance) ->
 		e.preventDefault()
 		if instance.stripeLoaded()
-			instance.paymentIsLoading = true
+			instance.paymentIsLoading.set true
 			productId = instance.product.get()._id
 			form =
 				name: $('input[name="name"]').val()
@@ -58,16 +58,16 @@ Template.paymentForm.events
 				exp_year: $('input[name="exp-year"]').val()
 			Stripe.card.createToken form, (status, token) ->
 				if token.error
-					instance.paymentIsLoading = false
+					instance.paymentIsLoading.set false
 					{error} = token
 					console.log error
 					errors = {}
 					errors[error.param] = true
-					instance.paymentErrors.set(errors)
+					instance.paymentErrors.set errors
 					return toastr.error error.message
 				Meteor.call 'chargeChatSubscription', token, productId, (error, response) ->
 					if error
-						instance.paymentIsLoading = false
+						instance.paymentIsLoading.set false
 						toastr.error "Credit Card could not be processed!"
 
 	'keyup input': (e, instance) ->

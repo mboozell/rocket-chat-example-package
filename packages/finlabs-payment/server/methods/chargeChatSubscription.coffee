@@ -10,13 +10,14 @@ Meteor.methods
 		plan = subscription.plan.id
 
 		user = Meteor.user()
-		console.log '[methods] chargeChatSubscription -> '.green,'userId:', Meteor.userId(), "$#{plan}"
-
-		user = Meteor.user()
+		console.log '[methods] chargeChatSubscription -> '.green,'userId:', user._id, "$#{plan}"
 
 		FinLabs.payment.util.createSubscription user, plan, token
 
 		RocketChat.authz.removeUsersFromRoles user._id, 'unpaid-user'
 		RocketChat.authz.addUsersToRoles user._id, 'user'
+
+		FinLabs.models.Purchase.createInactive user._id, product._id
+		FinLabs.payment.purchases.checkUser user._id
 
 		return true
