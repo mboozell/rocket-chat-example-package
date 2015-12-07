@@ -1,6 +1,6 @@
 stripe = Npm.require('stripe')
 
-FinLabs.payment.Util = class
+FinLabs.payment.util = new class
 
 	constructor: () ->
 		stripeKey = RocketChat.settings.get 'Stripe_Secret_Key'

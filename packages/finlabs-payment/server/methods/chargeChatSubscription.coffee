@@ -9,8 +9,7 @@ Meteor.methods
 
 		user = Meteor.user()
 
-		paymentUtil = new FinLabs.payment.Util()
-		paymentUtil.createSubscription user, plan, token
+		FinLabs.payment.util.createSubscription user, plan, token
 
 		RocketChat.authz.removeUsersFromRoles user._id, 'unpaid-user'
 		RocketChat.authz.addUsersToRoles user._id, 'user'

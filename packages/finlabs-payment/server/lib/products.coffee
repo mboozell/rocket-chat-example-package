@@ -34,6 +34,15 @@ Meteor.startup ->
 		for purchase in purchases
 			FinLabs.payment.purchases.checkPurchase purchase
 
+
+	updateProduct = (product) ->
+		for payment in product.payments
+			if payment.type is 'subscription'
+				plan = FinLabs.payment.util.getPlan payment.plan.id
+				FinLabs.models.Product.updatePlan plan
+
+		updatePurchases product
+
 	FinLabs.models.Product.find().observe
-		changed: updatePurchases
-		added: updatePurchases
+		changed: updateProduct
+		added: updateProduct

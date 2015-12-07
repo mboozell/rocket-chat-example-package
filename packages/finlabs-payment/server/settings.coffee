@@ -13,10 +13,16 @@ Meteor.startup ->
 		[
 			{
 				type: 'wordpress'
+			},
+			{
+				type: 'subscription'
+				plan:
+					id: 'wsj-chat'
 			}
 		],
 		baseProduct: true
 		apiKey: "moUObG8aQLN24KWyxpv0VN3dGvP9G0tyt81_39l9ehX"
+		default: true
 
 Meteor.startup ->
 
@@ -29,7 +35,7 @@ Meteor.startup ->
 		roles : ['admin']}
 
 		{ _id: 'view-products',
-		roles : ['admin']}
+		roles : ['admin', 'user', 'unpaid-user']}
 
 		{ _id: 'view-purchases',
 		roles : ['admin']}

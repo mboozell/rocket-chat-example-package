@@ -15,20 +15,20 @@ Template.paymentForm.helpers
 
 	buttonLabel: ->
 		instance = Template.instance()
+		trialDays = instance.paymentDetails.trialDays
 		if instance.stripeLoaded() and instance.paymentIsLoading.get()
 			"Processing"
-		else if RocketChat.settings.get 'Subscription_Trial_Days'
-			"Start My #{RocketChat.settings.get 'Subscription_Trial_Days'} Day Free Trial"
+		else if trialDays
+			"Start My #{trialDays} Day Free Trial"
 		else
 			"Pay Securely"
 
 	paymentPrice: ->
-		RocketChat.settings.get('Subscription_Price').toFixed(2)
+		Template.instance().paymentDetails.amount
 
 	paymentPeriod: ->
-		if RocketChat.settings.get 'Subscription_Interval'
-			"/#{RocketChat.settings.get 'Subscription_Interval'}"
-
+		interval = Template.instance().paymentDetails.trialDays
+		return if interval then "/#{interval}" else ""
 
 Template.paymentForm.events
 
@@ -72,6 +72,22 @@ Template.paymentForm.onCreated ->
 	instance = @
 	@paymentErrors = new ReactiveVar {}
 	@paymentIsLoading = new ReactiveVar true
+	@ready = new ReactiveVar false
+
+	@autorun ->
+		subscription = instance.subscribe 'products'
+		instance.ready.set subscription.ready()
+
+	@autorun ->
+		if instance.ready.get()
+			product = FinLabs.models.Product.findOne default: true
+			console.log product
+			if product
+				instance.product = product
+				for payment in product.payments
+					if payment.type is 'subscription'
+						instance.paymentDetails = payment.plan
+						break
 
 	$.ajaxSetup(cache: true)
 
