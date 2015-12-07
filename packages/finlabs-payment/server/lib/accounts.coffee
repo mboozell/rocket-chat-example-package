@@ -32,6 +32,6 @@ Meteor.startup ->
 	RocketChat.models.Users.find().observe
 		changed: (newUser, oldUser) ->
 			if (newUser.services.wordpress != oldUser.services.wordpress or
-				newUser.roles.__global_roles__ != oldUser.roles.__global_roles__ or
+				newUser.roles?.__global_roles__ != oldUser.roles?.__global_roles__ or
 				newUser.username != oldUser.username)
 					FinLabs.payment.purchases.checkUser newUser._id
