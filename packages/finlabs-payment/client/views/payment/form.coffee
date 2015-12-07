@@ -15,7 +15,7 @@ Template.paymentForm.helpers
 
 	buttonLabel: ->
 		instance = Template.instance()
-		trialDays = instance.paymentDetails.trialDays
+		trialDays = if instance.paymentDetails.get() then instance.paymentDetails.get().trialDays
 		if instance.stripeLoaded() and instance.paymentIsLoading.get()
 			"Processing"
 		else if trialDays
@@ -24,10 +24,14 @@ Template.paymentForm.helpers
 			"Pay Securely"
 
 	paymentPrice: ->
-		Template.instance().paymentDetails.amount
+		instance = Template.instance()
+		amount = if instance.paymentDetails.get() then instance.paymentDetails.get().amount
+		if amount
+			amount = (amount / 100).toFixed(2)
 
 	paymentPeriod: ->
-		interval = Template.instance().paymentDetails.trialDays
+		instance = Template.instance()
+		interval = if instance.paymentDetails.get() then instance.paymentDetails.get().interval
 		return if interval then "/#{interval}" else ""
 
 Template.paymentForm.events
@@ -45,6 +49,7 @@ Template.paymentForm.events
 		e.preventDefault()
 		if instance.stripeLoaded()
 			instance.paymentIsLoading = true
+			productId = instance.product.get()._id
 			form =
 				name: $('input[name="name"]').val()
 				number: $('input[name="number"]').val().replace /\s/g, ''
@@ -60,7 +65,7 @@ Template.paymentForm.events
 					errors[error.param] = true
 					instance.paymentErrors.set(errors)
 					return toastr.error error.message
-				Meteor.call 'chargeChatSubscription', token, (error, response) ->
+				Meteor.call 'chargeChatSubscription', token, productId, (error, response) ->
 					if error
 						instance.paymentIsLoading = false
 						toastr.error "Credit Card could not be processed!"
@@ -73,6 +78,8 @@ Template.paymentForm.onCreated ->
 	@paymentErrors = new ReactiveVar {}
 	@paymentIsLoading = new ReactiveVar true
 	@ready = new ReactiveVar false
+	@product = new ReactiveVar null
+	@paymentDetails = new ReactiveVar null
 
 	@autorun ->
 		subscription = instance.subscribe 'products'
@@ -81,13 +88,10 @@ Template.paymentForm.onCreated ->
 	@autorun ->
 		if instance.ready.get()
 			product = FinLabs.models.Product.findOne default: true
-			console.log product
 			if product
-				instance.product = product
-				for payment in product.payments
-					if payment.type is 'subscription'
-						instance.paymentDetails = payment.plan
-						break
+				instance.product.set product
+				subscription = _.findWhere product.payments, type: 'subscription'
+				instance.paymentDetails.set subscription.plan
 
 	$.ajaxSetup(cache: true)
 

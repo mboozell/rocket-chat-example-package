@@ -1,9 +1,14 @@
 Meteor.methods
-	chargeChatSubscription: (token) ->
+	chargeChatSubscription: (token, productId) ->
 		if not Meteor.userId()
 			throw new Meteor.Error 'invalid-user', "[methods] chargeChatSubscription -> Invalid user"
 
-		plan = RocketChat.settings.get 'Subscription_Plan'
+		product = FinLabs.models.Product.findOne productId
+		unless product.baseProduct and product.default
+			thow new Meteor.Error 'invalid-product', "[methods] chargeChatSubscription -> Invalid user"
+		subscription = _.findWhere product.payments, type: 'subscription'
+		plan = subscription.plan.id
+
 		user = Meteor.user()
 		console.log '[methods] chargeChatSubscription -> '.green,'userId:', Meteor.userId(), "$#{plan}"
 
