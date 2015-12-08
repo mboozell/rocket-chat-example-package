@@ -46,6 +46,9 @@ Template.wiseGuyAlerts.helpers
 	formatPrice: ->
 		if @price > 999 then (@price/1000).toFixed() + 'K' else @price
 
+	refPrice: ->
+		return 'Reference Price: ' + @ref_price
+
 Template.wiseGuyAlerts.onCreated ->
 	instance = @
 	@ready = new ReactiveVar true
