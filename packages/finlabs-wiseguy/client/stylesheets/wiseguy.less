@@ -177,6 +177,26 @@
 		opacity: 0;
 		animation: new-alert-animation 0.3s linear forwards;
 	}
+
+	.load-more {
+		text-align: center;
+		position: relative;
+		top: 15px;
+
+		.load-alerts {
+			border: none;
+		    color: #fff;
+		    text-transform: uppercase;
+		    font-weight: bold;
+		    background-color: #353C42;
+		    padding: 5px 15px;
+		    border-radius: 3px;
+		    cursor: pointer;
+		    &:hover {
+		    	background-color: #444B50;
+		    }
+		}
+	}
 }
 @-moz-keyframes new-alert-animation {
 	0% {
