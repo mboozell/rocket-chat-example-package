@@ -11,7 +11,7 @@
 ### Configure basic system
 
 - Create RAID disk from the data disks: `apt-get install mdadm --no-install-recommends && mdadm --create /dev/md0 --level=0 --raid-devices=2 /dev/sdc /dev/sdd && mkfs.ext3 /dev/md0 && mkdir /storage && mount /dev/md0 /storage && mdadm --detail --scan >> /etc/mdadm/mdadm.conf`
-- Add RAID entry from `mdadm.conf` to fstab: `/dev/md/sanglucci1:0 /storage auto defaults 0 2`
+- Add RAID entry from `mdadm.conf` to fstab: `UUID=UUID_FOR_RAID_ARRAY /storage auto defaults,nobootwait 0 2` (find UUID with `blkid`)
 - Add `AUTOSTART=true` to `/etc/default/mdadm`
 - Update initrd: `update-initramfs -u`
 - Add user `sanglucci` with SSH key and add to sudoers:
