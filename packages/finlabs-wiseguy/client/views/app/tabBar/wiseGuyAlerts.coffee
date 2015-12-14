@@ -1,4 +1,5 @@
 Template.wiseGuyAlerts.helpers
+
 	alerts: ->
 		return Template.instance().alerts()
 
@@ -14,8 +15,6 @@ Template.wiseGuyAlerts.helpers
 			return true
 		unless previousDate[0].ts.getDay() is @ts.getDay()
 			return true
-
-Template.wiseGuyAlert.helpers
 
 	isLast: ->
 		nextDate = WiseGuyAlerts.find({ts: {$lt: @ts}}, {sort: {ts: -1}, limit:1}).fetch()
@@ -36,7 +35,7 @@ Template.wiseGuyAlert.helpers
 
 	formatDate: ->
 		if @weekly
-			return "Fri #{@exp_date.getMonth() + 1}/#{@exp_date.getDate() + 1}"
+			return "Fri #{@exp_date.getMonth() + 1}/#{@exp_date.getDate()}"
 		"#{@exp_date.toDateString().substr(4,3)}#{@exp_date.toDateString().substr(13,2)}"
 
 	getStrike: ->
@@ -46,7 +45,15 @@ Template.wiseGuyAlert.helpers
 		if @direction is 1 then 'CALLS' else 'PUTS'
 
 	formatPrice: ->
-		if @price > 999 then (@price/1000).toFixed() + 'K' else @price
+		formattedPrice = @price
+		if @price >= 1e6
+			formattedPrice = (@price/1e6).toFixed(2) + 'M'
+		else if @price >= 1e3
+			formattedPrice = (@price/1e3).toFixed() + 'K'
+		return formattedPrice
+
+	refPrice: ->
+		return @ref_price
 
 Template.wiseGuyAlerts.onCreated ->
 	instance = @
@@ -66,7 +73,7 @@ Template.wiseGuyAlerts.events
 		ct.children('.more-info').slideToggle('fast')
 		ct.children('.wiseguy-alert').toggleClass('wiseguy-plus')
 
-Template.wiseGuyAlert.onRendered ->
+Template.wiseGuyAlerts.onRendered ->
 	Meteor.defer ->
 		if Meteor.user()?.settings?.preferences?.enableNewWiseguyAlertNotification
 			$('#wiseguyNotification')[0].play()

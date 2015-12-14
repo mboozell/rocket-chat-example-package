@@ -15,6 +15,11 @@ Template.room.helpers
 		return 'icon-star favorite-room' if sub?.f? and sub.f and favoritesEnabled
 		return 'icon-star-empty'
 
+	favoriteLabel: ->
+		sub = ChatSubscription.findOne { rid: this._id }, { fields: { f: 1 } }
+		return "Unfavorite" if sub?.f? and sub.f and favoritesEnabled
+		return "Favorite"
+
 	subscribed: ->
 		return isSubscribed(this._id)
 
@@ -326,9 +331,29 @@ Template.room.events
 		instance.showUsersOffline.set(!instance.showUsersOffline.get())
 
 	'click .message-cog': (e) ->
-		message_id = $(e.currentTarget).closest('.message').attr('id')
+		message = @_arguments[1]
 		$('.message-dropdown:visible').hide()
-		$(".messages-box \##{message_id} .message-dropdown").show()
+
+		dropDown = $(".messages-box \##{message._id} .message-dropdown")
+
+		if dropDown.length is 0
+			actions = RocketChat.MessageAction.getButtons message
+
+			el = Blaze.toHTMLWithData Template.messageDropdown,
+				actions: actions
+
+			$(".messages-box \##{message._id} .message-cog-container").append el
+
+			dropDown = $(".messages-box \##{message._id} .message-dropdown")
+
+		dropDown.show()
+
+	'click .message-dropdown .message-action': (e, t) ->
+		el = $(e.currentTarget)
+
+		button = RocketChat.MessageAction.getButtonById el.data('id')
+		if button?.action?
+			button.action.call @, e, t
 
 	'click .message-dropdown-close': ->
 		$('.message-dropdown:visible').hide()
@@ -409,12 +434,6 @@ Template.room.onCreated ->
 
 	@autorun ->
 		self.subscribe 'fullUserData', Session.get('showUserInfo'), 1
-
-	for button in RocketChat.MessageAction.getButtons()
-		if _.isFunction button.action
-			evt = {}
-			evt["click .#{button.id}"] = button.action
-			Template.room.events evt
 
 
 Template.room.onDestroyed ->
@@ -519,6 +538,13 @@ Template.room.onRendered ->
 			else
 				template.unreadCount.set 0
 	, 300
+
+	readMessage.onRead (rid) ->
+		if rid is template.data._id
+			template.unreadCount.set 0
+
+	wrapper.addEventListener 'scroll', ->
+		updateUnreadCount()
 
 	# salva a data da renderização para exibir alertas de novas mensagens
 	$.data(this.firstNode, 'renderedAt', new Date)

@@ -73,10 +73,13 @@ Template.loginForm.helpers
 		return true
 
 	registrationAllowed: ->
-		return RocketChat.settings.get('Accounts_RegistrationForm') is 'Public'
+		return RocketChat.settings.get('Accounts_RegistrationForm') is 'Public' or Template.instance().validSecretURL?.get()
 
 	linkReplacementText: ->
 		return RocketChat.settings.get('Accounts_RegistrationForm_LinkReplacementText')
+
+	passwordresetAllowed: ->
+		return RocketChat.settings.get 'Accounts_PasswordReset'
 
 Template.loginForm.events
 	'submit #login-card': (event, instance) ->
@@ -112,6 +115,7 @@ Template.loginForm.events
 				return
 
 			if instance.state.get() is 'register'
+				formData.secretURL = FlowRouter.getParam 'hash'
 				Meteor.call 'registerUser', formData, (error, result) ->
 					RocketChat.Button.reset(button)
 					if error?
@@ -161,6 +165,15 @@ Template.loginForm.onCreated ->
 	@adminKey = FlowRouter.getQueryParam('admin')
 	@state = new ReactiveVar if @inviteKey then 'register' else 'login'
 
+	if Meteor.settings.public.sandstorm
+		@state = new ReactiveVar('sandstorm')
+	else if Session.get 'loginDefaultState'
+		@state = new ReactiveVar(Session.get 'loginDefaultState')
+	else
+		@state = new ReactiveVar('login')
+
+	@validSecretURL = new ReactiveVar(false)
+
 	@validate = ->
 		formData = $("#login-card").serializeArray()
 		formObj = {}
@@ -209,7 +222,12 @@ Template.loginForm.onCreated ->
 			validState = state in states
 		return 'hidden' unless validState
 
+	if FlowRouter.getParam('hash')
+		Meteor.call 'checkRegistrationSecretURL', FlowRouter.getParam('hash'), (err, success) =>
+			@validSecretURL.set true
+
 Template.loginForm.onRendered ->
+	Session.set 'loginDefaultState'
 	Tracker.autorun =>
 		switch this.state.get()
 			when 'login', 'forgot-password', 'email-verification'

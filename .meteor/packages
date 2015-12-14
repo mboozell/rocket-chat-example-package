@@ -25,6 +25,7 @@ meteor-base
 mobile-experience
 mongo
 random
+rate-limit
 reactive-dict
 reactive-var
 reload
@@ -103,9 +104,11 @@ jalik:ufs-gridfs
 jparker:gravatar
 kadira:blaze-layout
 kadira:flow-router
+kadira:debug
 kenton:accounts-sandstorm
 kevohagan:sweetalert
 meteorhacks:kadira
+meteorhacks:zones
 mizzao:autocomplete
 mizzao:timesync
 momentjs:moment
@@ -131,3 +134,4 @@ yasaricli:slugify
 yasinuslu:blaze-meta
 # sanjo:jasmine
 # velocity:html-reporter
+rocketchat:assets
