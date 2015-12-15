@@ -19,7 +19,7 @@ class MentionsClient
 			if mentions.length isnt 0
 				mentions = _.unique mentions
 				mentions = mentions.join('|')
-				msg = msg.replace new RegExp("(?:^|\\s|\\n)(@(#{mentions}):?)\\b", 'g'), (match, mention, username) ->
+				msg = msg.replace new RegExp("(?:^|\\s|\\n)(@(#{mentions}):?)[:.,\s]?", 'g'), (match, mention, username) ->
 					if username is 'all'
 						if not RocketChat.authz.hasAtLeastOnePermission('group-notify', message.rid, message.u._id)
 							return match
@@ -43,7 +43,7 @@ class MentionsClient
 			if channels.length isnt 0
 				channels = _.unique channels
 				channels = channels.join('|')
-				msg = msg.replace new RegExp("(?:^|\\s|\\n)(#(#{channels}))\\b", 'g'), (match, mention, channel) ->
+				msg = msg.replace new RegExp("(?:^|\\s|\\n)(#(#{channels}))[:.,\s]?", 'g'), (match, mention, channel) ->
 					if not message.temp?
 						if not _.findWhere(message.channels, {name: channel})?
 							return match

@@ -209,9 +209,6 @@ Template.room.helpers
 	compactView: ->
 		return 'compact' if Meteor.user()?.settings?.preferences?.compactView
 
-	fileUploadAllowedMediaTypes: ->
-		return RocketChat.settings.get('FileUpload_MediaTypeWhiteList')
-
 
 Template.room.events
 	"click, touchend": (e, t) ->
@@ -384,6 +381,13 @@ Template.room.events
 
 	'dragleave .dropzone-overlay': (e) ->
 		e.currentTarget.parentNode.classList.remove 'over'
+
+	'dragover .dropzone-overlay': (e) ->
+		e = e.originalEvent or e
+		if e.dataTransfer.effectAllowed in ['move', 'linkMove']
+			e.dataTransfer.dropEffect = 'move'
+		else
+			e.dataTransfer.dropEffect = 'copy'
 
 	'dropped .dropzone-overlay': (event) ->
 		event.currentTarget.parentNode.classList.remove 'over'
