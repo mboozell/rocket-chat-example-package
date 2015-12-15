@@ -53,6 +53,7 @@ Package.onUse(function(api) {
 		'server/lib/stripeEvents.coffee',
 		'server/lib/products.coffee',
 		'server/lib/purchases.coffee',
+		'server/lib/addAndSendInvitation.coffee',
 		'server/methods/chargeChatSubscription.coffee',
 		'server/methods/updateProductBaseStatus.coffee',
 		'server/methods/addProductChannel.coffee',
@@ -69,7 +70,8 @@ Package.onUse(function(api) {
 		'server/publications/products.coffee',
 		'server/publications/productChannels.coffee',
 		'server/publications/productPurchases.coffee',
-		'server/restapi/v1/webhooks.coffee'
+		'server/restapi/v1/webhooks.coffee',
+		'server/restapi/v1/invitations.coffee'
 	], 'server');
 
 	api.addFiles([
