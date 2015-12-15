@@ -46,9 +46,11 @@
 				{{else}}{{#if linkReplacementText}}
 					{{{linkReplacementText}}}
 				{{/if}}{{/if}}
+				{{#if passwordresetAllowed}}
 				<div class="forgot-password {{showForgotPasswordLink}}">
 					<a href="">{{_ 'Forgot_password'}}</a>
 				</div>
+				{{/if}}
 			{{else}}
 				<div class="register-external">
 					<a href="https://www.wallstjesus.com" target="_blank">Register a new account</a>

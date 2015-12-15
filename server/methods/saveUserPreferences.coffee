@@ -11,6 +11,9 @@ Meteor.methods
 			if settings.disableNewMessageNotification?
 				preferences.disableNewMessageNotification = if settings.disableNewMessageNotification is "1" then true else false
 
+			if settings.enableNewWiseguyAlertNotification?
+				preferences.enableNewWiseguyAlertNotification = if settings.enableNewWiseguyAlertNotification is "1" then true else false
+
 			if settings.useEmojis?
 				preferences.useEmojis = if settings.useEmojis is "1" then true else false
 
