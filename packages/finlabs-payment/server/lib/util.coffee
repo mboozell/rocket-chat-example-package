@@ -20,6 +20,12 @@ FinLabs.payment.util = new class
 		_retrieveSubscriptions = (callback) => @stripe.customers.listSubscriptions customerId, callback
 		(Meteor.wrapAsync _retrieveSubscriptions)().data
 
+	getSubscription: (userId, subscriptionId) ->
+		customer = @getCustomer(userId)
+		{customerId} = customer
+		_retrieveSubscription = (callback) => @stripe.customers.retrieveSubscription customerId, subscriptionId, callback
+		(Meteor.wrapAsync _retrieveSubscription)()
+
 	createTransaction: (user, price, action, token, metadata) ->
 		customer = @getOrCreateCustomer user, token
 		{customerId} = customer

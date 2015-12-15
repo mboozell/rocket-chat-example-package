@@ -53,6 +53,7 @@ Package.onUse(function(api) {
 		'server/lib/stripeEvents.coffee',
 		'server/lib/products.coffee',
 		'server/lib/purchases.coffee',
+		'server/lib/updateUserFromInvitation.coffee',
 		'server/lib/addAndSendInvitation.coffee',
 		'server/methods/chargeChatSubscription.coffee',
 		'server/methods/updateProductBaseStatus.coffee',

@@ -33,6 +33,14 @@ FinLabs.models.Product = new class extends RocketChat.models._Base
 
 		return @find query, options
 
+	findByPlanId: (planId, options) ->
+		query =
+			payments:
+				$elemMatch:
+					"plan.id": planId
+
+		return @find query, options
+
 	# INSERT
 
 	createOne: (name, roles, channels, payments, options) ->

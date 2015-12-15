@@ -13,6 +13,9 @@ Meteor.startup ->
 	# 	return true
 
 	RocketChat.callbacks.add 'afterCreateUser', (options, user) ->
+		if options?.invitation?.stripe
+			FinLabs.updateUserFromInvitation user, options.invitation
+
 		if RocketChat.authz.hasRole user._id, 'admin'
 			products = FinLabs.models.Product.find().fetch()
 			for product in products
