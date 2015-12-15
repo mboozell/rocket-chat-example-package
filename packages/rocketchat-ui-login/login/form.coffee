@@ -163,9 +163,10 @@ Template.loginForm.onCreated ->
 	instance = @
 	@inviteKey = FlowRouter.getQueryParam('invite')
 	@adminKey = FlowRouter.getQueryParam('admin')
-	@state = new ReactiveVar if @inviteKey then 'register' else 'login'
 
-	if Meteor.settings.public.sandstorm
+	if @inviteKey
+		@state = new ReactiveVar('register')
+	else if Meteor.settings.public.sandstorm
 		@state = new ReactiveVar('sandstorm')
 	else if Session.get 'loginDefaultState'
 		@state = new ReactiveVar(Session.get 'loginDefaultState')
