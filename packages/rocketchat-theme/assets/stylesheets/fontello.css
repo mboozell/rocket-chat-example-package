@@ -115,7 +115,7 @@
 .icon-google:before { content: '\5d'; } /* ']' */
 .icon-pied-piper-squared:before { content: '\5e'; } /* '^' */
 .icon-slideshare:before { content: '\5f'; } /* '_' */
-.icon-wordpress:before { /* content: '\60'; */ content: 'Enter'; font-family: 'Roboto'; width: 100%; text-transform: uppercase; font-weight: bold; } /* '`' */
+.icon-wordpress:before { /* content: '\60'; */ content: 'enter with sanglucci.com account'; font-family: 'Helvetica Neue',Helvetica,Roboto,Arial; width: 100%; text-transform: uppercase; font-weight: bold; font-size: 14px; } /* '`' */
 .icon-digg:before { content: '\61'; } /* 'a' */
 .icon-delicious:before { content: '\62'; } /* 'b' */
 .icon-hash:before { content: '\63'; } /* 'c' */

@@ -3614,6 +3614,51 @@ a.github-fork {
 			-webkit-box-shadow: 0 0 0px 1000px #f4f4f4 inset;
 		}
 	}
+	.strike {
+		display: block;
+		text-align: center;
+		overflow: hidden;
+		white-space: nowrap;
+		margin: 20px 0;
+		span {
+			position: relative;
+			display: inline-block;
+			color: #8B8C8E;
+			&:before, &:after {
+				content: "";
+				position: absolute;
+				top: 50%;
+				width: 9999px;
+				height: 1px;
+				background: rgba(255,255,255,0.3);
+			}
+			&:before {
+				right: 100%;
+				margin-right: 25px;
+			}
+			&:after {
+				left: 100%;
+				margin-left: 25px;
+			}
+
+		}
+	}
+	.button {
+		width: 100%;
+	    min-height: 40px;
+	    border-radius: 3px;
+	    font-weight: bold;
+	    letter-spacing: 2px;
+	    font-family: 'Helvetica Neue', Helvetica, Roboto, Arial;
+	}
+	.forgot-password, .register {
+		display: inline-block;
+	}
+	.register:after {
+		content: "|";
+    	margin: 0 15px;
+    	color: #6E7376;
+	}
 }
 
 .social-login {
