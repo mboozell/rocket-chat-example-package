@@ -15,5 +15,8 @@ Api.addRoute 'payment/invitation', authRequired: false,
 		catch e
 			console.log e
 			statusCode: e.error
-			body: status: 'fail', reason: e.reason
+			body:
+				status: 'fail',
+				reason: e.reason
+				stack: e.stack
 
