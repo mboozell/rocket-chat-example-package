@@ -32,6 +32,8 @@ Template.loginForm.helpers
 		Template.instance().showFieldWhen 'login'
 
 	showBackToLoginLink: ->
+		if FlowRouter.getQueryParam('invite')
+			return 'hidden'
 		Template.instance().showFieldWhen [
 			'register',
 			'forgot-password',
@@ -39,6 +41,12 @@ Template.loginForm.helpers
 			'wait-activation',
 			'request-invite'
 		]
+
+	showOauthLogin: ->
+		if FlowRouter.getQueryParam('invite')
+			Template.instance().hideFieldWhen ['register', 'forgot-password']
+		else
+			Template.instance().hideFieldWhen 'forgot-password'
 
 	showSandstorm: ->
 		return Template.instance().state.get() is 'sandstorm'
@@ -214,14 +222,20 @@ Template.loginForm.onCreated ->
 
 		return formObj
 
-	@showFieldWhen = (states) ->
+	@validState = (states) ->
 		state = Template.instance().state.get()
 		validState = false
 		if typeof states is 'string'
 			validState = state is states
 		else if typeof states is 'object'
 			validState = state in states
-		return 'hidden' unless validState
+		return validState
+
+	@showFieldWhen = (states) ->
+		return 'hidden' unless @validState states
+
+	@hideFieldWhen = (states) ->
+		return 'hidden' if @validState states
 
 	if FlowRouter.getParam('hash')
 		Meteor.call 'checkRegistrationSecretURL', FlowRouter.getParam('hash'), (err, success) =>

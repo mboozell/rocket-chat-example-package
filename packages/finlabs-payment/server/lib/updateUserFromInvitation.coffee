@@ -1,6 +1,6 @@
 FinLabs.updateUserFromInvitation = (user, invitation) ->
-	console.log "UPDATING USER FROM INVITATION"
-	FinLabs.models.Customer.createWithUserAndCustomerId user._id, invitation.stripe.customer
+	unless FinLabs.models.Customer.findOneByUser user._id
+		FinLabs.models.Customer.createWithUserAndCustomerId user._id, invitation.stripe.customer
 
 	subscription = FinLabs.payment.util.getSubscription user._id, invitation.stripe.subscription
 	FinLabs.models.Subscription.createFromStripe user._id, subscription

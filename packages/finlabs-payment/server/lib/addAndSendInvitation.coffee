@@ -12,6 +12,11 @@ FinLabs.payment.addAndSendInvitation = (email, stripe, apiKey) ->
 	invitation = RocketChat.models.Invitations.createOneWithEmail email, stripe: stripe
 	invitation.url = "#{Meteor.absoluteUrl()}register?invite=#{encodeURIComponent(invitation.key)}"
 
+	if RocketChat.models.Users.findOneByEmailAddress email
+		user = RocketChat.models.Users.findOneByEmailAddress email
+		FinLabs.updateUserFromInvitation user, invitation
+		invitation.url = "#{Meteor.absoluteUrl()}"
+
 	invitationHtml = fs.readFileSync './assets/app/templates/invitationEmail.html', 'utf8'
 	invitationHtml = invitationHtml.replace '{{url}}', invitation.url
 
@@ -20,4 +25,13 @@ FinLabs.payment.addAndSendInvitation = (email, stripe, apiKey) ->
 		from: RocketChat.settings.get 'From_Email'
 		subject: RocketChat.settings.get 'Invitation_Subject'
 		html: invitationHtml
-	Email.send email
+
+	tries = 0
+	while true
+		try
+			return Email.send email
+		catch e
+			if tries < 3
+				tries++
+			else
+				throw e

@@ -54,49 +54,18 @@
 					No alerts to display
 				</li>
 			{{/if}}
+
+			{{#if moreResults}}
+				<div class="load-more">
+					<button class="load-alerts">load more</button>
+				</div>
+			{{/if}}
 		</div>
 	</div>
+
 
 	<audio id="wiseguyNotification" preload>
 		<source src="/sounds/cha-ching.mp3" type="audio/mpeg" />
 	</audio>
-</template>
 
-<template name="wiseGuyAlert">
-	<div class="alert-wrap">
-
-		<div class="wiseguy-alert">
-			<div class="col-1">
-				<i class="wiseguy-minus wisecon"></i>
-			</div>
-			<div class="col-3">
-				<div class="timestamp">
-					{{timestamp}}
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="ticker">
-					{{ticker}}
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="{{getState}}">
-					{{getState}}
-				</div>
-			</div>
-		</div>
-
-		<div class="more-info">
-			<ul>
-				<li>
-					{{formatDate}} {{#if weekly}}<span class="wiseguy-weekly">(Weekly)</span>{{/if}}
-					{{getStrike}} {{getDirection}}
-				</li>
-				<li>{{formatPrice}} BET {{tags}}</li>
-			</ul>
-		</div>
-
-		{{#if isLast}}<hr>{{/if}}
-
-	</div>
 </template>

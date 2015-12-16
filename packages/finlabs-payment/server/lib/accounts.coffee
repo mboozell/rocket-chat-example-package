@@ -1,16 +1,16 @@
 Meteor.startup ->
 
-	# Accounts.validateLoginAttempt (attempt) ->
-  #
-	# 	unless attempt.allowed
-	# 		return false
-	# 	unless RocketChat.settings.get "Require_Payment"
-	# 		return attempt.allowed
-  #
-	# 	userId = attempt.user?._id
-	# 	unless FinLabs.payment.purchases.userHasBaseProduct userId
-	# 		throw new Meteor.Error 'unsubscribed-user', TAPi18n.__ 'User is not Subscribed'
-	# 	return true
+	Accounts.validateLoginAttempt (attempt) ->
+
+		unless attempt.allowed
+			return false
+		unless RocketChat.settings.get "Require_Payment"
+			return attempt.allowed
+
+		userId = attempt.user?._id
+		unless FinLabs.payment.purchases.userHasBaseProduct userId
+			throw new Meteor.Error 'unsubscribed-user', TAPi18n.__ 'User is not Subscribed. Visit WallStJesus.com'
+		return true
 
 	RocketChat.callbacks.add 'afterCreateUser', (options, user) ->
 		if options?.invitation?.stripe
@@ -38,6 +38,9 @@ Meteor.startup ->
 		FinLabs.payment.purchases.checkUser userId
 
 		unless RocketChat.settings.get "Require_Payment"
+			if RocketChat.authz.hasRole userId, 'unpaid-user'
+				RocketChat.authz.removeUsersFromRoles userId, 'unpaid-user'
+				RocketChat.authz.addUsersToRoles userId, 'user'
 			return true
 
 		unless FinLabs.payment.purchases.userHasBaseProduct userId
