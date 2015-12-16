@@ -33,6 +33,14 @@ FinLabs.models.Product = new class extends RocketChat.models._Base
 
 		return @find query, options
 
+	findByPlanId: (planId, options) ->
+		query =
+			payments:
+				$elemMatch:
+					"plan.id": planId
+
+		return @find query, options
+
 	# INSERT
 
 	createOne: (name, roles, channels, payments, options) ->
@@ -73,6 +81,36 @@ FinLabs.models.Product = new class extends RocketChat.models._Base
 				"payments.$.plan.amount": plan.amount
 				"payments.$.plan.trialDays": plan.trial_period_days
 				"payments.$.plan.interval": plan.interval
+
+		return @update query, update
+
+	addChannel: (_id, channelId) ->
+		query =
+			_id: _id
+
+		update =
+			$addToSet:
+				channels: channelId
+
+		return @update query, update
+
+	removeChannel: (_id, channelId) ->
+		query =
+			_id: _id
+
+		update =
+			$pull:
+				channels: channelId
+
+		return @update query, update
+
+	updateBaseStatus: (_id, isBaseProduct) ->
+		query =
+			_id: _id
+
+		update =
+			$set:
+				baseProduct: isBaseProduct
 
 		return @update query, update
 

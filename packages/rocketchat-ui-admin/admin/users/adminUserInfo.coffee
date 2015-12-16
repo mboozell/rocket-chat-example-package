@@ -31,7 +31,7 @@ Template.adminUserInfo.events
 				toastr.success t('User_has_been_deactivated')
 			if error
 				toastr.error error.reason
-	
+
 	'click .activate': (e) ->
 		e.stopPropagation()
 		e.preventDefault()
@@ -40,7 +40,7 @@ Template.adminUserInfo.events
 				toastr.success t('User_has_been_activated')
 			if error
 				toastr.error error.reason
-	
+
 	'click .make-admin': (e) ->
 		e.stopPropagation()
 		e.preventDefault()
@@ -49,7 +49,7 @@ Template.adminUserInfo.events
 				toastr.success t('User_is_now_an_admin')
 			if error
 				toastr.error error.reason
-	
+
 	'click .remove-admin': (e) ->
 		e.stopPropagation()
 		e.preventDefault()
@@ -74,18 +74,18 @@ Template.adminUserInfo.events
 			closeOnConfirm: false
 			html: false
 		}, ->
-			swal 
+			swal
 				title: t('Deleted')
 				text: t('User_has_been_deleted')
 				type: 'success'
 				timer: 2000
-				showConfirmButton: false 
+				showConfirmButton: false
 
 			Meteor.call 'deleteUser', _id, (error, result) ->
 				if error
 					toastr.error error.reason
 				Session.set 'adminSelectedUser'
-				
+
 	'click .edit-user': (e) ->
 		e.stopPropagation()
 		e.preventDefault()

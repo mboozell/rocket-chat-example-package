@@ -17,3 +17,5 @@ Meteor.startup ->
       unless role in roles
         Roles.createRole role
         roles.push(role)
+
+	FinLabs.payment?.tools.add "wiseguy-alerts", ['wsj-user']

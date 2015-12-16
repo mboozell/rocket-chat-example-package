@@ -21,9 +21,6 @@ Meteor.startup ->
 		{ _id: 'view-user-administration',
 		roles : ['admin']}
 
-		{ _id: 'view-product-administration',
-		roles : ['admin']}
-
 		{ _id: 'view-full-other-user-info',
 		roles : ['admin']}
 
@@ -87,12 +84,6 @@ Meteor.startup ->
 		{ _id: 'create-invitation',
 		roles : ['admin']}
 
-		{ _id: 'create-integration',
-		roles : ['admin']}
-
-		{ _id: 'view-integrations',
-		roles : ['admin']}
-
 		{ _id: 'basic',
 		roles : ['admin', 'site-moderator', 'moderator', 'user']}
 
@@ -113,6 +104,15 @@ Meteor.startup ->
 
 		{ _id: 'view-d-room',
 		roles : ['admin', 'site-moderator', 'user']}
+
+		{ _id: 'access-permissions',
+		roles : ['admin']}
+
+		{ _id: 'manage-assets',
+		roles : ['admin']}
+
+		{ _id: 'manage-integrations',
+		roles : ['admin']}
 	]
 
 	#alanning:roles

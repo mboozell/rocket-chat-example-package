@@ -1,6 +1,6 @@
 stripe = Npm.require('stripe')
 
-FinLabs.payment.Util = class
+FinLabs.payment.util = new class
 
 	constructor: () ->
 		stripeKey = RocketChat.settings.get 'Stripe_Secret_Key'
@@ -19,6 +19,12 @@ FinLabs.payment.Util = class
 		{customerId} = customer
 		_retrieveSubscriptions = (callback) => @stripe.customers.listSubscriptions customerId, callback
 		(Meteor.wrapAsync _retrieveSubscriptions)().data
+
+	getSubscription: (userId, subscriptionId) ->
+		customer = @getCustomer(userId)
+		{customerId} = customer
+		_retrieveSubscription = (callback) => @stripe.customers.retrieveSubscription customerId, subscriptionId, callback
+		(Meteor.wrapAsync _retrieveSubscription)()
 
 	createTransaction: (user, price, action, token, metadata) ->
 		customer = @getOrCreateCustomer user, token

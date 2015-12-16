@@ -153,6 +153,12 @@ RocketChat.models.Rooms = new class extends RocketChat.models._Base
 
 		return @find query, options
 
+	findByOneOfNames: (names, options) ->
+		query =
+			name:
+				$in: names
+
+		return @find query, options
 
 	# UPDATE
 	archiveById: (_id) ->

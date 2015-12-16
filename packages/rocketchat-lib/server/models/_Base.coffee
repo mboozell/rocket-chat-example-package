@@ -13,6 +13,12 @@ RocketChat.models._Base = class
 	findOne: ->
 		return @model.findOne.apply @model, arguments
 
+	findAll: (ids, args...) ->
+		query =
+			_id:
+				$in: ids
+		return @model.find query, args...
+
 	insert: ->
 		return @model.insert.apply @model, arguments
 
