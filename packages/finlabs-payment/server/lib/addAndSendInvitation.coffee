@@ -25,4 +25,13 @@ FinLabs.payment.addAndSendInvitation = (email, stripe, apiKey) ->
 		from: RocketChat.settings.get 'From_Email'
 		subject: RocketChat.settings.get 'Invitation_Subject'
 		html: invitationHtml
-	Email.send email
+
+	tries = 0
+	while true
+		try
+			return Email.send email
+		catch e
+			if tries < 3
+				tries++
+			else
+				throw e
