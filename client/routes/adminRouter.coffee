@@ -29,7 +29,7 @@ FlowRouter.route '/admin/products',
 	triggersEnter: [tabReset]
 	triggersExit: [tabReset]
 	action: ->
-		BlazeLayout.render 'main', {center: 'adminroducts'}
+		BlazeLayout.render 'main', {center: 'adminProducts'}
 
 FlowRouter.route '/admin/:group?',
 	name: 'admin'

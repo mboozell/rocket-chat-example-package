@@ -36,6 +36,7 @@
 
 						<div class="more-info">
 							<ul>
+								{{#if refPrice}}<li>Reference Price: {{ticker}}={{refPrice}}</li>{{/if}}
 								<li>
 									{{formatDate}} {{#if weekly}}<span class="wiseguy-weekly">(Weekly)</span>{{/if}}
 									{{getStrike}} {{getDirection}}
@@ -61,5 +62,10 @@
 			{{/if}}
 		</div>
 	</div>
-	
+
+
+	<audio id="wiseguyNotification" preload>
+		<source src="/sounds/cha-ching.mp3" type="audio/mpeg" />
+	</audio>
+
 </template>

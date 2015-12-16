@@ -53,6 +53,8 @@ code {
 	word-wrap: break-word;
 	text-align: left;
 	white-space: pre-wrap;
+	unicode-bidi: embed;
+	direction: ltr;
 	&.inline {
 		display: inline;
 		padding: 0 0.5em;
@@ -76,11 +78,12 @@ blockquote {
 	position: relative;
 	&:before {
 		content: ' ';
-		height: 100%;
 		width: 4px;
 		position: absolute;
+		border-radius: 2px;
 		left: 0px;
-		border-radius: 10px;
+		top: -1px;
+		bottom: -1px;
 	}
 }
 
@@ -297,7 +300,8 @@ blockquote {
 			animation-iteration-count: infinite;
 			animation-timing-function: linear;
 		}
-		.icon-search {
+		.icon-search,
+		.icon-right-open-small {
 			position: absolute;
 			left: 2px;
 			top: 10px;
@@ -401,7 +405,7 @@ html {
 }
 
 body {
-	font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+	font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif, "Meiryo UI";
 	font-size: 0.875rem;
 	height: 100%;
 	width: 100%;
@@ -432,6 +436,7 @@ select,
 input[type='text'],
 input[type='number'],
 input[type='email'],
+input[type='url'],
 input[type='password'] {
 	-webkit-appearance: none;
 	height: 35px;
@@ -471,9 +476,14 @@ form.inline {
 	input[type='text'],
 	input[type='number'],
 	input[type='email'],
+	input[type='url'],
 	input[type='password'] {
 		width: auto;
 	}
+}
+
+input[disabled] {
+	background-color: #f4f4f4 !important;
 }
 
 .search-form {
@@ -512,7 +522,7 @@ form.inline {
 		&:after {
 			content: " ";
 			visibility: visible;
-			//background-image: url('/images/logo/loading.gif');
+			background-image: url('/images/logo/loading-progress.gif');
 			background-position: center;
 			background-repeat: no-repeat;
 			display: block;
@@ -560,7 +570,7 @@ label.required:after {
 }
 
 .loading {
-	//background-image: url('/images/loading.gif');
+	background-image: url('/images/loading-progress.gif');
 	background-repeat: no-repeat;
 	background-position: 50%;
 	width: 100%;
@@ -1737,6 +1747,88 @@ a.github-fork {
 }
 
 .page-settings {
+	.content {
+		padding: 20px 0;
+		background-color: #f8f8f8;
+		color: #444;
+
+		> .info {
+			max-width: auto;
+			line-height: 24px;
+			padding-left: 20px;
+			font-size: 16px;
+			font-weight: 500;
+		}
+	}
+
+	.section {
+		border: 1px solid #ddd;
+		border-left: none;
+		background-color: #fff;
+		padding: 20px;
+		margin-bottom: 20px;
+
+		&.section-collapsed {
+			.section-content {
+				display: none;
+			}
+		}
+
+		.section-title {
+			display: flex;
+			font-size: 24px;
+			font-weight: 600;
+			color: #444;
+			line-height: 40px;
+
+			.section-title-text {
+				flex-grow: 1;
+			}
+
+			.section-title-right {
+				line-height: 0px;
+			}
+		}
+
+		.section-content {
+			border: none !important;
+			border-radius: 0px !important;
+			padding: 20px 0 0 0 !important;
+
+			.input-line {
+				border-bottom: 1px solid #eee;
+				padding: 20px 0;
+				margin-bottom: 0px;
+
+				&:last-child {
+					border-bottom: none;
+					padding-bottom: 0;
+				}
+
+				&:first-child {
+					padding-top: 0;
+				}
+
+				input {
+					color: #444;
+				}
+
+				> label {
+					text-align: left;
+					font-weight: 500;
+					font-size: 16px;
+					line-height: 20px;
+					color: #444;
+				}
+
+				.settings-description {
+					color: #888;
+					padding: 5px;
+				}
+			}
+		}
+	}
+
 	.settings-description {
 		.allow-text-selection;
 	}
@@ -1744,6 +1836,45 @@ a.github-fork {
 		max-width: none;
 		width: 100%;
 		padding: 0;
+	}
+
+	.settings-file-preview {
+		display: flex;
+		align-items: center;
+
+		input[type=file] {
+			position: absolute !important;
+			width: 100%;
+			top: 0;
+			left: 0;
+			height: 100%;
+			opacity: 0;
+			z-index: 10000;
+			cursor: pointer;
+			* {
+				cursor: pointer;
+			}
+		}
+
+		.preview {
+			height: 50px;
+			width: 100px;
+			border-radius: 4px;
+			overflow: hidden;
+			box-shadow: 0 0 1px rgba(0,0,0,.5) inset;
+			background-size: contain;
+			background-position: center center;
+			background-repeat: no-repeat;
+
+			&.no-file {
+				background-color: #fafafa;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: #ccc;
+				font-size: 24px;
+			}
+		}
 	}
 }
 
@@ -2492,6 +2623,12 @@ a.github-fork {
 			padding-left: 3px;
 			margin-left: 3px;
 		}
+		.is-bot {
+			background-color: #ccc;
+			padding: 1px 4px;
+			border-radius: 2px;
+			color: white;
+		}
 	}
 	.private {
 		margin-left: 10px;
@@ -2584,6 +2721,11 @@ a.github-fork {
 	}
 	&.temp .body {
 		opacity: .5;
+	}
+	.message-alias {
+		color: #aaa;
+		font-weight: 400;
+		padding-left: 2px;
 	}
 }
 
@@ -4008,7 +4150,7 @@ a.github-fork {
 .message-popup-results {
 	&.notready {
 		.message-popup-items {
-			//background-image: url(/images/logo/loading.gif);
+			background-image: url(/images/logo/loading-progress.gif);
 			background-repeat: no-repeat;
 			background-position: 50% 50%;
 			height: 100px;
@@ -4196,4 +4338,22 @@ a.github-fork {
 
 .inline-video {
 	max-height: 200px;
+}
+
+.blink {
+	-webkit-animation: blink 1s linear 2;
+    -moz-animation: blink 1s linear 2;
+    animation: blink 1s linear 2;
+}
+
+.attention-message {
+	color: white;
+	padding-top: 50px;
+	font-size: 24px;
+
+	i {
+		display: block;
+		margin-bottom: 20px;
+		font-size: 40px;
+	}
 }

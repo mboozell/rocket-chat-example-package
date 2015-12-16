@@ -34,7 +34,7 @@ FinLabs.models.Purchase = new class extends RocketChat.models._Base
 
 	# INSERT
 
-	createActive: (userId, productId) ->
+	createActive: (userId, productId, options) ->
 		query =
 			user: userId
 			product: productId
@@ -45,9 +45,11 @@ FinLabs.models.Purchase = new class extends RocketChat.models._Base
 			active: true
 			ts: new Date()
 
+		_.extend purchase, options
+
 		return @upsert query, purchase
 
-	createInactive: (userId, productId) ->
+	createInactive: (userId, productId, options) ->
 		query =
 			user: userId
 			product: productId
@@ -57,6 +59,8 @@ FinLabs.models.Purchase = new class extends RocketChat.models._Base
 			user: userId
 			active: false
 			ts: new Date()
+
+		_.extend purchase, options
 
 		return @upsert query, purchase
 
@@ -81,9 +85,20 @@ FinLabs.models.Purchase = new class extends RocketChat.models._Base
 
 		return @update query, update
 
+	unOverride: (userId, productId) ->
+		query =
+			user: userId,
+			product: productId
+
+		update =
+			$set: override: false
+
+		return @update query, update
+
 	# REMOVE
 	removeById: (_id) ->
 		return @remove _id
 
 	removeByUser: (userId) ->
 		return @remove user: userId
+
