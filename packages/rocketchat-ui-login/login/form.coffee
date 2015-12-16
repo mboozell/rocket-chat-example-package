@@ -41,7 +41,7 @@ Template.loginForm.helpers
 		]
 
 	showOauthLogin: ->
-		if @inviteKey
+		if FlowRouter.getQueryParam('invite')
 			Template.instance().hideFieldWhen 'register'
 			
 	showSandstorm: ->
