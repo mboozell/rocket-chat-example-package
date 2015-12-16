@@ -83,8 +83,8 @@ RocketChat.settings.add 'SMTP_Username', '', { type: 'string', group: 'SMTP' }
 RocketChat.settings.add 'SMTP_Password', '', { type: 'string', group: 'SMTP' }
 RocketChat.settings.add 'From_Email', '', { type: 'string', group: 'SMTP', placeholder: 'email@domain' }
 
-RocketChat.settings.add 'Invitation_Subject', 'You have been invited to Rocket.Chat', { type: 'string', group: 'SMTP', section: 'Invitation' }
-RocketChat.settings.add 'Invitation_HTML', '<h2>You have been invited to <h1>Rocket.Chat</h1></h2><p>Go to ' + __meteor_runtime_config__?.ROOT_URL + ' and try the best open source chat solution available today!</p>', { type: 'string', multiline: true, group: 'SMTP', section: 'Invitation' }
+RocketChat.settings.add 'Invitation_Subject', 'Welcome to the Steamroom!', { type: 'string', group: 'SMTP', section: 'Invitation' }
+RocketChat.settings.add 'Invitation_HTML', '<h2>Welcome to the <h1>Steamroom!</h1></h2>' , { type: 'string', multiline: true, group: 'SMTP', section: 'Invitation' }
 RocketChat.settings.add 'Accounts_Enrollment_Email',  '', { type: 'string', multiline: true,  group: 'SMTP', section: 'Invitation' }
 
 RocketChat.settings.addGroup 'Message'
