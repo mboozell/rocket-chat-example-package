@@ -8,6 +8,7 @@
 		</div>
 
 		<div class="wiseguy-alert-list scrollable">
+		{{#if Template.subscriptionsReady}}
 			{{#if hasAlerts}}
 				{{#each alerts}}
 					{{#if isEqual}}<div class="new-day" data-date="{{groupDate}}"></div>{{/if}}
@@ -54,6 +55,9 @@
 					No alerts to display
 				</li>
 			{{/if}}
+		{{else}}
+			{{> loading}}
+		{{/if}}
 		</div>
 	</div>
 
