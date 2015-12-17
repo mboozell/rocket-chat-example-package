@@ -30,4 +30,3 @@ FinLabs.models.WiseGuyAlerts = new class extends RocketChat.models._Base
       _id: _id
 
     return @remove query
-

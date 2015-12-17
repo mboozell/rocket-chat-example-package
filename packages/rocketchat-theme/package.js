@@ -27,6 +27,7 @@ Package.onUse(function(api) {
 	api.addAssets('assets/stylesheets/utils/_emojione.import.less', 'server');
 	api.addAssets('assets/stylesheets/utils/_keyframes.import.less', 'server');
 	api.addAssets('assets/stylesheets/utils/_lesshat.import.less', 'server');
+	api.addAssets('assets/stylesheets/utils/_loadingSpinner.css', 'server');
 	api.addAssets('assets/stylesheets/utils/_preloader.import.less', 'server');
 	api.addAssets('assets/stylesheets/utils/_reset.import.less', 'server');
 	api.addAssets('assets/stylesheets/utils/_octicons.less', 'server');

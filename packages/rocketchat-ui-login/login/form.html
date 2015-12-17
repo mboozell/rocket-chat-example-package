@@ -12,7 +12,6 @@
 				<p>{{{_ "Please_wait_activation"}}}</p>
 			</header>
 		{{else}}
-			{{ > loginServices }}
 			{{#if needsValidateEmail}}
 				<div class="alert alert-danger">
 					{{_ "You_need_confirm_email"}}
@@ -39,6 +38,18 @@
 				<div class="submit">
 					<button data-loading-text="{{_ "Please_wait"}}..." class='button primary login'><span>{{btnLoginSave}}</span></button>
 				</div>
+
+			{{/if}}
+
+			<div class="{{showOauthLogin}}">
+				<div class="strike">
+					<span>or</span>
+				</div>
+				{{ > loginServices }}
+			</div>
+
+			{{#if loginEnabled}}
+
 				{{#if registrationAllowed}}
 				<div class="register {{showRegisterLink}}">
 					<a href="">{{_ 'Register'}}</a>
