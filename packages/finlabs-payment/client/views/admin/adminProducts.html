@@ -1,0 +1,55 @@
+<template name="adminProducts">
+	<section class="page-container page-list page-static">
+		<head class="fixed-title">
+			{{> burger}}
+			<h2>
+				<span class="room-title">{{_ "Products"}}</span>
+			</h2>
+		</head>
+		<div class="content">
+			<div class="rocket-form">
+				<fieldset>
+					<div class="section">
+						<div class="section-content">
+							<div class="input-line double-col">
+								<label>{{_ "Product Name"}}</label>
+								<div>
+									<input type="text" name="product_name" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+				<div class="submit">
+					<button class="button create">{{_ "Create New Product"}}</button>
+				</div>
+			</div>
+			<h1>{{_ "Current Products"}}</h1>
+			<div class="list">
+				<table>
+					<thead>
+						<tr>
+							<th>{{_ "Product"}}</th>
+							<th>{{_ "# of Users"}}</th>
+							<th>{{_ "# of Channels"}}</th>
+						</tr>
+					</thead>
+					<tbody>
+					{{#each products}}
+						<tr class="product-info" data-productid="{{_id}}">
+							<td>{{name}}</td>
+							<td>0</td>
+							<td>0</td>
+						</tr>
+					{{/each}}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+	<section class="flex-tab">
+		<div class="user-view">
+			{{> Template.dynamic template=flexTemplate data=flexData}}
+		</div>
+	</section>
+</template>

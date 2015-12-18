@@ -8,15 +8,14 @@ Api.addRoute 'payment/webhook/stripe', authRequired: false,
 		console.log "WEBHOOK STARTED"
 		eventId = @bodyParams.id
 		if eventId
-			if FinLabs.payment.stripeEvents.log.exists eventId
+			if FinLabs.payment.stripeEvents.logs.exists eventId
 				return status: "success"
-			FinLabs.payment.stripeEvents.log.add @bodyParams
-			paymentUtil = new FinLabs.payment.Util()
+			FinLabs.payment.stripeEvents.logs.add @bodyParams
 			# event = @bodyParams
-			event = paymentUtil.getEvent(eventId)
+			event = FinLabs.payment.util.getEvent(eventId)
 			object = event.data.object
 			eventHandler = FinLabs.payment.stripeEvents.handlers[object.object]
 			if eventHandler
 				eventHandler(object, event)
-		FinLabs.payment.stripeEvents.log.complete event
+		FinLabs.payment.stripeEvents.logs.complete event
 		return status: "success"

@@ -108,9 +108,8 @@ FinLabs.payment.purchases =
 			if FinLabs.models.Subscription.userHasActivePlan userId, planId
 				return true
 
-			paymentUtil = new FinLabs.payment.Util()
 			try
-				for subscription in paymentUtil.getSubscriptions(userId).data
+				for subscription in FinLabs.payment.util.getSubscriptions(userId).data
 					FinLabs.models.Subscription.updateOrAdd subscription
 
 			FinLabs.models.Subscription.userHasActivePlan userId, planId

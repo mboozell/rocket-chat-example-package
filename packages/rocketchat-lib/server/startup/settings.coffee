@@ -14,6 +14,8 @@ RocketChat.settings.add 'Accounts_RegistrationForm_SecretURL', Random.id(), { ty
 RocketChat.settings.add 'Accounts_RegistrationForm_LinkReplacementText', 'New user registration is currently disabled', { type: 'string', group: 'Accounts', section: 'Registration', public: true }
 RocketChat.settings.add 'Accounts_Registration_AuthenticationServices_Enabled', true, { type: 'boolean', group: 'Accounts', section: 'Registration', public: true }
 
+RocketChat.settings.add 'Accounts_PasswordReset', true, { type: 'boolean', group: 'Accounts', public: true, section: 'Registration' }
+
 RocketChat.settings.add 'Accounts_AvatarStoreType', 'GridFS', { type: 'string', group: 'Accounts', section: 'Avatar' }
 RocketChat.settings.add 'Accounts_AvatarStorePath', '', { type: 'string', group: 'Accounts', section: 'Avatar' }
 RocketChat.settings.add 'Accounts_AvatarResize', false, { type: 'boolean', group: 'Accounts', section: 'Avatar' }
@@ -47,6 +49,8 @@ RocketChat.settings.add 'Accounts_AllowUsernameChange', true, { type: 'boolean',
 RocketChat.settings.add 'Accounts_AllowPasswordChange', true, { type: 'boolean', group: 'Accounts', section: 'General', public: true }
 RocketChat.settings.add 'Accounts_RequireNameForSignUp', true, { type: 'boolean', group: 'Accounts', section: 'General', public: true }
 
+RocketChat.settings.add 'Accounts_LoginExpiration', 90, { type: 'int', group: 'Accounts', section: 'General', public: true }
+
 RocketChat.settings.addGroup 'FileUpload'
 RocketChat.settings.add 'FileUpload_Enabled', true, { type: 'boolean', group: 'FileUpload', public: true }
 RocketChat.settings.add 'FileUpload_MaxFileSize', 2097152, { type: 'int', group: 'FileUpload', public: true }
@@ -60,14 +64,17 @@ RocketChat.settings.add 'Allow_Invalid_SelfSigned_Certs', false, { type: 'boolea
 RocketChat.settings.add 'Disable_Favorite_Rooms', false, { type: 'boolean', group: 'General' }
 RocketChat.settings.add 'CDN_PREFIX', '', { type: 'string', group: 'General' }
 RocketChat.settings.add 'General_Channels_Enabled', false, { type: 'boolean', group: 'General', public: true }
+RocketChat.settings.add 'Restart', 'restart_server', { type: 'action', group: 'General', actionText: 'Restart_the_server' }
 
-RocketChat.settings.add 'UTF8_Names_Validation', '[0-9a-zA-Z-_.]+', { type: 'string', group: 'General', section: 'UTF8', public: true }
+RocketChat.settings.add 'UTF8_Names_Validation', '[0-9a-zA-Z-_.]+', { type: 'string', group: 'General', section: 'UTF8', public: true  ,i18nDescription: 'UTF8_Names_Validation_Description'}
 RocketChat.settings.add 'UTF8_Names_Slugify', true, { type: 'boolean', group: 'General', section: 'UTF8', public: true }
 
 RocketChat.settings.addGroup 'API'
 RocketChat.settings.add 'API_Analytics', '', { type: 'string', group: 'API', public: true }
 RocketChat.settings.add 'API_Embed', true, { type: 'boolean', group: 'API', public: true }
 RocketChat.settings.add 'API_EmbedDisabledFor', '', { type: 'string', group: 'API', public: true, i18nDescription: 'API_EmbedDisabledFor_Description' }
+RocketChat.settings.add 'Kadira_App_Id', '', { type: 'string', group: 'API' }
+RocketChat.settings.add 'Kadira_App_Secret', '', {type: 'string', group: 'API' }
 
 RocketChat.settings.addGroup 'SMTP'
 RocketChat.settings.add 'SMTP_Host', '', { type: 'string', group: 'SMTP' }
@@ -76,8 +83,8 @@ RocketChat.settings.add 'SMTP_Username', '', { type: 'string', group: 'SMTP' }
 RocketChat.settings.add 'SMTP_Password', '', { type: 'string', group: 'SMTP' }
 RocketChat.settings.add 'From_Email', '', { type: 'string', group: 'SMTP', placeholder: 'email@domain' }
 
-RocketChat.settings.add 'Invitation_Subject', 'You have been invited to Rocket.Chat', { type: 'string', group: 'SMTP', section: 'Invitation' }
-RocketChat.settings.add 'Invitation_HTML', '<h2>You have been invited to <h1>Rocket.Chat</h1></h2><p>Go to ' + __meteor_runtime_config__?.ROOT_URL + ' and try the best open source chat solution available today!</p>', { type: 'string', multiline: true, group: 'SMTP', section: 'Invitation' }
+RocketChat.settings.add 'Invitation_Subject', 'Welcome to the Steamroom!', { type: 'string', group: 'SMTP', section: 'Invitation' }
+RocketChat.settings.add 'Invitation_HTML', '<h2>Welcome to the <h1>Steamroom!</h1></h2>' , { type: 'string', multiline: true, group: 'SMTP', section: 'Invitation' }
 RocketChat.settings.add 'Accounts_Enrollment_Email',  '', { type: 'string', multiline: true,  group: 'SMTP', section: 'Invitation' }
 
 RocketChat.settings.addGroup 'Message'
@@ -101,18 +108,19 @@ RocketChat.settings.add 'Meta_msvalidate01', '', { type: 'string', group: 'Meta'
 
 RocketChat.settings.addGroup 'Push'
 RocketChat.settings.add 'Push_debug', false, { type: 'boolean', group: 'Push', public: true }
-RocketChat.settings.add 'Push_enable', false, { type: 'boolean', group: 'Push', public: true }
+RocketChat.settings.add 'Push_enable', true, { type: 'boolean', group: 'Push', public: true }
 RocketChat.settings.add 'Push_enable_gateway', true, { type: 'boolean', group: 'Push' }
 RocketChat.settings.add 'Push_gateway', 'https://rocket.chat', { type: 'string', group: 'Push' }
-RocketChat.settings.add 'Push_production', false, { type: 'boolean', group: 'Push', public: true }
-RocketChat.settings.add 'Push_apn_passphrase', '', { type: 'string', group: 'Push' }
-RocketChat.settings.add 'Push_apn_key', '', { type: 'string', multiline: true, group: 'Push' }
-RocketChat.settings.add 'Push_apn_cert', '', { type: 'string', multiline: true, group: 'Push' }
-RocketChat.settings.add 'Push_apn_dev_passphrase', '', { type: 'string', group: 'Push' }
-RocketChat.settings.add 'Push_apn_dev_key', '', { type: 'string', multiline: true, group: 'Push' }
-RocketChat.settings.add 'Push_apn_dev_cert', '', { type: 'string', multiline: true, group: 'Push' }
-RocketChat.settings.add 'Push_gcm_api_key', '', { type: 'string', group: 'Push' }
-RocketChat.settings.add 'Push_gcm_project_number', '', { type: 'string', group: 'Push', public: true }
+RocketChat.settings.add 'Push_production', true, { type: 'boolean', group: 'Push', public: true }
+RocketChat.settings.add 'Push_test_push', 'push_test', { type: 'action', group: 'Push', actionText: 'Send_a_test_push_to_my_user' }
+RocketChat.settings.add 'Push_apn_passphrase', '', { type: 'string', group: 'Push', section: 'Certificates_and_Keys' }
+RocketChat.settings.add 'Push_apn_key', '', { type: 'string', multiline: true, group: 'Push', section: 'Certificates_and_Keys' }
+RocketChat.settings.add 'Push_apn_cert', '', { type: 'string', multiline: true, group: 'Push', section: 'Certificates_and_Keys' }
+RocketChat.settings.add 'Push_apn_dev_passphrase', '', { type: 'string', group: 'Push', section: 'Certificates_and_Keys' }
+RocketChat.settings.add 'Push_apn_dev_key', '', { type: 'string', multiline: true, group: 'Push', section: 'Certificates_and_Keys' }
+RocketChat.settings.add 'Push_apn_dev_cert', '', { type: 'string', multiline: true, group: 'Push', section: 'Certificates_and_Keys' }
+RocketChat.settings.add 'Push_gcm_api_key', '', { type: 'string', group: 'Push', section: 'Certificates_and_Keys' }
+RocketChat.settings.add 'Push_gcm_project_number', '', { type: 'string', group: 'Push', public: true, section: 'Certificates_and_Keys' }
 
 RocketChat.settings.addGroup 'Layout'
 RocketChat.settings.add 'Layout_Home_Title', 'Home', { type: 'string', group: 'Layout', public: true, section: 'Content' }

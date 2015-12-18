@@ -1,4 +1,5 @@
 Template.wiseGuyAlerts.helpers
+
 	alerts: ->
 		return Template.instance().alerts()
 
@@ -34,7 +35,7 @@ Template.wiseGuyAlerts.helpers
 
 	formatDate: ->
 		if @weekly
-			return "Fri #{@exp_date.getMonth() + 1}/#{@exp_date.getDate() + 1}"
+			return "Fri #{@exp_date.getMonth() + 1}/#{@exp_date.getDate()}"
 		"#{@exp_date.toDateString().substr(4,3)}#{@exp_date.toDateString().substr(13,2)}"
 
 	getStrike: ->
@@ -44,20 +45,30 @@ Template.wiseGuyAlerts.helpers
 		if @direction is 1 then 'CALLS' else 'PUTS'
 
 	formatPrice: ->
-		if @price > 999 then (@price/1000).toFixed() + 'K' else @price
+		formattedPrice = @price
+		if @price >= 1e6
+			formattedPrice = (@price/1e6).toFixed(2) + 'M'
+		else if @price >= 1e3
+			formattedPrice = (@price/1e3).toFixed() + 'K'
+		return formattedPrice
+
+	refPrice: ->
+		return @ref_price
+
+	moreResults: ->
+		return !(WiseGuyAlerts.find().count() < Template.instance().numItems.get() )
 
 Template.wiseGuyAlerts.onCreated ->
 	instance = @
 	@ready = new ReactiveVar true
+	@numItems = new ReactiveVar 20
 
 	@autorun ->
-		subscription = instance.subscribe 'wiseGuyAlerts', 20
+		subscription = instance.subscribe 'wiseGuyAlerts', instance.numItems.get()
 		instance.ready.set subscription.ready()
 
 	@alerts = ->
 		return WiseGuyAlerts.find({}, {sort: ts: -1}).fetch()
-
-Template.wiseGuyAlerts.onRendered ->
 
 Template.wiseGuyAlerts.events
 	'click .alert-wrap': (e) ->
@@ -65,3 +76,18 @@ Template.wiseGuyAlerts.events
 		ct = $(e.currentTarget)
 		ct.children('.more-info').slideToggle('fast')
 		ct.children('.wiseguy-alert').toggleClass('wiseguy-plus')
+
+	'click .load-alerts': (e, template) ->
+		e.preventDefault()
+		template.numItems.set(template.numItems.get() + 10)
+
+Template.wiseGuyAlerts.onRendered ->
+	Meteor.defer ->
+		if Meteor.user()?.settings?.preferences?.enableNewWiseguyAlertNotification
+			$('#wiseguyNotification')[0].play()
+
+		if !(RocketChat.TabBar.isFlexOpen('wiseGuyAlerts'))
+			element = $('.tab-button[data-template="wiseGuyAlerts"]')
+			element.addClass('blink').delay(2000).queue (next) ->
+				$(this).removeClass('blink')
+				next()

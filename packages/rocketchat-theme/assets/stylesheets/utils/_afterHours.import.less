@@ -160,6 +160,14 @@
     .wiseguy-alert:hover .wisecon {
       background-color: @after-hours-light;
     }
+
+    .load-more .load-alerts {
+      background-color: #545B61;
+      .transition(background-color .3s ease-in-out);
+      &:hover {
+        background-color: #686E75;
+      }
+    }
   }
 
   textarea, select, input[type='text'],
@@ -256,5 +264,11 @@
     h2 {
       color: #fff;
     }
+  }
+
+  .blink {
+    -webkit-animation: blink-ah 1s linear 2;
+    -moz-animation: blink-ah 1s linear 2;
+    animation: blink-ah 1s linear 2;
   }
 }

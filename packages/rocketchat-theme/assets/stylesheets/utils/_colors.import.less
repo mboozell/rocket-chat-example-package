@@ -136,6 +136,7 @@ select,
 input[type='text'],
 input[type='number'],
 input[type='email'],
+input[type='url'],
 input[type='password'] {
 	border-color: #E7E7E7;
 	background-color: #fff;
@@ -1111,7 +1112,7 @@ a.github-fork {
 			color: lighten(@primary-background-color, 50%);
 		}
 		&:hover {
-			color: darken(@primary-background-color, 10%);
+			color: lighten(@primary-background-color, 80%);
 		}
 	}
 	.input-text {

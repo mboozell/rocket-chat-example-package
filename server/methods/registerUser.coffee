@@ -13,6 +13,9 @@ Meteor.methods
 			unless invitation.email is email
 				throw new Meteor.Error 'email-invalid', "Invite doesn't match Email"
 
+		if RocketChat.settings.get('Accounts_RegistrationForm') is 'Secret URL' and (not formData.secretURL or formData.secretURL isnt RocketChat.settings.get('Accounts_RegistrationForm_SecretURL'))
+			throw new Meteor.Error 'registration-disabled', 'User registration is only allowed via Secret URL'
+
 		userData =
 			email: email
 			password: pass

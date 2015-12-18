@@ -1,0 +1,15 @@
+<template name="adminProductUsers">
+	<h1 class="product-info-title">{{name}}</h1>
+	<div>
+		{{#each users}}
+		<div class="user-list-item">
+			<span>{{username}}</span>
+			<a class="remove-user" data-userid="{{_id}}">delete</a>
+		</div>
+		{{/each}}
+	</div>
+	<div>
+		{{> inputAutocomplete settings=autocompleteSettings id="new-user-name" class="required search" autocomplete="off"}}
+		<button class="button add-user">{{_ "Add User"}}</button>
+	</div>
+</template>
