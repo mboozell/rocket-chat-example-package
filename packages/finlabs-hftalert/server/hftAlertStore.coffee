@@ -27,4 +27,4 @@ do ->
 				_id: id
 				root: @name
 
-	FinLabs.hftAlert.store = new GridFS 'rocketchat_plugin_hftalert_files'
+	FinLabs.hftAlert.store = new GridFS 'rocketchat_hftalert_files'

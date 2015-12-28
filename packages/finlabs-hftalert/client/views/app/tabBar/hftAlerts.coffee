@@ -16,8 +16,16 @@ Template.hftAlerts.helpers
 Template.hftAlerts.onCreated ->
 	instance = @
 	@images = new ReactiveVar
-		'5min':
-			caption: "5 minute",
+		'SPYLiquidity':
+			caption: "SPY Liquidity",
+			extension: 'jpg',
+			num: 0
+		'SPYPressure':
+			caption: "SPY Market Pressure",
+			extension: 'jpg',
+			num: 0
+		'VXXPressure':
+			caption: "VXX Market Pressure",
 			extension: 'jpg',
 			num: 0
 

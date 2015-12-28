@@ -43,6 +43,7 @@ emojione:emojione@1.5.2
 facebook@1.2.2
 fastclick@1.0.7
 finlabs:analytics@0.0.1
+finlabs:hftalert@0.0.1
 finlabs:lib@0.0.1
 finlabs:payment@0.0.1
 finlabs:wiseguy@0.0.1
