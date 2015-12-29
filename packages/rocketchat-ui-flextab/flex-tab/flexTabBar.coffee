@@ -13,13 +13,19 @@ Template.flexTabBar.events
 		if RocketChat.TabBar.isFlexOpen() and RocketChat.TabBar.getTemplate() is $(e.currentTarget).data('template')
 			RocketChat.TabBar.closeFlex()
 			$('.flex-tab').css('max-width', '')
+			$('#rocket-chat .main-content').css('right', "")
 		else
 			width = $(e.currentTarget).data('width')
 
 			if width?
 				$('.flex-tab').css('max-width', "#{width}px")
+				if window.matchMedia and window.matchMedia("(min-width: 780px)").matches
+					$('#rocket-chat .main-content').css('right', "#{width}px")
+				else
+					$('#rocket-chat .main-content').css('right', "")
 			else
 				$('.flex-tab').css('max-width', '')
+				$('#rocket-chat .main-content').css('right', "")
 
 			RocketChat.TabBar.setTemplate $(e.currentTarget).data('template'), ->
 				$('.flex-tab')?.find("input[type='text']:first")?.focus()
