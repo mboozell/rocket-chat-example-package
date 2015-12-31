@@ -10,7 +10,8 @@ Package.onUse(function(api) {
 
 	api.use([
 		'coffeescript',
-		'underscore'
+		'underscore',
+		'rocketchat:lib@0.0.1'
 	]);
 
 	api.use([], 'server');
@@ -20,7 +21,11 @@ Package.onUse(function(api) {
 
 	api.addFiles([], ['server', 'client']);
 
-	api.addFiles([], 'server');
+	api.addFiles([
+		"server/settings.coffee",
+		"server/methods/getHostname.coffee",
+		"server/lib/emailAdminsUpdate.coffee"
+	], 'server');
 
 	api.addFiles([], 'client');
 

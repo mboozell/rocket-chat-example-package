@@ -26,6 +26,8 @@ Package.onUse(function(api) {
 	api.addFiles('master/loading.html', 'client');
 	api.addFiles('master/error.html', 'client');
 	api.addFiles('master/logoLayout.html', 'client');
+	api.addFiles('master/siteMetaInfo.html', 'client');
 
 	api.addFiles('master/main.coffee', 'client');
+	api.addFiles('master/siteMetaInfo.coffee', 'client');
 });
