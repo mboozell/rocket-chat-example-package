@@ -225,10 +225,10 @@ Template.admin.onRendered ->
 
 	Meteor.setTimeout ->
 		$('input.minicolors').minicolors({theme: 'rocketchat'})
-	, 500
+	, 1000
 
 	Tracker.autorun ->
 		FlowRouter.watchPathChange()
 		Meteor.setTimeout ->
 			$('input.minicolors').minicolors({theme: 'rocketchat'})
-		, 200
+		, 400

@@ -52,7 +52,7 @@
 <template name="main">
 	{{#if subsReady}}
 		{{#unless logged}}
-			{{> loginLayout}}
+			{{> loginLayout center="loginForm"}}
 		{{else}}
 		{{#if isUnpaidUser}}
 			{{> registerPayment}}

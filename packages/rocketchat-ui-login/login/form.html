@@ -38,7 +38,6 @@
 				<div class="submit">
 					<button data-loading-text="{{_ "Please_wait"}}..." class='button primary login'><span>{{btnLoginSave}}</span></button>
 				</div>
-
 			{{/if}}
 
 			<div class="{{showOauthLogin}}">
@@ -54,18 +53,16 @@
 				<div class="register {{showRegisterLink}}">
 					<a href="">{{_ 'Register'}}</a>
 				</div>
-				{{else}}{{#if linkReplacementText}}
-					{{{linkReplacementText}}}
-				{{/if}}{{/if}}
+				{{else}}
+					{{#if linkReplacementText}}
+						{{{linkReplacementText}}}
+					{{/if}}
+				{{/if}}
 				{{#if passwordresetAllowed}}
 				<div class="forgot-password {{showForgotPasswordLink}}">
 					<a href="">{{_ 'Forgot_password'}}</a>
 				</div>
 				{{/if}}
-			{{else}}
-				<div class="register-external">
-					<a href="https://www.wallstjesus.com" target="_blank">Register a new account</a>
-				</div>
 			{{/if}}
 		{{/if}}
 		<div class="back-to-login {{showBackToLoginLink}}">
