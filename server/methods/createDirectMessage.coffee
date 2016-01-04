@@ -6,8 +6,6 @@ Meteor.methods
 		if RocketChat.authz.hasPermission(Meteor.userId(), 'create-d') isnt true
 			throw new Meteor.Error 'not-authorized', '[methods] createDirectMessage -> Not authorized'
 
-		console.log '[methods] createDirectMessage -> '.green, 'userId:', Meteor.userId(), 'arguments:', arguments
-
 		me = Meteor.user()
 
 		if me.username is username

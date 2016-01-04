@@ -68,3 +68,4 @@ pm2.json
 settings.json
 local
 .envrc
+build.sh
