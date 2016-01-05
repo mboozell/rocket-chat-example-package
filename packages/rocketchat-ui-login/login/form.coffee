@@ -6,7 +6,7 @@ Template.loginForm.helpers
 		return if RocketChat.settings.get 'Accounts_RequireNameForSignUp' then t('Name') else t('Name_optional')
 
 	showFormLogin: ->
-		return RocketChat.settings.get 'Accounts_ShowFormLogin' 
+		return RocketChat.settings.get 'Accounts_ShowFormLogin'
 
 	showName: ->
 		Template.instance().showFieldWhen 'register'
@@ -149,7 +149,7 @@ Template.loginForm.events
 					loginMethod = 'loginWithLDAP'
 
 				Meteor[loginMethod] formData.emailOrUsername, formData.pass, (error) ->
-					FinLabs.Analytics.track	"Login", login_info: formData.emailOrUsername
+					FinLabs?.Analytics?.track	"Login", login_info: formData.emailOrUsername
 					RocketChat.Button.reset(button)
 					if error?
 						if error.error is 'no-valid-email'

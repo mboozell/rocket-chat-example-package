@@ -629,7 +629,7 @@ Template.room.onRendered ->
 #
 # 			toastr.success t('Room_name_changed_successfully')
 #
-# 			FinLabs.Analytics.track( 'Save Room Name', {
+# 			FinLabs?.Analytics?.track( 'Save Room Name', {
 # 				roomId: rid
 # 				roomName: name
 # 				username: Meteor.user().name
