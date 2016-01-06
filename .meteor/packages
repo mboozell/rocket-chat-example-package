@@ -112,7 +112,7 @@ kadira:debug
 kenton:accounts-sandstorm
 kevohagan:sweetalert
 meteorhacks:kadira
-meteorhacks:zones
+# meteorhacks:zones
 mizzao:autocomplete
 mizzao:timesync
 momentjs:moment
