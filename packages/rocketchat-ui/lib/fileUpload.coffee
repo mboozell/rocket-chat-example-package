@@ -134,7 +134,7 @@ readAsArrayBuffer = (file, callback) ->
 
 							rid = Session.get 'openedRoom'
 
-							FinLabs.Analytics.track( "Upload Image", {
+							FinLabs?.Analytics?.track( "Upload Image", {
 								room: ChatRoom.findOne(rid).name
 								username: Meteor.user().username
 								file: file

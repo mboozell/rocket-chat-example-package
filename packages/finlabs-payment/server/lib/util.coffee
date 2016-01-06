@@ -4,7 +4,7 @@ FinLabs.payment.util = new class
 
 	constructor: () ->
 		stripeKey = RocketChat.settings.get 'Stripe_Secret_Key'
-		@stripe = new stripe(stripeKey)
+		@stripe = if stripeKey then new stripe(stripeKey) else {}
 
 	getPlan: (planId) ->
 		_retrievePlan = (callback) => @stripe.plans.retrieve planId, callback
