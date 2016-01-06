@@ -4,7 +4,7 @@ FinLabs.hftAlert.tabBarItem =
 	id: "hftalert"
 	width: 600
 	template: "hftAlerts"
-	order: 6
+	order: 10
 
 Meteor.startup ->
 	RocketChat.callbacks.add 'enter-room', ->

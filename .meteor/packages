@@ -91,7 +91,7 @@ finlabs:lib
 finlabs:hftalert
 finlabs:payment
 finlabs:analytics
-finlabs:wiseguy
+# finlabs:wiseguy
 
 konecty:change-case
 konecty:delayed-task
