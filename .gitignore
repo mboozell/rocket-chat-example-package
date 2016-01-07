@@ -66,5 +66,6 @@ tramp
 ecosystem.json
 pm2.json
 settings.json
-local
+.local
 .envrc
+build.sh

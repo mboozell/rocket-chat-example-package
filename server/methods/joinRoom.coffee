@@ -3,11 +3,8 @@ Meteor.methods
 
 		room = RocketChat.models.Rooms.findOneById rid
 
-		console.log '[methods] joinRoom -> '.green, 'userId:', Meteor.userId(), 'arguments:', arguments
-
 		if RocketChat.authz.hasPermission(Meteor.userId(), 'basic') isnt true
 			throw new Meteor.Error 'not-authorized', '[methods] joinRoom -> Not authorized'
-
 
 		if not room?
 			throw new Meteor.Error 500, 'No channel with this id'

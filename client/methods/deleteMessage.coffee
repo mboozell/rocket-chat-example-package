@@ -17,7 +17,7 @@ Meteor.methods
 
 		rid = Session.get 'openedRoom'
 
-		FinLabs.Analytics.track( 'Delete Message', {
+		FinLabs?.Analytics?.track( 'Delete Message', {
 			username: Meteor.user().name
 			room: ChatRoom.findOne(rid).name
 			roomType: ChatRoom.findOne(rid).t
