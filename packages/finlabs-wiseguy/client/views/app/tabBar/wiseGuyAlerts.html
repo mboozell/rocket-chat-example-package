@@ -1,13 +1,12 @@
 <template name="wiseGuyAlerts">
 	<div class="content wiseguy-wrap">
 
-		<div class="control">
-			<div class="header">
-				<h2>Wiseguy Alerts</h2>
-			</div>
-		</div>
-
 		<div class="wiseguy-alert-list scrollable">
+			<div class="control">
+				<div class="header">
+					<h2>Wiseguy Alerts</h2>
+				</div>
+			</div>
 			{{#if hasAlerts}}
 				{{#each alerts}}
 					{{#if isEqual}}<div class="new-day" data-date="{{groupDate}}"></div>{{/if}}
