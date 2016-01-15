@@ -35,3 +35,6 @@ FinLabs.hftAlert.settings =
 
 FinLabs.hftAlert.stream.permissions.write -> false
 FinLabs.hftAlert.stream.permissions.read -> true
+
+for id, image of FinLabs.hftAlert.settings.images
+	FinLabs.hftAlert.models.Meta.create id

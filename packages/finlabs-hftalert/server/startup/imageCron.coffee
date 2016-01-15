@@ -17,7 +17,9 @@ Meteor.startup ->
 								if debug then console.log("#{id} Downloaded Successfully!")
 								break
 							catch e
-								if debug then console.log("#{id} Couldn't download. Trying again")
+								if debug
+									console.log("#{id} Couldn't download. Trying again")
+									console.log(e.message)
 								continue
 						return true
 

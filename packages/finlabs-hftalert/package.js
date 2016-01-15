@@ -43,6 +43,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/hftalert.coffee', ['server', 'client']);
 
 	api.addFiles([
+		'server/models/Meta.coffee',
 		'server/hftAlertSettings.coffee',
 		'server/getDelineatorImage.coffee',
 		'server/hftAlertStore.coffee',
