@@ -11,7 +11,7 @@ FinLabs.hftAlert.settings =
 			name: "30min.jpg"
 			url: "http://www.hcmi.com/users/subscribers/Advanced/30min/Delin_ny.jpg"
 			type: "image/jpg"
-			frequency: "every 5 min"
+			frequency: "every 1 min"
 		'daily':
 			name: "daily.jpg"
 			url: "http://www.hcmi.com/users/subscribers/Advanced/30min/daily.jpg"
