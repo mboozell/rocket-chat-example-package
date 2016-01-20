@@ -7,6 +7,9 @@ class Kick
 		if command isnt 'kick' or not Match.test params, String
 			return
 
+		unless RocketChat.authz.hasPermission Meteor.userId(), 'remove-user', item.rid
+			return
+
 		username = params.trim()
 		if username is ''
 			return

@@ -40,9 +40,10 @@ Package.onUse(function(api) {
 	api.addFiles("package-tap.i18n", ["client", "server"]);
 	api.addFiles(tapi18nFiles, ["client", "server"]);
 
-	api.addFiles('hftalert.coffee', ['server', 'client']);
+	api.addFiles('lib/hftalert.coffee', ['server', 'client']);
 
 	api.addFiles([
+		'server/models/Meta.coffee',
 		'server/hftAlertSettings.coffee',
 		'server/getDelineatorImage.coffee',
 		'server/hftAlertStore.coffee',

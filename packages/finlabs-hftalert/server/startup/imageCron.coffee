@@ -2,6 +2,7 @@ Meteor.startup ->
 	Meteor.defer ->
 
 		getImage = Meteor.wrapAsync FinLabs.hftAlert.getDelineatorImage, FinLabs.hftAlert
+		debug = RocketChat.settings.get("Debug_Level") == "debug"
 
 		for id, image of FinLabs.hftAlert.settings.images
 			do (id, image) ->
@@ -13,9 +14,15 @@ Meteor.startup ->
 						for tries in [1..3]
 							try
 								getImage id
-								console.log('Downloaded Successfully!')
+								if debug then console.log("#{id} Downloaded Successfully!")
 								break
 							catch e
-								console.log('Couldnt download. Trying again')
+								if debug
+									console.log("#{id} Couldn't download. Trying again")
+									console.log(e.message)
 								continue
 						return true
+
+		SyncedCron.config
+			log: debug
+

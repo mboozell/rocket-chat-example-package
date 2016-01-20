@@ -12,47 +12,98 @@
       "properties": { }
     },
 
-
-    // public IPs for 3 nodes + load balancer
+    // Network security group
 
     {
-      "name": "sanglucci-primary-pip",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "location": "[resourceGroup().location]",
+      "name": "sanglucci-security",
+      "type": "Microsoft.Network/networkSecurityGroups",
       "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
       "properties": {
-        "publicIPAllocationMethod": "Dynamic",
-        "dnsSettings": {
-          "domainNameLabel": "sanglucci-primary"
-        }
+        "securityRules": [
+          // allow ssh only internally between nodes
+          // nodes are accessible from load balancer PIP through NAT rules
+
+          {
+            "name": "any-ssh-allow",
+            "properties": {
+              "direction": "Inbound",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "22",
+              "protocol": "Tcp",
+              "access": "Allow",
+              "priority": 300
+            }
+          },
+
+          // Allow HTTP from anywhere
+          {
+            "name": "any-http-allow",
+            "properties": {
+              "direction": "Inbound",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "80",
+              "protocol": "Tcp",
+              "access": "Allow",
+              "priority": 102
+            }
+          },
+
+          // Allow HTTPS from anywhere
+
+          {
+            "name": "any-https-allow",
+            "properties": {
+              "direction": "Inbound",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "443",
+              "protocol": "Tcp",
+              "access": "Allow",
+              "priority": 101
+            }
+          },
+
+          // Allow 8080 (meteor) from load balancer (probe)
+
+          {
+            "name": "lb-meteor-allow",
+            "properties": {
+              "direction": "Inbound",
+              "sourceAddressPrefix": "AzureLoadBalancer",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "10.0.0.0/24",
+              "destinationPortRange": "8080",
+              "protocol": "Tcp",
+              "access": "Allow",
+              "priority": 100
+            }
+          },
+
+          // Allow 27017 between nodes only
+          {
+            "name": "vnet-mongo-allow",
+            "properties": {
+              "direction": "Inbound",
+              "sourceAddressPrefix": "10.0.0.0/24",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "10.0.0.0/24",
+              "destinationPortRange": "27017",
+              "protocol": "Tcp",
+              "access": "Allow",
+              "priority": 200
+            }
+          }
+        ]
       }
     },
 
-    {
-      "name": "sanglucci-secondary-pip",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "location": "[resourceGroup().location]",
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publicIPAllocationMethod": "Dynamic",
-        "dnsSettings": {
-          "domainNameLabel": "sanglucci-secondary"
-        }
-      }
-    },
-
-    {
-      "name": "sanglucci-arb-pip",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "location": "[resourceGroup().location]",
-      "apiVersion": "2015-06-15",
-      "properties": {
-        "publicIPAllocationMethod": "Dynamic",
-        "dnsSettings": {
-          "domainNameLabel": "sanglucci-arb"
-        }
-      }
-    },
+    // public IP for load balancer
 
     {
       "name": "sanglucci-lb-pip",
@@ -84,7 +135,10 @@
           {
             "name": "default",
             "properties": {
-              "addressPrefix": "10.0.0.0/24"
+              "addressPrefix": "10.0.0.0/24",
+              "networkSecurityGroup": {
+                "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci/providers/Microsoft.Network/networkSecurityGroups/sanglucci-security"
+              }
             }
           }
         ]
@@ -121,7 +175,7 @@
               "frontendIPConfiguration": { "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci/providers/Microsoft.Network/loadBalancers/sanglucci-lb/frontendIPConfigurations/sanglucci-lb-frontend" },
               "backendAddressPool": { "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci/providers/Microsoft.Network/loadBalancers/sanglucci-lb/backendAddressPools/sanglucci-lb-backend" },
               "protocol": "Tcp",
-              "backendPort": 8080,
+              "backendPort": 80,
               "frontendPort": 80,
               "loadDistribution": "SourceIPProtocol"
             }
@@ -132,7 +186,7 @@
               "frontendIPConfiguration": { "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci/providers/Microsoft.Network/loadBalancers/sanglucci-lb/frontendIPConfigurations/sanglucci-lb-frontend" },
               "backendAddressPool": { "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci/providers/Microsoft.Network/loadBalancers/sanglucci-lb/backendAddressPools/sanglucci-lb-backend" },
               "protocol": "Tcp",
-              "backendPort": 8443,
+              "backendPort": 443,
               "frontendPort": 443,
               "loadDistribution": "SourceIPProtocol"
             }
@@ -143,11 +197,10 @@
           {
             "name": "sanglucci-root-probe",
             "properties": {
-              "protocol": "Http",
-              "port": 80,
+              "protocol": "Tcp",
+              "port": 8080,
               "intervalInSeconds": 5,
-              "numberOfProbes": 2,
-              "requestPath": "/"
+              "numberOfProbes": 2
             }
           }
         ]
@@ -162,20 +215,14 @@
       "location": "[resourceGroup().location]",
       "apiVersion": "2015-06-15",
       "dependsOn": [
-        "Microsoft.Network/publicIPAddresses/sanglucci-primary-pip",
-        "Microsoft.Network/publicIPAddresses/sanglucci-primary-pip",
         "Microsoft.Network/virtualNetworks/sanglucci-vnet",
         "Microsoft.Network/loadBalancers/sanglucci-lb"
       ],
       "properties": {
-        "networkSecurityGroup": {
-          "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci/providers/Microsoft.Network/networkSecurityGroups/sanglucci-ssh"
-        },
         "ipConfigurations": [
           {
             "name": "ipconfig0",
             "properties": {
-              "publicIPAddress": { "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci/providers/Microsoft.Network/publicIPAddresses/sanglucci-primary-pip" },
               "subnet": { "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci/providers/Microsoft.Network/virtualNetworks/sanglucci-vnet/subnets/default" },
               "privateIPAllocationMethod": "Static",
               "privateIPAddress": "10.0.0.4",
@@ -194,19 +241,14 @@
       "location": "[resourceGroup().location]",
       "apiVersion": "2015-06-15",
       "dependsOn": [
-        "Microsoft.Network/publicIPAddresses/sanglucci-secondary-pip",
         "Microsoft.Network/virtualNetworks/sanglucci-vnet",
         "Microsoft.Network/loadBalancers/sanglucci-lb"
       ],
       "properties": {
-        "networkSecurityGroup": {
-          "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci/providers/Microsoft.Network/networkSecurityGroups/sanglucci-ssh"
-        },
         "ipConfigurations": [
           {
             "name": "ipconfig1",
             "properties": {
-              "publicIPAddress": { "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci/providers/Microsoft.Network/publicIPAddresses/sanglucci-secondary-pip" },
               "subnet": { "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci/providers/Microsoft.Network/virtualNetworks/sanglucci-vnet/subnets/default" },
               "privateIPAllocationMethod": "Static",
               "privateIPAddress": "10.0.0.5",
@@ -225,14 +267,10 @@
       "location": "[resourceGroup().location]",
       "apiVersion": "2015-06-15",
       "dependsOn": [
-        "Microsoft.Network/publicIPAddresses/sanglucci-arb-pip",
         "Microsoft.Network/virtualNetworks/sanglucci-vnet",
         "Microsoft.Network/loadBalancers/sanglucci-lb"
       ],
       "properties": {
-        "networkSecurityGroup": {
-          "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci/providers/Microsoft.Network/networkSecurityGroups/sanglucci-ssh"
-        },
         "ipConfigurations": [
           {
             "name": "ipconfig-arb",
@@ -240,10 +278,7 @@
               "publicIPAddress": { "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci/providers/Microsoft.Network/publicIPAddresses/sanglucci-arb-pip" },
               "subnet": { "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci/providers/Microsoft.Network/virtualNetworks/sanglucci-vnet/subnets/default" },
               "privateIPAllocationMethod": "Static",
-              "privateIPAddress": "10.0.0.6",
-              "loadBalancerBackendAddressPools": [
-                //{ "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci/providers/Microsoft.Network/loadBalancers/sanglucci-lb/backendAddressPools/sanglucci-lb-backend" }
-              ]
+              "privateIPAddress": "10.0.0.6"
             }
           }
         ]
@@ -265,15 +300,15 @@
         "hardwareProfile": { "vmSize": "Standard_D1_v2" },
         "osProfile": {
           "computerName": "sanglucci-primary",
-          "adminUsername": "georgiosd",
+          "adminUsername": "sanglucci",
           "adminPassword": "irrelevant",
           "linuxConfiguration": {
             "disablePasswordAuthentication": "true",
             "ssh": {
               "publicKeys": [
                 {
-                  "path": "/home/georgiosd/.ssh/authorized_keys",
-                  "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYrLYOWm+C44rLXqyqbk9awQh9yRMJW3lYQzsECK/4f5UdEzjoXkjf2eNiRsJqwvKDgzPNrLd9My+XhnFPfDmA22ZXvPoySmtDhNcHdHhioY9FoSI4SIAyopGm/NABR+wKmm1csErWw3+hThzG0OKZJNBfObxfwr3KcbxacLbCtP5Q90g69JkgfhI8bQFagBfp4sib+k3YLbawgB6kKCnxNTUEtOZ5omzFmQFiOXRWyhcaqN7nusiH90sbJuhyaVYRGVxBNKv5aUFNJpPW3AHm/wqQEaZb16rsItmsScU1A25kJF/cnL6mBjbyZ7xI3w4QDeYjP53bTLkoahdsipM/"
+                  "path": "/home/sanglucci/.ssh/authorized_keys",
+                  "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2/b4BnvTfbZeXaIfyYox96j4yJMACL6snnqIS2uPqZ230cnkfOzsgH/q+0F/jIqp0jBfe5zp0QKpGHxn8U+e9DrT9OZN4G0xBG5yMvxR0HIJiYwRP1x/XHShRd7UV7kSGWCQhNP08pacUcSpbc/3cs2jTgdIL1WRLowZMXkiRxUz0o3lmp/7IMj1Q+VzVxYfOhqcZtHO1e2FO3aWq2LPXBGKX9MJ8S8hcJSIabU0yF6A9l3h1QtLT1pKV8JieHrwsMoZ23aG+uWZhoiBdLu0LQeew6jM2SQWm0POnnXb1+h/gmPGaIMb81htgY9wnD3gBYLOsBhUmM8OS95PNu/kD"
                 }
               ]
             }
@@ -285,7 +320,7 @@
             "osType": "Linux",
             "createOption": "FromImage",
             "image": {
-              "uri": "http://sangluccim.blob.core.windows.net/system/Microsoft.Compute/Images/rocket-osDisk.e083dc74-4b61-4543-b2b0-e8ebc1041586.vhd"
+              "uri": "http://sangluccim.blob.core.windows.net/system/Microsoft.Compute/Images/vhds/sanglucci-osDisk.1dcb00a8-1ff6-4017-b1e2-6247277f6803.vhd"
             },
             "vhd": {
               "uri": "http://sangluccim.blob.core.windows.net/vhds/sanglucci-primary-osdisk.vhd"
@@ -344,15 +379,15 @@
         "hardwareProfile": { "vmSize": "Standard_D1_v2" },
         "osProfile": {
           "computerName": "sanglucci-secondary",
-          "adminUsername": "georgiosd",
+          "adminUsername": "sanglucci",
           "adminPassword": "irrelevant",
           "linuxConfiguration": {
             "disablePasswordAuthentication": "true",
             "ssh": {
               "publicKeys": [
                 {
-                  "path": "/home/georgiosd/.ssh/authorized_keys",
-                  "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYrLYOWm+C44rLXqyqbk9awQh9yRMJW3lYQzsECK/4f5UdEzjoXkjf2eNiRsJqwvKDgzPNrLd9My+XhnFPfDmA22ZXvPoySmtDhNcHdHhioY9FoSI4SIAyopGm/NABR+wKmm1csErWw3+hThzG0OKZJNBfObxfwr3KcbxacLbCtP5Q90g69JkgfhI8bQFagBfp4sib+k3YLbawgB6kKCnxNTUEtOZ5omzFmQFiOXRWyhcaqN7nusiH90sbJuhyaVYRGVxBNKv5aUFNJpPW3AHm/wqQEaZb16rsItmsScU1A25kJF/cnL6mBjbyZ7xI3w4QDeYjP53bTLkoahdsipM/"
+                  "path": "/home/sanglucci/.ssh/authorized_keys",
+                  "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2/b4BnvTfbZeXaIfyYox96j4yJMACL6snnqIS2uPqZ230cnkfOzsgH/q+0F/jIqp0jBfe5zp0QKpGHxn8U+e9DrT9OZN4G0xBG5yMvxR0HIJiYwRP1x/XHShRd7UV7kSGWCQhNP08pacUcSpbc/3cs2jTgdIL1WRLowZMXkiRxUz0o3lmp/7IMj1Q+VzVxYfOhqcZtHO1e2FO3aWq2LPXBGKX9MJ8S8hcJSIabU0yF6A9l3h1QtLT1pKV8JieHrwsMoZ23aG+uWZhoiBdLu0LQeew6jM2SQWm0POnnXb1+h/gmPGaIMb81htgY9wnD3gBYLOsBhUmM8OS95PNu/kD"
                 }
               ]
             }
@@ -364,7 +399,7 @@
             "osType": "Linux",
             "createOption": "FromImage",
             "image": {
-              "uri": "http://sangluccim.blob.core.windows.net/system/Microsoft.Compute/Images/rocket-osDisk.e083dc74-4b61-4543-b2b0-e8ebc1041586.vhd"
+              "uri": "http://sangluccim.blob.core.windows.net/system/Microsoft.Compute/Images/vhds/sanglucci-osDisk.1dcb00a8-1ff6-4017-b1e2-6247277f6803.vhd"
             },
             "vhd": {
               "uri": "http://sangluccim.blob.core.windows.net/vhds/sanglucci-secondary-osdisk.vhd"
@@ -424,15 +459,15 @@
         "hardwareProfile": { "vmSize": "Standard_A0" },
         "osProfile": {
           "computerName": "sanglucci-arb",
-          "adminUsername": "georgiosd",
+          "adminUsername": "sanglucci",
           "adminPassword": "irrelevant",
           "linuxConfiguration": {
             "disablePasswordAuthentication": "true",
             "ssh": {
               "publicKeys": [
                 {
-                  "path": "/home/georgiosd/.ssh/authorized_keys",
-                  "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYrLYOWm+C44rLXqyqbk9awQh9yRMJW3lYQzsECK/4f5UdEzjoXkjf2eNiRsJqwvKDgzPNrLd9My+XhnFPfDmA22ZXvPoySmtDhNcHdHhioY9FoSI4SIAyopGm/NABR+wKmm1csErWw3+hThzG0OKZJNBfObxfwr3KcbxacLbCtP5Q90g69JkgfhI8bQFagBfp4sib+k3YLbawgB6kKCnxNTUEtOZ5omzFmQFiOXRWyhcaqN7nusiH90sbJuhyaVYRGVxBNKv5aUFNJpPW3AHm/wqQEaZb16rsItmsScU1A25kJF/cnL6mBjbyZ7xI3w4QDeYjP53bTLkoahdsipM/"
+                  "path": "/home/sanglucci/.ssh/authorized_keys",
+                  "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2/b4BnvTfbZeXaIfyYox96j4yJMACL6snnqIS2uPqZ230cnkfOzsgH/q+0F/jIqp0jBfe5zp0QKpGHxn8U+e9DrT9OZN4G0xBG5yMvxR0HIJiYwRP1x/XHShRd7UV7kSGWCQhNP08pacUcSpbc/3cs2jTgdIL1WRLowZMXkiRxUz0o3lmp/7IMj1Q+VzVxYfOhqcZtHO1e2FO3aWq2LPXBGKX9MJ8S8hcJSIabU0yF6A9l3h1QtLT1pKV8JieHrwsMoZ23aG+uWZhoiBdLu0LQeew6jM2SQWm0POnnXb1+h/gmPGaIMb81htgY9wnD3gBYLOsBhUmM8OS95PNu/kD"
                 }
               ]
             }
@@ -444,7 +479,7 @@
             "osType": "Linux",
             "createOption": "FromImage",
             "image": {
-              "uri": "http://sangluccim.blob.core.windows.net/system/Microsoft.Compute/Images/rocket-osDisk.e083dc74-4b61-4543-b2b0-e8ebc1041586.vhd"
+              "uri": "http://sangluccim.blob.core.windows.net/system/Microsoft.Compute/Images/vhds/sanglucci-osDisk.1dcb00a8-1ff6-4017-b1e2-6247277f6803.vhd"
             },
             "vhd": {
               "uri": "http://sangluccim.blob.core.windows.net/vhds/sanglucci-arb-osdisk.vhd"

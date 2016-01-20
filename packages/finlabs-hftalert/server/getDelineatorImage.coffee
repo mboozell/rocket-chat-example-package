@@ -4,18 +4,20 @@ FinLabs.hftAlert.getDelineatorImage = (id, callback) ->
 
 	image = FinLabs.hftAlert.settings.images[id]
 	if not image
-		callback()
+		return callback({message: "No Image"})
+
 	headers =
 		"Referer": FinLabs.hftAlert.settings.referer
 		"DNT": "1"
-	stream = request({url: image.url, headers: headers})
-		.pipe(FinLabs.hftAlert.store.upsert(id, image))
 
-	stream.on 'close', (data) ->
+	emitStream = ->
 		FinLabs.hftAlert.stream.emit 'new image', {id: id}
 		callback()
 
-	stream.on 'error', (error) ->
-		throw error
+	stream = request({url: image.url, headers: headers})
+		.on('error', callback)
+		.pipe(FinLabs.hftAlert.store.upsert(id, image))
+		.on('close', emitStream)
+		.on('error', callback)
 
 	return stream

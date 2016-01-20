@@ -7,22 +7,22 @@ FinLabs.payment = {}
 
 Meteor.startup ->
 
-	FinLabs.payment.products.add 'wsj-chat',
-		['wiseguy-alerts'],
-		['steam-room'],
-		[
-			{
-				type: 'wordpress'
-			},
-			{
-				type: 'subscription'
-				plan:
-					id: 'wsj-chat'
-			}
-		],
-		baseProduct: true
-		apiKey: "moUObG8aQLN24KWyxpv0VN3dGvP9G0tyt81_39l9ehX"
-		default: true
+	# FinLabs.payment.products.add 'wsj-chat',
+	# 	['wiseguy-alerts'],
+	# 	['steam-room'],
+	# 	[
+	# 		{
+	# 			type: 'wordpress'
+	# 		},
+	# 		{
+	# 			type: 'subscription'
+	# 			plan:
+	# 				id: 'wsj-chat'
+	# 		}
+	# 	],
+	# 	baseProduct: true
+	# 	apiKey: "moUObG8aQLN24KWyxpv0VN3dGvP9G0tyt81_39l9ehX"
+	# 	default: true
 
 Meteor.startup ->
 

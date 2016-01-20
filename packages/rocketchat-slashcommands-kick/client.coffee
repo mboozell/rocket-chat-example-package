@@ -9,3 +9,6 @@ RocketChat.slashCommands.add 'kick', (command, params, item) ->
 ,
 	description: TAPi18n.__ 'Remove_someone_from_room'
 	params: '@username'
+	filter: () ->
+		roomId = Session.get "openedRoom"
+		return RocketChat.authz.hasAtLeastOnePermission 'remove-user', roomId
