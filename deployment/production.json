@@ -21,9 +21,6 @@
       "location": "[resourceGroup().location]",
       "properties": {
         "securityRules": [
-          // allow ssh only internally between nodes
-          // nodes are accessible from load balancer PIP through NAT rules
-
           {
             "name": "any-ssh-allow",
             "properties": {
@@ -38,7 +35,6 @@
             }
           },
 
-          // Allow HTTP from anywhere
           {
             "name": "any-http-allow",
             "properties": {
@@ -53,8 +49,6 @@
             }
           },
 
-          // Allow HTTPS from anywhere
-
           {
             "name": "any-https-allow",
             "properties": {
@@ -66,37 +60,6 @@
               "protocol": "Tcp",
               "access": "Allow",
               "priority": 101
-            }
-          },
-
-          // Allow 8080 (meteor) from load balancer (probe)
-
-          {
-            "name": "lb-meteor-allow",
-            "properties": {
-              "direction": "Inbound",
-              "sourceAddressPrefix": "AzureLoadBalancer",
-              "sourcePortRange": "*",
-              "destinationAddressPrefix": "10.0.0.0/24",
-              "destinationPortRange": "8080",
-              "protocol": "Tcp",
-              "access": "Allow",
-              "priority": 100
-            }
-          },
-
-          // Allow 27017 between nodes only
-          {
-            "name": "vnet-mongo-allow",
-            "properties": {
-              "direction": "Inbound",
-              "sourceAddressPrefix": "10.0.0.0/24",
-              "sourcePortRange": "*",
-              "destinationAddressPrefix": "10.0.0.0/24",
-              "destinationPortRange": "27017",
-              "protocol": "Tcp",
-              "access": "Allow",
-              "priority": 200
             }
           }
         ]
