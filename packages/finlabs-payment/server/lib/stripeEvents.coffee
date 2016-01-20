@@ -24,8 +24,11 @@ FinLabs.payment.stripeEvents =
 			FinLabs.models.Subscription.updateOrAdd(subscription)
 
 			customer = FinLabs.models.Customer.findOneByCustomerId subscription.customer
-			user = FinLabs.models.Users.findOneById customer.user
-			email = user.emails[0].address
+			if customer
+				user = FinLabs.models.Users.findOneById customer.user
+				email = user.emails[0].address
+			else
+				email = "<email not found>"
 
 			unless subscription.status is 'active'
 				FinLabs.lib.emailAdminsUpdate
