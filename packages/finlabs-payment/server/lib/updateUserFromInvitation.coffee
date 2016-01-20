@@ -3,7 +3,7 @@ FinLabs.updateUserFromInvitation = (user, invitation) ->
 		FinLabs.models.Customer.createWithUserAndCustomerId user._id, invitation.stripe.customer
 
 	subscription = FinLabs.payment.util.getSubscription user._id, invitation.stripe.subscription
-	FinLabs.models.Subscription.createFromStripe user._id, subscription
+	FinLabs.models.Subscription.updateOrAdd subscription, user._id
 
 	products = FinLabs.models.Product.findByPlanId(subscription.plan.id).fetch()
 	for product in products

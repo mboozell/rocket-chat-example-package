@@ -60,18 +60,20 @@ FinLabs.models.Subscription = new class extends RocketChat.models._Base
 			$set: fields
 		return @update query, update
 
-	updateOrAdd: (subscription) ->
+	updateOrAdd: (subscription, userId) ->
 		subscription.subscriptionId = subscription.id
 		subscription.updatedAt = new Date()
 		delete subscription.id
 		updates = @updateBySubscriptionId subscription.subscriptionId, subscription
 		if updates
-			console.log "Updated #{updates} documents"
 			return updates
 		subscription.createdAt = subscription.updatedAt
-		customer = FinLabs.models.Customer.findOneByCustomerId subscription.customer
-		if customer
-			subscription.user = customer.user
+		if userId?
+			subscription.user = userId
+		else
+			customer = FinLabs.models.Customer.findOneByCustomerId subscription.customer
+			if customer
+				subscription.user = customer.user
 		return @insert subscription
 
 	# REMOVE
