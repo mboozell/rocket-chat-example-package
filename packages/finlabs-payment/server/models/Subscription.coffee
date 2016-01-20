@@ -70,7 +70,8 @@ FinLabs.models.Subscription = new class extends RocketChat.models._Base
 			return updates
 		subscription.createdAt = subscription.updatedAt
 		customer = FinLabs.models.Customer.findOneByCustomerId subscription.customer
-		subscription.user = customer.user
+		if customer
+			subscription.user = customer.user
 		return @insert subscription
 
 	# REMOVE
