@@ -1,0 +1,220 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+
+    // Network security group
+
+    {
+      "name": "sanglucci-dev-security",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "securityRules": [
+          // SSH
+
+          {
+            "name": "default-allow-ssh",
+            "properties": {
+              "direction": "Inbound",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "22",
+              "protocol": "Tcp",
+              "access": "Allow",
+              "priority": 100
+            }
+          },
+
+          // HTTP
+          {
+            "name": "default-allow-http",
+            "properties": {
+              "direction": "Inbound",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "80",
+              "protocol": "Tcp",
+              "access": "Allow",
+              "priority": 200
+            }
+          },
+
+          // HTTPS
+
+          {
+            "name": "default-allow-https",
+            "properties": {
+              "direction": "Inbound",
+              "sourceAddressPrefix": "*",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "443",
+              "protocol": "Tcp",
+              "access": "Allow",
+              "priority": 300
+            }
+          }
+
+        ]
+      }
+    },
+
+    // Virtual Network
+
+    {
+      "name": "sanglucci-dev-vnet",
+      "type": "Microsoft.Network/virtualNetworks",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "Microsoft.Network/networkSecurityGroups/sanglucci-dev-security"
+      ],
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.0.0.0/16"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "default",
+            "properties": {
+              "addressPrefix": "10.0.1.0/24",
+              "networkSecurityGroup": {
+                "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci-dev/providers/Microsoft.Network/networkSecurityGroups/sanglucci-dev-security"
+              }
+            }
+          }
+        ]
+      }
+    },
+
+    // PIP
+
+    {
+      "name": "sanglucci-dev-pip",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "publicIPAllocationMethod": "Static",
+        "dnsSettings": {
+          "domainNameLabel": "sanglucci-dev"
+        }
+      }
+    },
+
+    // NIC
+
+    {
+      "name": "sanglucci-dev-nic",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "Microsoft.Network/networkSecurityGroups/sanglucci-dev-security",
+        "Microsoft.Network/publicIPAddresses/sanglucci-dev-pip",
+        "Microsoft.Network/virtualNetworks/sanglucci-dev-vnet"
+      ],
+      "properties": {
+        "networkSecurityGroup": {
+          "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci-dev/providers/Microsoft.Network/networkSecurityGroups/sanglucci-dev-security"
+        },
+        "ipConfigurations": [
+          {
+            "name": "ipconfig-dev",
+            "properties": {
+              "publicIPAddress": { "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci-dev/providers/Microsoft.Network/publicIPAddresses/sanglucci-dev-pip" },
+              "subnet": { "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci-dev/providers/Microsoft.Network/virtualNetworks/sanglucci-dev-vnet/subnets/default" },
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "10.0.1.14"
+            }
+          }
+        ]
+      }
+    },
+
+    // Virtual Machines (nodes)
+    {
+      "name": "sanglucci-dev-vm",
+      "type": "Microsoft.Compute/virtualMachines",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "Microsoft.Network/networkInterfaces/sanglucci-dev-nic"
+      ],
+      "properties": {
+        "hardwareProfile": { "vmSize": "Standard_D1_v2" },
+        "osProfile": {
+          "computerName": "sanglucci-dev",
+          "adminUsername": "sanglucci",
+          "adminPassword": "irrelevant",
+          "linuxConfiguration": {
+            "disablePasswordAuthentication": "true",
+            "ssh": {
+              "publicKeys": [
+                {
+                  "path": "/home/sanglucci/.ssh/authorized_keys",
+                  "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC2/b4BnvTfbZeXaIfyYox96j4yJMACL6snnqIS2uPqZ230cnkfOzsgH/q+0F/jIqp0jBfe5zp0QKpGHxn8U+e9DrT9OZN4G0xBG5yMvxR0HIJiYwRP1x/XHShRd7UV7kSGWCQhNP08pacUcSpbc/3cs2jTgdIL1WRLowZMXkiRxUz0o3lmp/7IMj1Q+VzVxYfOhqcZtHO1e2FO3aWq2LPXBGKX9MJ8S8hcJSIabU0yF6A9l3h1QtLT1pKV8JieHrwsMoZ23aG+uWZhoiBdLu0LQeew6jM2SQWm0POnnXb1+h/gmPGaIMb81htgY9wnD3gBYLOsBhUmM8OS95PNu/kD"
+                }
+              ]
+            }
+          }
+        },
+        "storageProfile": {
+          "osDisk": {
+            "name": "sanglucci-dev-osdisk.vhd",
+            "osType": "Linux",
+            "createOption": "FromImage",
+            "image": {
+              "uri": "http://sangluccim.blob.core.windows.net/system/Microsoft.Compute/Images/vhds/sanglucci-osDisk.1dcb00a8-1ff6-4017-b1e2-6247277f6803.vhd"
+            },
+            "vhd": {
+              "uri": "http://sangluccim.blob.core.windows.net/vhds/sanglucci-dev-osdisk.vhd"
+            },
+            "caching": "ReadWrite"
+          },
+
+          "dataDisks": [
+            {
+              "name": "sanglucci-dev-data0.vhd",
+              "diskSizeGB": "10",
+              "lun": 0,
+              "caching": "ReadWrite",
+              "vhd": {
+                "uri": "http://sangluccim.blob.core.windows.net/vhds/sanglucci-dev-data0.vhd"
+              },
+              "createOption": "Empty"
+            },
+            {
+              "name": "sanglucci-dev-data1.vhd",
+              "diskSizeGB": "10",
+              "lun": 1,
+              "caching": "ReadWrite",
+              "vhd": {
+                "uri": "http://sangluccim.blob.core.windows.net/vhds/sanglucci-dev-data1.vhd"
+              },
+              "createOption": "Empty"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            { "id": "/subscriptions/59252ee8-9f48-488c-95c6-f03ff771fe7f/resourceGroups/sanglucci-dev/providers/Microsoft.Network/networkInterfaces/sanglucci-dev-nic" }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true,
+            "storageUri": "http://sangluccim.blob.core.windows.net/"
+          }
+        }
+      }
+    }
+
+  ]
+}
