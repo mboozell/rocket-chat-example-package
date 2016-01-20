@@ -23,5 +23,14 @@ FinLabs.payment.stripeEvents =
 		subscription: (subscription) ->
 			FinLabs.models.Subscription.updateOrAdd(subscription)
 
+			customer = FinLabs.models.Customer.findOneByCustomerId subscription.customer
+			user = FinLabs.models.Users.findOneById customer.user
+			email = user.emails[0].address
+
+			unless subscription.status is 'active'
+				FinLabs.lib.emailAdminsUpdate
+					subject: "Subscription Payment Ended!"
+					text: "Subscription [#{subscription.plan.id}] payment for #{email} [#{subscription.customer}] has changed to #{subscription.status}."
+
 		plan: (plan) ->
 			FinLabs.models.Product.updatePlan(plan)
