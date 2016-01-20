@@ -62,6 +62,10 @@ Template.messageSearch.events
 			dropDown = $(".search-messages-list \##{message_id} .message-dropdown")
 			dropDown.show()
 
+	'click .load-more a': (e, t) ->
+		t.limit.set(t.limit.get() + 20)
+		t.search()
+
 	'scroll .content': _.throttle (e, t) ->
 		if e.target.scrollTop >= e.target.scrollHeight - e.target.clientHeight
 			t.limit.set(t.limit.get() + 20)
