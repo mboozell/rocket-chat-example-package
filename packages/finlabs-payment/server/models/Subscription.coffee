@@ -68,7 +68,7 @@ FinLabs.models.Subscription = new class extends RocketChat.models._Base
 		if updates
 			console.log "Updated #{updates} documents"
 			return updates
-		subscription.createdAt = subscription.updatedAt()
+		subscription.createdAt = subscription.updatedAt
 		customer = FinLabs.models.Customer.findOneByCustomerId subscription.customer
 		subscription.user = customer.user
 		return @insert subscription
