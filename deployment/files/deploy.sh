@@ -30,13 +30,20 @@ tar -zxf $bundle -C $dest --overwrite --touch || exit 1
 # install packages - reduce npm logging to error because it throws OD off
 echo "Installing npm packages"
 cd $dest/bundle/programs/server
-npm config set loglevel error
+sudo npm config set loglevel error
 npm install > /dev/null 2>&1 || exit 1
 
 # give ourselves permissions
 cd $dest
 chmod 775 bundle
 sudo chown -R sanglucci.sanglucci bundle
+
+# link version to permanent place after deleting old link
+echo "Linking $dest to $perm"
+rm -f $perm
+ln -s $dest $perm || exit 1
+
+# create daemon script
 
 cat <<EOF > $dest/bundle/rocketchat
 #!/usr/bin/env node
@@ -65,15 +72,21 @@ cat $dest/bundle/main.js >> $dest/bundle/rocketchat
 chown sanglucci.sanglucci $dest/bundle/rocketchat
 chmod +x $dest/bundle/rocketchat
 
-# link version to permanent place after deleting old link
-echo "Linking $dest to $perm"
-rm -f $perm
-ln -s $dest $perm || exit 1
-
 # restart service
 echo "Restarting $serviceName"
-sudo stop $serviceName > /dev/null 2>&1
-sudo start $serviceName || exit 1
+pid_file="/var/run/apps/$app-$environment.pid"
+if [ -f $pid_file ] && [ -e /proc/$(cat $pid_file) ]; then
+	sudo stop $serviceName
+fi
+
+sudo start $serviceName
+
+sleep 30s
+
+if [ ! -f $pid_file ] || [ ! -e /proc/$(cat $pid_file) ]; then
+	>&2 echo "Service failed to start!"
+	exit 1
+fi
 
 # delete old files
 echo "Deleting old deployment at $prev_perm"

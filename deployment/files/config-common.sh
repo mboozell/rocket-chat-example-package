@@ -146,6 +146,9 @@ ln -s /storage/apps /var/apps
 mkdir /var/log/apps
 chown sanglucci.sanglucci /var/log/apps
 
+mkdir /var/run/apps
+chown sanglucci.sanglucci /var/run/apps
+
 # setup nginx
 
 sed -i s/#.server_tokens/server_tokens/ /etc/nginx/nginx.conf
