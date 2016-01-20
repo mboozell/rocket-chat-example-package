@@ -7,6 +7,9 @@ class Mute
 		if command isnt 'mute' or not Match.test params, String
 			return
 
+		unless RocketChat.authz.hasPermission Meteor.userId(), 'mute-user', item.rid
+			return
+
 		username = params.trim()
 		if username is ''
 			return

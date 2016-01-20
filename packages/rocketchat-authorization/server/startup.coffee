@@ -69,6 +69,9 @@ Meteor.startup ->
 		{ _id: 'remove-user',
 		roles : ['admin', 'site-moderator', 'moderator']}
 
+		{ _id: 'add-user',
+		roles : ['admin', 'site-moderator', 'moderator']}
+
 		{ _id: 'mute-user',
 		roles : ['admin', 'site-moderator', 'moderator']}
 
