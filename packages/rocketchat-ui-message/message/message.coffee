@@ -61,9 +61,10 @@ Template.message.helpers
 		return RocketChat.settings.get('Message_AllowDeleting') and this.u?._id is Meteor.userId()
 	showEditedStatus: ->
 		return RocketChat.settings.get 'Message_ShowEditedStatus'
-	isModerator: ->
+	moderator: (user) ->
 		rid = Template.instance().data.rid
-		RocketChat.authz.hasRole(@_id, 'moderator', rid)
+		moderator = RocketChat.authz.hasRole(user._id, ['moderator', 'admin'], rid)
+		return if moderator then "moderator" else ""
 	label: ->
 		if @i18nLabel
 			return t(@i18nLabel)
