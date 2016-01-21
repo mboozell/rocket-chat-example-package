@@ -89,7 +89,9 @@ if [ ! -f $pid_file ] || [ ! -e /proc/$(cat $pid_file) ]; then
 fi
 
 # delete old files
-echo "Deleting old deployment at $prev_perm"
-rm -rf $prev_perm
+if [ ! `readlink -e $dest` = $prev_perm ]; then
+	echo "Deleting old deployment at $prev_perm"
+	rm -rf $prev_perm
+fi
 
 echo "Done."

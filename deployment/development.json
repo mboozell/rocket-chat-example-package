@@ -12,8 +12,6 @@
       "location": "[resourceGroup().location]",
       "properties": {
         "securityRules": [
-          // SSH
-
           {
             "name": "default-allow-ssh",
             "properties": {
@@ -28,7 +26,6 @@
             }
           },
 
-          // HTTP
           {
             "name": "default-allow-http",
             "properties": {
@@ -42,8 +39,6 @@
               "priority": 200
             }
           },
-
-          // HTTPS
 
           {
             "name": "default-allow-https",
