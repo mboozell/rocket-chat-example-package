@@ -7,6 +7,9 @@ Meteor.methods
 		unless Match.test data?.username, String
 			throw new Meteor.Error 'invalid-username'
 
+		unless RocketChat.authz.hasPermission fromId, 'add-user', data.rid
+			return
+
 		room = RocketChat.models.Rooms.findOneById data.rid
 
 		# if room.username isnt Meteor.user().username and room.t is 'c'
