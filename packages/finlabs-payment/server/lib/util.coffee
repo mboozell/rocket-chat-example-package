@@ -16,6 +16,8 @@ FinLabs.payment.util = new class
 
 	getSubscriptions: (userId) ->
 		customer = @getCustomer(userId)
+		unless customer
+			return []
 		{customerId} = customer
 		_retrieveSubscriptions = (callback) => @stripe.customers.listSubscriptions customerId, callback
 		(Meteor.wrapAsync _retrieveSubscriptions)().data

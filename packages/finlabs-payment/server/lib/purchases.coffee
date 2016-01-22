@@ -109,7 +109,7 @@ FinLabs.payment.purchases =
 				return true
 
 			try
-				for subscription in FinLabs.payment.util.getSubscriptions(userId).data
+				for subscription in FinLabs.payment.util.getSubscriptions(userId)
 					FinLabs.models.Subscription.updateOrAdd subscription
 
 			FinLabs.models.Subscription.userHasActivePlan userId, planId
@@ -134,12 +134,13 @@ FinLabs.payment.purchases =
 
 Meteor.startup ->
 
+	doPurchaseCheck = (purchase) ->
+		Meteor.defer ->
+			FinLabs.payment.purchases.checkPurchase(purchase)
+
 	FinLabs.models.Purchase.find().observe
-
-		added: FinLabs.payment.purchases.checkPurchase
-		changed: FinLabs.payment.purchases.checkPurchase
-		removed: FinLabs.payment.purchases.checkPurchase
-
-
+		added: doPurchaseCheck
+		changed: doPurchaseCheck
+		removed: doPurchaseCheck
 
 
