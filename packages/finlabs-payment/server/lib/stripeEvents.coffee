@@ -25,7 +25,7 @@ FinLabs.payment.stripeEvents =
 
 			customer = FinLabs.models.Customer.findOneByCustomerId subscription.customer
 			if customer
-				user = FinLabs.models.Users.findOneById customer.user
+				user = RocketChat.models.Users.findOneById customer.user
 				email = user.emails[0].address
 			else
 				email = "<email not found>"
