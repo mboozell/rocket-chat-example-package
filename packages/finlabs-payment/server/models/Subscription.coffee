@@ -33,11 +33,11 @@ FinLabs.models.Subscription = new class extends RocketChat.models._Base
 		return @findOne query, options
 
 	findActiveByUserAndPlan: (userId, planId) ->
-		now = Date.now()
 		query =
 			user: userId
-			current_period_end: { $lte: now }
 			"plan.id": planId
+			status:
+				$in: ['active', 'trialing', 'past_due']
 
 		@find query
 
