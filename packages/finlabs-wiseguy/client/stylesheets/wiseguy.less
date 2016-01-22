@@ -33,9 +33,14 @@
 	}
 }
 
-.wiseguy-alert-list {
-	padding: 105px 0;
-	margin-top: 70px;
+.flex-tab .wiseguy-alert-list {
+	padding-bottom: 30px;
+
+	.control {
+		position: fixed;
+		width: calc(~'100% - 20px');
+		left: 10px;
+	}
 
 	.col-1, .col-3, .col-4 {
 		position: relative;
@@ -90,9 +95,9 @@
 	}
 
 	.new-day {
-		margin: 50px 0;
+		margin: 70px 0 40px;
 		&:first-of-type {
-			margin: -60px 0 0 0;
+			margin: -30px 0 0 0;
 			position: relative;
 			bottom: 40px;
 		}
