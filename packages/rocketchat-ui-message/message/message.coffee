@@ -65,6 +65,8 @@ Template.message.helpers
 		rid = Template.instance().data.rid
 		moderator = RocketChat.authz.hasRole(user._id, ['moderator', 'admin'], rid)
 		return if moderator then "moderator" else ""
+	modEmoji: ->
+		return emojione.toImage(":crown:")
 	label: ->
 		if @i18nLabel
 			return t(@i18nLabel)
