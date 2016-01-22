@@ -8,6 +8,9 @@ class Invite
 		if command isnt 'invite' or not Match.test params, String
 			return
 
+		unless RocketChat.authz.hasPermission Meteor.userId(), 'add-user', item.rid
+			return
+
 		username = params.trim()
 		if username is ''
 			return
@@ -37,8 +40,9 @@ class Invite
 			}
 			return
 
-		Meteor.runAsUser user._id, ->
-			Meteor.call 'joinRoom', item.rid
+		Meteor.call 'addUserToRoom',
+			rid: item.rid
+			username: user.username
 
 
 RocketChat.slashCommands.add 'invite', Invite

@@ -1,9 +1,16 @@
 <template name="hftAlerts">
-	<div class="content">
+	<div class="hft-alert content">
 		{{#each images}}
-		<a href="{{getUrl}}" class="hft-alert-swipebox" title="{{caption}}" target="_blank">
-			<img src="{{getUrl}}" id="hft-alert-image-{{id}}" class="hft-alert-image">
-		</a>
+		<div class="image-wrapper">
+			<a href="{{getUrl}}" class="hft-alert-swipebox" title="{{caption}}" target="_blank">
+				<img src="{{getUrl}}" id="hft-alert-image-{{id}}" class="hft-alert-image">
+
+				<div class="caption">
+					<p class="caption-content">{{caption}}</p>
+				</div>
+			</a>
+			
+		</div>
 		{{/each}}
 	</div>
 </template>

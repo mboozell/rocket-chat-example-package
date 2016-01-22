@@ -27,11 +27,19 @@ FinLabs.payment.addAndSendInvitation = (email, stripe, apiKey) ->
 		html: invitationHtml
 
 	tries = 0
+	sent = false
 	while true
 		try
-			return Email.send email
+			sent = Email.send email
+			break
 		catch e
 			if tries < 3
 				tries++
 			else
 				throw e
+
+	FinLabs.lib.emailAdminsUpdate
+		subject: "Chat Update! New Invite Sent"
+		text: "Sent #{invitation.email} an invite with url #{invitation.url}"
+
+	return sent

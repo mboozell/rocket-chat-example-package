@@ -41,6 +41,7 @@ rocketchat:lib
 rocketchat:authorization
 rocketchat:autolinker
 rocketchat:channel-settings
+rocketchat:channel-settings-mail-messages
 rocketchat:colors
 rocketchat:custom-oauth
 rocketchat:emojione
@@ -53,15 +54,19 @@ rocketchat:ldap
 rocketchat:logger
 rocketchat:mailer
 rocketchat:markdown
-rocketchat:me
+#rocketchat:me
 rocketchat:mentions
+rocketchat:mentions-flextab
 rocketchat:message-pin
 rocketchat:message-star
 rocketchat:oembed
 # rocketchat:sharedsecret
 rocketchat:slashcommands-invite
 rocketchat:slashcommands-join
-rocketchat:slashcommands-leave
+#rocketchat:slashcommands-leave
+rocketchat:slashcommands-kick
+rocketchat:slashcommands-mute
+rocketchat:slashcommands-hide
 rocketchat:spotify
 rocketchat:statistics
 rocketchat:theme
@@ -108,7 +113,7 @@ kadira:debug
 kenton:accounts-sandstorm
 kevohagan:sweetalert
 meteorhacks:kadira
-meteorhacks:zones
+# meteorhacks:zones
 mizzao:autocomplete
 mizzao:timesync
 momentjs:moment
@@ -117,6 +122,7 @@ mrt:reactive-store
 mystor:device-detection
 nimble:restivus
 nooitaf:colors
+ostrio:cookies@2.0.1
 pauli:accounts-linkedin
 perak:codemirror
 percolate:migrations

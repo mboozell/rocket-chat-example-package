@@ -35,7 +35,7 @@ Template.wiseGuyAlerts.helpers
 
 	formatDate: ->
 		if @weekly
-			return "Fri #{@exp_date.getMonth() + 1}/#{@exp_date.getDate()}"
+			return "Fri #{@exp_date.getMonth() + 1}/#{@exp_date.getUTCDate()}"
 		"#{@exp_date.toDateString().substr(4,3)}#{@exp_date.toDateString().substr(13,2)}"
 
 	getStrike: ->

@@ -30,13 +30,13 @@
 					</li>
 				{{/if}}
 
-				<!-- {{#each adminBoxOptions}} -->
-				<!-- 	{{#if permissionGranted}} -->
-				<!-- 		<li> -->
-				<!-- 			<a href="{{pathFor href}}" class="admin&#45;link">{{label}}</a> -->
-				<!-- 		</li> -->
-				<!-- 	{{/if}} -->
-				<!-- {{/each}} -->
+				{{#each adminBoxOptions}}
+					{{#if permissionGranted}}
+						<li>
+							<a href="{{pathFor href}}" class="admin-link">{{label}}</a>
+						</li>
+					{{/if}}
+				{{/each}}
 
 				<h3 class="add-room">
 					{{_ "Settings"}}

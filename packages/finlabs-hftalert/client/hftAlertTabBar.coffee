@@ -2,8 +2,10 @@ FinLabs.hftAlert.tabBarItem =
 	i18nTitle: "rocketchat-hftalert:HFT_Alerts"
 	icon: "icon-chart-line"
 	id: "hftalert"
+	width: 600
 	template: "hftAlerts"
-	order: 6
+	order: 10
+	resizeable: true
 
 Meteor.startup ->
 	RocketChat.callbacks.add 'enter-room', ->

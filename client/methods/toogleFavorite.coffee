@@ -11,7 +11,7 @@ Meteor.methods
 			$set:
 				f: f
 
-		FinLabs.Analytics.track( 'Toggle Favorite', {
+		FinLabs?.Analytics?.track( 'Toggle Favorite', {
 			room: ChatRoom.findOne(rid).name
 			toggleOn: f
 			roomType: ChatRoom.findOne(rid).t

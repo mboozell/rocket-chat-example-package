@@ -33,6 +33,7 @@ Meteor.methods
 		if invitation.email
 			RocketChat.models.Users.setEmailVerified userId
 		else if userData.email and emailEnabled
-			Accounts.sendVerificationEmail(userId, email)
+			Meteor.defer ->
+				Accounts.sendVerificationEmail(userId, email)
 
 		return userId

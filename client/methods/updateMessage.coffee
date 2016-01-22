@@ -43,7 +43,7 @@ Meteor.methods
 
 			rid = Session.get 'openedRoom'
 
-			FinLabs.Analytics.track( 'Update Message', {
+			FinLabs?.Analytics?.track( 'Update Message', {
 				originalMessage: originalMessage.msg
 				updatedMessage: message.msg
 				editedAt: message.editedAt

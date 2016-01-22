@@ -33,11 +33,11 @@ FinLabs.models.Subscription = new class extends RocketChat.models._Base
 		return @findOne query, options
 
 	findActiveByUserAndPlan: (userId, planId) ->
-		now = Date.now()
 		query =
 			user: userId
-			current_period_end: { $lte: now }
 			"plan.id": planId
+			status:
+				$in: ['active', 'trialing', 'past_due']
 
 		@find query
 
@@ -60,17 +60,20 @@ FinLabs.models.Subscription = new class extends RocketChat.models._Base
 			$set: fields
 		return @update query, update
 
-	updateOrAdd: (subscription) ->
+	updateOrAdd: (subscription, userId) ->
 		subscription.subscriptionId = subscription.id
 		subscription.updatedAt = new Date()
 		delete subscription.id
 		updates = @updateBySubscriptionId subscription.subscriptionId, subscription
 		if updates
-			console.log "Updated #{updates} documents"
 			return updates
-		subscription.createdAt = subscription.updatedAt()
-		customer = FinLabs.models.Customer.findOneByCustomerId subscription.customer
-		subscription.user = customer.user
+		subscription.createdAt = subscription.updatedAt
+		if userId?
+			subscription.user = userId
+		else
+			customer = FinLabs.models.Customer.findOneByCustomerId subscription.customer
+			if customer
+				subscription.user = customer.user
 		return @insert subscription
 
 	# REMOVE

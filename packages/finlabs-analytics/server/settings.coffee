@@ -1,2 +1,2 @@
-RocketChat.settings.addGroup 'Analytics'
-RocketChat.settings.add 'Segment_Key', '', { type: 'string', group: 'Analytics', public: true}
+RocketChat.settings.addGroup 'Analytics', ->
+	@add 'Segment_Key', '', { type: 'string', public: true}
