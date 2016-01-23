@@ -36,7 +36,9 @@ instances:
 
   - name: rocketchat-node
     search_string: ['node']
+    exact_match: False
     thresholds:
+	  warning: [1, 2]
       critical: [1, 1]
 
 EOF
