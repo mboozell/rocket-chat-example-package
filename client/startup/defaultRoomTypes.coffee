@@ -17,7 +17,7 @@ Meteor.startup ->
 					return { name: sub.name }
 			permissions: [ 'view-c-room' ]
 
-	RocketChat.roomTypes.add 'd', 20,
+	RocketChat.roomTypes.add 'd', 30,
 		template: 'directMessages'
 		icon: 'icon-at'
 		route:
@@ -30,7 +30,7 @@ Meteor.startup ->
 				return { username: sub.name }
 		permissions: [ 'view-d-room' ]
 
-	RocketChat.roomTypes.add 'p', 30,
+	RocketChat.roomTypes.add 'p', 20,
 		template: 'privateGroups'
 		icon: 'icon-lock'
 		route:
