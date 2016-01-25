@@ -63,7 +63,7 @@ Template.message.helpers
 		return RocketChat.settings.get 'Message_ShowEditedStatus'
 	moderator: (user) ->
 		rid = Template.instance().data.rid
-		moderator = RocketChat.authz.hasRole(user._id, ['moderator', 'admin'], rid)
+		moderator = RocketChat.authz.hasRole(user._id, ['moderator'], rid)
 		return if moderator then "moderator" else ""
 	modEmoji: ->
 		return emojione.toImage(":crown:")
