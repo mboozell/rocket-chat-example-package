@@ -49,3 +49,7 @@ Meteor.startup ->
 
 		setLanguage userLanguage
 	)
+
+	Meteor.call 'isProduction', (err, isProduction) ->
+		if isProduction
+			Session.set("environment", "production")

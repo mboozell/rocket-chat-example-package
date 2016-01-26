@@ -5,6 +5,8 @@ Template.adminFlex.helpers
 		return TAPi18n.__(@i18nLabel or @_id)
 	adminBoxOptions: ->
 		return RocketChat.AdminBox.getOptions()
+	isProduction: ->
+		Session.get("environment") is "production"
 
 Template.adminFlex.events
 	'mouseenter header': ->
