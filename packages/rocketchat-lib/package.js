@@ -77,6 +77,7 @@ Package.onUse(function(api) {
 	api.addFiles('server/methods/setUsername.coffee', 'server');
 	api.addFiles('server/methods/updateUser.coffee', 'server');
 	api.addFiles('server/methods/restartServer.coffee', 'server');
+	api.addFiles('server/methods/isProduction.coffee', 'server');
 
 	// SERVER STARTUP
 	api.addFiles('server/startup/settingsOnLoadCdnPrefix.coffee', 'server');
