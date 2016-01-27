@@ -27,21 +27,20 @@ EOF
 
 # add monitoring script for node
 
-cat <<EOF > /etc/dd-agent/conf.d/process.yaml
+#cat <<EOF > /etc/dd-agent/conf.d/process.yaml
 
-init_config:
-  pid_cache_duration: 1
+# init_config:
+#  pid_cache_duration: 1
 
-instances:
+# instances:
 
-  - name: rocketchat-node
-    search_string: ['node']
-    exact_match: False
-    thresholds:
-	  warning: [1, 2]
-      critical: [1, 1]
-
-EOF
+#  - name: rocketchat-node
+#    search_string: ['node']
+#    exact_match: False
+#    thresholds:
+#	  warning: [1, 2]
+#      critical: [1, 1]
+#EOF
 
 # add nginx status check
 

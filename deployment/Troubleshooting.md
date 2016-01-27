@@ -70,7 +70,7 @@ If there are errors and not visible, use `less` and press `END`:
 ### Check if node process is up
 
 ```
-# ps aux | grep [n]ode
+# ps aux | grep [S]angLucci
 ```
 
 Example output:
