@@ -195,8 +195,8 @@
 
   .page-static {
 
-    label {
-      color: @after-hours-font-1
+    label, .section .section-content .input-line>label {
+      color: @after-hours-font-1;
     }
 
     input {
@@ -213,13 +213,27 @@
     }
 
     // Settings Option Groups Border Color
-    .content .section .section-content {
+    .section, .content .section .section-content, .content .section-content .input-line {
       border-color: @after-hours-dark;
     }
 
   }
 
+  .page-settings {
+    .section {
+      .section-title {
+        color: @after-hours-font-1;
+      }
+      .section-content .input-line input {
+        color: @after-hours-font-1;
+      }
+    }
+  }
+
   .page-container {
+    .content, .rocket-form .section {
+      background-color: @after-hours-secondary;
+    }
     .content::-webkit-scrollbar-thumb {
       background-color: @after-hours-darker;
     }
@@ -243,6 +257,24 @@
     }
     .results p {
       color: #fff;
+    }
+    .room-info:hover {
+      @after-hours-darker;
+    }
+    .statistics-table {
+      border-color: @after-hours-darker;
+      font: @after-hours-font-1;
+
+      tr {
+        background-color: @after-hours-secondary;
+
+        &:nth-of-type(even) {
+          background-color: @after-hours-dark;
+        }
+      }
+    }
+    .content .rocket-form .input-line>label {
+      color: @after-hours-font-1;
     }
   }
 
