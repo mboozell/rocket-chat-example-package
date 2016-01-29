@@ -259,7 +259,7 @@
       color: #fff;
     }
     .room-info:hover {
-      @after-hours-darker;
+      background-color: @after-hours-darker;
     }
     .statistics-table {
       border-color: @after-hours-darker;
@@ -321,4 +321,22 @@
   li.moderator {
     background-color: #444B50;
   }
+
+  .permissions-manager {
+
+    .permission-grid {
+
+      td {
+        border-color: @after-hours-darker;
+      }
+      td * {
+        color: #fff;
+      }
+
+      thead tr {
+        background-color: @after-hours-darker;
+      }
+    }
+  }
+
 }
