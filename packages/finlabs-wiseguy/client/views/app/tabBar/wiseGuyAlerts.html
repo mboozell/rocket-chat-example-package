@@ -7,57 +7,66 @@
 					<h2>Wiseguy Alerts</h2>
 				</div>
 			</div>
-			{{#if hasAlerts}}
-				{{#each alerts}}
-					{{#if isEqual}}<div class="new-day" data-date="{{groupDate}}"></div>{{/if}}
-					<div class="alert-wrap">
+			
+			{{#each alerts}}
+				{{#if isEqual}}<div class="new-day" data-date="{{groupDate}}"></div>{{/if}}
+				<div class="alert-wrap">
 
-						<div class="wiseguy-alert">
-							<div class="col-1">
-								<i class="wiseguy-minus wisecon"></i>
-							</div>
-							<div class="col-3">
-								<div class="timestamp">
-									{{timestamp}}
-								</div>
-							</div>
-							<div class="col-4">
-								<div class="ticker">
-									{{ticker}}
-								</div>
-							</div>
-							<div class="col-4">
-								<div class="{{getState}}">
-									{{getState}}
-								</div>
+					<div class="wiseguy-alert">
+						<div class="col-1">
+							<i class="wiseguy-minus wisecon"></i>
+						</div>
+						<div class="col-3">
+							<div class="timestamp">
+								{{timestamp}}
 							</div>
 						</div>
-
-						<div class="more-info">
-							<ul>
-								{{#if refPrice}}<li>Reference Price: {{ticker}}={{refPrice}}</li>{{/if}}
-								<li>
-									{{formatDate}} {{#if weekly}}<span class="wiseguy-weekly">(Weekly)</span>{{/if}}
-									{{getStrike}} {{getDirection}}
-								</li>
-								<li>{{formatPrice}} BET {{tags}}</li>
-							</ul>
+						<div class="col-4">
+							<div class="ticker">
+								{{ticker}}
+							</div>
 						</div>
-
-						{{#if isLast}}<hr>{{/if}}
-
+						<div class="col-4">
+							<div class="{{getState}}">
+								{{getState}}
+							</div>
+						</div>
 					</div>
-				{{/each}}
-			{{else}}
-				<li class="empty">
-					No alerts to display
-				</li>
-			{{/if}}
+
+					<div class="more-info">
+						<ul>
+							{{#if refPrice}}<li>Reference Price: {{ticker}}={{refPrice}}</li>{{/if}}
+							<li>
+								{{formatDate}} {{#if weekly}}<span class="wiseguy-weekly">(Weekly)</span>{{/if}}
+								{{getStrike}} {{getDirection}}
+							</li>
+							<li>{{formatPrice}} BET {{tags}}</li>
+						</ul>
+					</div>
+
+					{{#if isLast}}<hr>{{/if}}
+
+				</div>
+			{{/each}}
 
 			{{#if moreResults}}
 				<div class="load-more">
-					<button class="load-alerts">load more</button>
+					{{#if Template.subscriptionsReady}}
+						<button class="load-alerts">load more</button>
+					{{else}}
+						<div class="load-more-loading">{{_ "Loading..."}}</div>
+					{{/if}}
 				</div>
+			{{/if}}
+
+			{{#if Template.subscriptionsReady}}
+				{{#unless hasAlerts}}
+					<li class="empty">
+						No alerts to display
+					</li>
+				{{/unless}}
+			{{else}}
+				<div class="load-more-loading empty">{{_ "Loading..."}}</div>
 			{{/if}}
 		</div>
 	</div>
