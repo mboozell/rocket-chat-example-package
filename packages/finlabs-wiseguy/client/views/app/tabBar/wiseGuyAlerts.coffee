@@ -56,16 +56,20 @@ Template.wiseGuyAlerts.helpers
 		return @ref_price
 
 	moreResults: ->
-		return !(WiseGuyAlerts.find().count() < Template.instance().numItems.get() )
+		return Template.instance().hasMore.get()
 
 Template.wiseGuyAlerts.onCreated ->
 	instance = @
 	@ready = new ReactiveVar true
 	@numItems = new ReactiveVar 20
+	@hasMore = new ReactiveVar true
 
 	@autorun ->
-		subscription = instance.subscribe 'wiseGuyAlerts', instance.numItems.get()
+		subscription = @subscribe 'wiseGuyAlerts', @numItems.get()
 		instance.ready.set subscription.ready()
+		if sub.ready()
+			if WiseGuyAlerts.find().count() < Template.instance().numItems.get()
+				@hasMore.set false
 
 	@alerts = ->
 		return WiseGuyAlerts.find({}, {sort: ts: -1}).fetch()
