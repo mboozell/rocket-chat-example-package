@@ -47,6 +47,7 @@ Template.adminInviteUser.events
 		email = $('#inviteEmail').val()
 		options =
 			name: $('#inviteName').val()
+			overrideProducts: instance.generateProductList
 
 		if not instance.isValidEmail(email)
 			toastr.error t("Email not valid")
@@ -63,10 +64,12 @@ Template.adminInviteUser.events
 
 	'productListChange #possible-products-selection': (e, t, v) ->
 		productList = v.data
+		t.generateProductList = _.map productList, (product) -> product._id
 
 Template.adminInviteUser.onCreated ->
 	@inviteEmails = new ReactiveVar []
 	@inviteUrl = new ReactiveVar ''
+	@generateProductList = []
 	@clearEmailForm = ->
 		$('#inviteEmails').val('')
 	@clearGenerateForm = ->

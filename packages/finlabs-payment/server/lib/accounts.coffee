@@ -13,7 +13,7 @@ Meteor.startup ->
 		return true
 
 	RocketChat.callbacks.add 'afterCreateUser', (options, user) ->
-		if options?.invitation?.stripe
+		if options?.invitation
 			FinLabs.updateUserFromInvitation user, options.invitation
 
 		if RocketChat.authz.hasRole user._id, 'admin'
