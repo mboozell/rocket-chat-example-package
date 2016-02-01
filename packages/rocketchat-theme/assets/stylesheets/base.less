@@ -1539,7 +1539,7 @@ a.github-fork {
 			top: 60px;
 		}
 		&.bottom-unread-rooms {
-			bottom: 70px;
+			bottom: 0px;
 		}
 
 		i {
@@ -4525,4 +4525,27 @@ a.github-fork {
 			}
 		}
 	}
+}
+
+li.moderator {
+	background-color: #F3F3F3;
+
+	.mod-emoji {
+		display: inline-block;
+	}
+}
+
+.mod-emoji {
+	display: none;
+}
+
+.prod-warning {
+	font-size: .5em;
+	text-transform: uppercase;
+	padding: .25em .5em;
+	position: relative;
+	bottom: .25em;
+	background: #E05757;
+	color: #FFF;
+	border-radius: .5em;
 }

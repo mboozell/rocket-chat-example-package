@@ -3,6 +3,9 @@ Meteor.methods
 		if message.msg?.length > RocketChat.settings.get('Message_MaxAllowedSize')
 			throw new Meteor.Error 400, '[methods] sendMessage -> Message size exceed Message_MaxAllowedSize'
 
+		if message.alert and not RocketChat.authz.hasPermission Meteor.userId(), 'alert-room', message.rid
+			throw new Meteor.Error 401, '[methods] sendMessage -> Unauthorized to make alert'
+
 		if not Meteor.userId()
 			throw new Meteor.Error('invalid-user', "[methods] sendMessage -> Invalid user")
 

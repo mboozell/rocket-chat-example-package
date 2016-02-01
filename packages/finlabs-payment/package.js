@@ -85,10 +85,13 @@ Package.onUse(function(api) {
 		'client/views/admin/productTabs/adminProductChannels.coffee',
 		'client/views/admin/adminProducts.html',
 		'client/views/admin/adminProducts.coffee',
+		'client/views/admin/inviteSubscriptionProducts.html',
+		'client/views/admin/inviteSubscriptionProducts.coffee',
 		'client/views/login/payment.html',
 		'client/views/login/payment.coffee',
 		'client/views/payment/form.html',
 		'client/views/payment/form.coffee',
+		'client/stylesheets/tagList.less',
 		'client/stylesheets/payment.less'
 	], 'client');
 

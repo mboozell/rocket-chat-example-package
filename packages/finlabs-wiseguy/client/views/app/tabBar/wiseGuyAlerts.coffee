@@ -56,16 +56,16 @@ Template.wiseGuyAlerts.helpers
 		return @ref_price
 
 	moreResults: ->
-		return !(WiseGuyAlerts.find().count() < Template.instance().numItems.get() )
+		return Template.instance().hasMore.get()
 
 Template.wiseGuyAlerts.onCreated ->
-	instance = @
-	@ready = new ReactiveVar true
-	@numItems = new ReactiveVar 20
-
-	@autorun ->
-		subscription = instance.subscribe 'wiseGuyAlerts', instance.numItems.get()
-		instance.ready.set subscription.ready()
+	@hasMore = new ReactiveVar true
+	@limit = new ReactiveVar 20
+	@autorun =>
+		sub = @subscribe 'wiseGuyAlerts', @limit.get()
+		if sub.ready()
+			if WiseGuyAlerts.find().count() < @limit.get()
+				@hasMore.set false
 
 	@alerts = ->
 		return WiseGuyAlerts.find({}, {sort: ts: -1}).fetch()
@@ -79,7 +79,7 @@ Template.wiseGuyAlerts.events
 
 	'click .load-alerts': (e, template) ->
 		e.preventDefault()
-		template.numItems.set(template.numItems.get() + 10)
+		template.limit.set(template.limit.get() + 10)
 
 Template.wiseGuyAlerts.onRendered ->
 	Meteor.defer ->

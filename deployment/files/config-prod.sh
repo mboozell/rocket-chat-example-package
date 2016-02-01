@@ -17,7 +17,7 @@ setup_nginx_config wallstjesus.com live.wallstjesus.com 8080
 cp backup-mongo.sh /storage/apps
 
 if [ hostname = "sanglucci-primary" ]; then
-	echo "0 */2 	* * * root /storage/apps/backup-mongo.sh" >> /etc/crontab
+	echo "0 */2 	* * * root /usr/bin/nice -n 19 /usr/bin/ionice -c2 -n7 /storage/apps/backup-mongo.sh" >> /etc/crontab
 elif [ hostname = "sanglucci-secondary" ] then
-	echo "0 1-23/2 	* * * root /storage/apps/backup-mongo.sh" >> /etc/crontab
+	echo "0 1-23/2 	* * * root /usr/bin/nice -n 19 /usr/bin/ionice -c2 -n7 /storage/apps/backup-mongo.sh" >> /etc/crontab
 fi

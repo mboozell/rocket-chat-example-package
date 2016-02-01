@@ -23,6 +23,7 @@ case $1 in
 
     echo 'never' > ${thp_path}/enabled
     echo 'never' > ${thp_path}/defrag
+    service mongod restart
 
     unset thp_path
     ;;

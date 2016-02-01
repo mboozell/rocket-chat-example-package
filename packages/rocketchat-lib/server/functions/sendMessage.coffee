@@ -16,27 +16,29 @@ RocketChat.sendMessage = (user, message, room, options) ->
 
 	message.rid = room._id
 
-	if message.parseUrls isnt false
-		if urls = message.msg.match /([A-Za-z]{3,9}):\/\/([-;:&=\+\$,\w]+@{1})?([-A-Za-z0-9\.]+)+:?(\d+)?((\/[-\+=!:~%\/\.@\,\w]+)?\??([-\+=&!:;%@\/\.\,\w]+)?#?([\w]+)?)?/g
-			message.urls = urls.map (url) -> url: url
+	if message.msg
 
-	message = RocketChat.callbacks.run 'beforeSaveMessage', message
+		if message.parseUrls isnt false
+			if urls = message.msg.match /([A-Za-z]{3,9}):\/\/([-;:&=\+\$,\w]+@{1})?([-A-Za-z0-9\.]+)+:?(\d+)?((\/[-\+=!:~%\/\.@\,\w]+)?\??([-\+=&!:;%@\/\.\,\w]+)?#?([\w]+)?)?/g
+				message.urls = urls.map (url) -> url: url
 
-	if message._id? and options?.upsert is true
-		RocketChat.models.Messages.upsert {_id: message._id}, message
+		message = RocketChat.callbacks.run 'beforeSaveMessage', message
+
+		if message._id? and options?.upsert is true
+			RocketChat.models.Messages.upsert {_id: message._id}, message
+		else
+			message._id = RocketChat.models.Messages.insert message
+
+		Meteor.defer ->
+			RocketChat.callbacks.run 'afterSaveMessage', message, room
+
 	else
-		message._id = RocketChat.models.Messages.insert message
 
-	###
-	Defer other updates as their return is not interesting to the user
-	###
+		unless message.alert
+			return
 
-	###
-	Execute all callbacks
-	###
-	Meteor.defer ->
+		message.msg = "Important Information Alert!"
 
-		RocketChat.callbacks.run 'afterSaveMessage', message, room
 
 	###
 	Update all the room activity tracker fields
@@ -94,7 +96,10 @@ RocketChat.sendMessage = (user, message, room, options) ->
 				mentionIds.push mention._id
 
 			# @all?
-			toAll = mentionIds.indexOf('all') > -1
+			if not RocketChat.authz.hasPermission user._id, 'group-notify', room._id
+				mentionIds = _.reject mentionIds, (mention) -> mention == 'all'
+
+			toAll = mentionIds.indexOf('all') > -1 or message.alert
 
 			if mentionIds.length > 0
 				usersOfMention = RocketChat.models.Users.find({_id: {$in: mentionIds}}, {fields: {_id: 1, username: 1}}).fetch()

@@ -1,7 +1,10 @@
 <template name="adminFlex">
 	<header>
 		<div>
-			<h4>{{_ "Administration"}}</h4>
+			<h4>
+				{{_ "Administration"}}
+				{{#if isProduction}}<span class="prod-warning">prod</span>{{/if}}
+			</h4>
 		</div>
 	</header>
 	<div class="content">

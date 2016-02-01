@@ -4,7 +4,7 @@
 @after-hours-darker: darken(@after-hours-secondary, 8%);
 @after-hours-light: lighten(@after-hours-primary, 3%);
 @after-hours-font-1: #fff;
-@after-hours-font-2: #aaa;
+@after-hours-font-2: #ccc;
 @after-hours-accent: #2c75c9;
 
 .after-hours {
@@ -195,8 +195,8 @@
 
   .page-static {
 
-    label {
-      color: @after-hours-font-1
+    label, .section .section-content .input-line>label {
+      color: @after-hours-font-1;
     }
 
     input {
@@ -213,13 +213,27 @@
     }
 
     // Settings Option Groups Border Color
-    .content .section .section-content {
+    .section, .content .section .section-content, .content .section-content .input-line {
       border-color: @after-hours-dark;
     }
 
   }
 
+  .page-settings {
+    .section {
+      .section-title {
+        color: @after-hours-font-1;
+      }
+      .section-content .input-line input {
+        color: @after-hours-font-1;
+      }
+    }
+  }
+
   .page-container {
+    .content, .rocket-form .section {
+      background-color: @after-hours-secondary;
+    }
     .content::-webkit-scrollbar-thumb {
       background-color: @after-hours-darker;
     }
@@ -244,6 +258,24 @@
     .results p {
       color: #fff;
     }
+    .room-info:hover {
+      background-color: @after-hours-darker;
+    }
+    .statistics-table {
+      border-color: @after-hours-darker;
+      font: @after-hours-font-1;
+
+      tr {
+        background-color: @after-hours-secondary;
+
+        &:nth-of-type(even) {
+          background-color: @after-hours-dark;
+        }
+      }
+    }
+    .content .rocket-form .input-line>label {
+      color: @after-hours-font-1;
+    }
   }
 
   .first-unread {
@@ -258,6 +290,12 @@
           background-color: @after-hours-dark;
     		}
     	}
+    }
+  }
+
+  .container-bars {
+    .unread-bar {
+      background-color: #272D31;
     }
   }
 
@@ -279,4 +317,26 @@
     -moz-animation: blink-ah 1s linear 2;
     animation: blink-ah 1s linear 2;
   }
+
+  li.moderator {
+    background-color: #444B50;
+  }
+
+  .permissions-manager {
+
+    .permission-grid {
+
+      td {
+        border-color: @after-hours-darker;
+      }
+      td * {
+        color: #fff;
+      }
+
+      thead tr {
+        background-color: @after-hours-darker;
+      }
+    }
+  }
+
 }

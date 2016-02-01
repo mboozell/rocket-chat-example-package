@@ -66,6 +66,8 @@ var getTimestampedLogFunc = function(orig) {
 console.log = getTimestampedLogFunc(console.log);
 console.error = getTimestampedLogFunc(console.error);
 
+process.title = '$app-$environment';
+
 EOF
 
 cat $dest/bundle/main.js >> $dest/bundle/rocketchat

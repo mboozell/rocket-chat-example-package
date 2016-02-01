@@ -45,6 +45,7 @@ fastclick@1.0.7
 finlabs:analytics@0.0.1
 finlabs:lib@0.0.1
 finlabs:payment@0.0.1
+finlabs:slashcommands-alert@0.0.1
 finlabs:wiseguy@0.0.1
 francocatena:status@1.5.0
 geojson-utils@1.0.4

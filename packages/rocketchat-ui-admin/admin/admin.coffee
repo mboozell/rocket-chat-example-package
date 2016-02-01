@@ -129,11 +129,26 @@ Template.admin.events
 			query.section = @section
 
 		settings = TempSettings.find(query, {fields: {_id: 1, value: 1}}).fetch()
-
-		if not _.isEmpty settings
+		saveSettings = ->
 			RocketChat.settings.batchSet settings, (err, success) ->
 				return toastr.error TAPi18n.__ 'Error_updating_settings' if err
 				toastr.success TAPi18n.__ 'Settings_updated'
+
+		if not _.isEmpty settings
+			if Session.get("environment") is "production"
+				swal {
+					title: TAPi18n.__('Are_you_sure')
+					text: TAPi18n.__('Production_Warning')
+					type: 'warning'
+					showCancelButton: true
+					confirmButtonColor: '#DD6B55'
+					confirmButtonText: TAPi18n.__('Yes')
+					cancelButtonText: TAPi18n.__('Cancel')
+					closeOnConfirm: true
+					html: false
+				}, saveSettings
+			else
+				saveSettings()
 
 	"click .submit .add-custom-oauth": (e, t) ->
 		config =
@@ -208,14 +223,29 @@ Template.admin.events
 		if @type isnt 'action'
 			return
 
-		Meteor.call @value, (err, data) ->
-			if err?
-				toastr.error TAPi18n.__(err.error), TAPi18n.__('Error')
-				return
+		action = @value
+		doAction = ->
+			Meteor.call action, (err, data) ->
+				if err?
+					toastr.error TAPi18n.__(err.error), TAPi18n.__('Error')
+					return
+				args = [data.message].concat data.params
+				toastr.success TAPi18n.__.apply(TAPi18n, args), TAPi18n.__('Success')
 
-			args = [data.message].concat data.params
-
-			toastr.success TAPi18n.__.apply(TAPi18n, args), TAPi18n.__('Success')
+		if Session.get("environment") is "production"
+			swal {
+				title: TAPi18n.__('Are_you_sure')
+				text: TAPi18n.__('Production_Warning')
+				type: 'warning'
+				showCancelButton: true
+				confirmButtonColor: '#DD6B55'
+				confirmButtonText: TAPi18n.__('Yes')
+				cancelButtonText: TAPi18n.__('Cancel')
+				closeOnConfirm: true
+				html: false
+			}, doAction
+		else
+			doAction()
 
 
 Template.admin.onRendered ->

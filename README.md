@@ -1,31 +1,72 @@
 # SangLucci Rocket Chat
 
+Our build server, TeamCity can be found at [http://build.flmr.io](http://build.flmr.io).
+Our deployment server, Octopus Deploy, can be found at [http://deploy.flmr.io](http://deploy.flmr.io)
+
+Both of the above services are hosted on the `FLMRIO` VM which also hosts other services (last update: Jan 26, 2016). 
+
 ## Build process
 
-Commits to this repository are picked up by TeamCity hosted at [http://build.flmr.io](http://build.flmr.io) and a build is executed automatically with the included changes. 
+Commits to this repository are automatically picked up by TeamCity and a build is executed with all the included changes, incrementing the build number. If the server is turned-off at the time of a commit, a build will be triggered as soon as it is up. 
 
-The build will essentially run `meteor build` with target architecture `linux_x86_64` and package the output tarball into a NuGet package for deployment with Octopus Deploy.
+The build uses a PowerShell script to run `meteor build` with target architecture `linux_x86_64` and package the output tarball into a NuGet package for deployment.
 
-If the build finishes successfully, the dependent task (Create Release for Build) will be triggered which will launch a deployment to the `Web.Development` environment automatically. 
+## Deployment
 
-## Environments
+We have 3 environments: `Web.Development`, `Web.QA` (User acceptance) and `Web.Production`. The deployment lifecycle configured in Octopus dictates that deployments must be promoted in this order. 
 
-We currently have 3 environments: `Web.Development`, `Web.QA` (User acceptance) and `Web.Production`. The deployment lifecycle dictates that deployments must be promoted in this order. 
+Both the `Web.Development` and `Web.QA` environments exist on the SangLucci development server and `Web.Production` on the cluster of production VMs.
 
-The `Web.Development` and `Web.QA` environments exist on `sanglucci1.eastus.cloudapp.azure.com` and `Web.Production` on `sanglucci0.eastus.cloudapp.azure.com`.
+Deployments/promotions can be triggered manually by going into Octopus and selecting a release to deploy to a target environment. 
 
-The server is a Linux VM hosted on `Azure` (Standard A2 instance for production) running `Ubuntu Server 14.04 LTS`. `MongoDB` is configured (each environment has its own DB instance) and `Nginx` serves to proxy requests to the `node` instances. Node instances are kept alive with the `Upstart`.
+*Note that a release fixes the Octopus settings; if Octopus settings are changed and the same package version must be deployed, the release must be deleted and recreated or a new release created.*
 
-## Deployment and troubleshooting
+# Architecture
 
-After deploying the meteor package to the target environment, it is unpacked to `/var/apps/SangLucci.Chat/ENVIRONMENT_NAME/VERSION`. The current deployment is symlinked to `/var/apps/SangLucci.Chat/ENVIRONMENT_NAME/current`. Once npm packages are successfully installed, the symlink is changed to the new version and the service restarted. 
+All servers are hosted on Azure, on Linux VMs running `Ubuntu Server 14.04 LTS`. 
 
-### Troubleshooting
+The production environment is composed of 3 servers, the minimum to create a MongoDB replica set. However, because our current needs do not require that much processing power, two mongo nodes and an arbiter (used only for voting for a primary) is used. 
 
-The deployment script will exit if any command exits with an error and its output is captured by Octopus. 
+The two nodes that host a data-bearing mongo node are called `sanglucci-primary` and `sanglucci-secondary` respectively and use Azure `D1_v2` instances. The arbiter is called `sanglucci-arbiter` and is the smallest VM size `A0` because it does no processing other than voting in the replica set. As and when our processing needs increase, we will convert the arbiter to a data-bearing node.
 
-In cases when further troubleshooting is necessary the relevant log files are:
+Data-bearing nodes (primary, secondary) host a NodeJS process that serves requests to the chatroom. The database and application files are stored in `/storage` which is an auto-mounted RAID-0 array with two Azure data disks. 
 
-- Upstart log file: `/var/log/upstart/SangLucci.Chat-ENRIVONRMENT_NAME` 
-- Node output log file: `/var/log/SangLucci.Chat/ENVIRONMENT_NAME/*.log`
+Requests are load-balanced between the two nodes using a standard Azure load balancer. Nginx is used to offload SSL and provide HTTPS redirects for HTTP requests.
 
+Diagrammatically:
+
+												   HTTPS request
+														 |
+												====================
+												|   Load balancer  |
+												====================
+														/  \		
+													   /    \		SSL (HTTP requests are redirected to HTTPS)
+													  /      \
+												     /        \
+									=====================	  =====================
+									|  nginx (primary)  |     | nginx (secondary) |	(Ports 80, 443)
+									=====================	  =====================
+											  |							|																
+									=====================	  =====================
+									|    node process   |     |   node process    |	(Port 8080)
+									=====================	  =====================
+											 ()						   ()
+									=====================	  =====================		=====================
+									|     MongoDB       |     |     MongoDB       |		| MongoDB (arbiter) |	
+									=====================	  =====================		=====================
+
+There are no links to the MongoDB nodes because essentially the node processes can be talking to any one of them (except the arbiter) depending on settings. For our setup, the `read preference` is set to `nearest` meaning that the nodes will pick the mongo node that responds the fastest, which should be the local node under normal circumstances. The `write preference` is set to `majority` which means that a write request must be replicated before the operation finishes (to ensure no data loss).
+
+The node processes are started and maintained using Upstart with the corresponding configuration files in `/etc/init/`.
+The load balancer checks that the `http://primary,secondary:8080` endpoint returns a 2xx code to establish the health of a server; checks run every 5 seconds, after 2 consecutive failures a host is marked as unhealthy it is removed from the backend pool and no traffic is routed to that host until the health check is successful again.
+
+Backups are taken hourly through a cron task that runs on the primary node on even hours and on the secondary node on odd hours. The process is configured to execute on the lowest priority (both CPU and I/O).
+
+Updates are installed daily automatically. 4AM for the primary and arb and 7.35AM for the secondary (as soon as it wakes up).
+
+During deployment, the package created by TeamCity is transferred to the server(s) and stored in `/home/sanglucci/octopus`. Then a script is executed that extracts it in `/var/apps` with the version number created as part of the path. A symlink is created to `current` such that it points to the currently running version and it doesn't require changing the paths in Upstart every time.
+
+Misc notes about the configuration of the nodes:
+- `/storage/apps` is symlinked to `/var/apps`
+- Logs are in `/var/log/apps`

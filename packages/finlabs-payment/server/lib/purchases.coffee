@@ -13,13 +13,10 @@ FinLabs.payment.purchases =
 			return false
 
 		product = FinLabs.models.Product.findOneById productId
-		if product.payments.length < 1
-			for purchase in purchases
-				if purchase.active
-					return true
-			return false
 
 		for purchase in purchases
+			if purchase.active and (purchase.override or product.payments.length < 1)
+				return true
 			for payment in product.payments
 				if self._validate[payment.type](userId, purchase, payment)
 					unless purchase.active
