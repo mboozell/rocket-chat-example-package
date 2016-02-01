@@ -24,6 +24,20 @@ Meteor.startup ->
 	# 	apiKey: "moUObG8aQLN24KWyxpv0VN3dGvP9G0tyt81_39l9ehX"
 	# 	default: true
 
+	FinLabs.payment.products.add 'hft-alert',
+		['hftalerts'],
+		['community'],
+		[],
+		baseProduct: true
+		apiKey: "moUObG8aQLN24KWyahetnaihntw3291werdtn_thatnt0"
+
+	FinLabs.payment.products.add 'general',
+		[],
+		[],
+		[],
+		baseProduct: true
+		apiKey: "ahecswpftDR4TuMhhkmhahe44kaRNTUnuhdtt9130wyha"
+
 Meteor.startup ->
 
 	permissions = [

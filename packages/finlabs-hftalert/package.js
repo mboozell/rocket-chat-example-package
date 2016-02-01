@@ -18,7 +18,8 @@ Package.onUse(function(api) {
 
 	api.use([
 		'mongo',
-		'webapp'
+		'webapp',
+		"alanning:roles"
 	], 'server');
 
 	Npm.depends({
