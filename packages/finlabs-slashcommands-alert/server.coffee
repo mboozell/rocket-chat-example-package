@@ -18,7 +18,7 @@ class Alert
 		message = msg: msg, alert: true
 
 		RocketChat.sendMessage user, message, room
-		FinLabs.slashAlert.stream.emit 'new-alert', {roomId: item.rid}
+		FinLabs.slashAlert.stream.emit 'new-alert', {room: item.rid, user: Meteor.userId()}
 
 
 RocketChat.slashCommands.add 'alert', Alert

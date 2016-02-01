@@ -80,6 +80,9 @@ Template.message.helpers
 
 		return true
 
+	alertClass: ->
+		return if @alert then "important" else ""
+
 Template.message.onCreated ->
 	msg = Template.currentData()
 

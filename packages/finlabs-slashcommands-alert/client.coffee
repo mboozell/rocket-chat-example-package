@@ -6,4 +6,10 @@ RocketChat.slashCommands.add 'alert', undefined,
 		return RocketChat.authz.hasAtLeastOnePermission 'alert-room', roomId
 
 FinLabs.slashAlert.stream.on 'new-alert', (data) ->
-	console.log data
+	if Meteor.userId() == data.user
+		return
+	if ChatSubscription.findOne({rid: data.room, open: true})
+		if Meteor.user().status in ["online", "away"]
+			bell = $('#marketOpenCloseNotification')
+			if bell.length > 0
+				bell[0].play()
