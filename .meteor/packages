@@ -93,6 +93,7 @@ finlabs:lib
 finlabs:payment
 finlabs:analytics
 finlabs:wiseguy
+finlabs:slashcommands-alert
 
 konecty:change-case
 konecty:delayed-task
