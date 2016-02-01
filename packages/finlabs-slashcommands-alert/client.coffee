@@ -1,6 +1,6 @@
 RocketChat.slashCommands.add 'alert', undefined,
 	description: TAPi18n.__ 'Alert_channel_of_important_information'
-	params: 'message'
+	params: 'optional message'
 	filter: () ->
 		roomId = Session.get "openedRoom"
 		return RocketChat.authz.hasAtLeastOnePermission 'alert-room', roomId
