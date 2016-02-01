@@ -1,0 +1,10 @@
+<template name="inviteSubscriptionProducts">
+	<div>With Product Subscriptions</div>
+	{{> inputAutocomplete settings=autocompleteSettings id="possible-products" class="search" }}
+	<div id="{{selectionId}}" class="hidden"></div>
+	<div class="possible-product-list tag-list">
+		{{#each selected}}
+		<div class="possible-product-selection tag-list-item">{{name}} <span class="tag-list-item-delete" data-item-id="{{_id}}">x</span></div>
+		{{/each}}
+	</div>
+</template>

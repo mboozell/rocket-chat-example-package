@@ -12,6 +12,10 @@ Template.adminInviteUser.helpers
 		return Template.instance().inviteUrl.get()
 	paymentRequired: ->
 		RocketChat.settings.get "Require_Payment"
+	possibleProductsTemplate: ->
+		if FinLabs?.models?.Product then "inviteSubscriptionProducts" else ""
+	possibleProductsData: ->
+		id: "possible-products-selection"
 
 Template.adminInviteUser.events
 	'click .send': (e, instance) ->
@@ -43,8 +47,7 @@ Template.adminInviteUser.events
 		email = $('#inviteEmail').val()
 		options =
 			name: $('#inviteName').val()
-		if RocketChat.settings.get "Require_Payment"
-			options.freeAccount = $("#freeAccount").prop("checked")
+			overrideProducts: instance.generateProductList
 
 		if not instance.isValidEmail(email)
 			toastr.error t("Email not valid")
@@ -59,9 +62,14 @@ Template.adminInviteUser.events
 	'keyup #inviteEmail, keyup #inviteName': (e, instance) ->
 		instance.inviteUrl.set('')
 
+	'productListChange #possible-products-selection': (e, t, v) ->
+		productList = v.data
+		t.generateProductList = _.map productList, (product) -> product._id
+
 Template.adminInviteUser.onCreated ->
 	@inviteEmails = new ReactiveVar []
 	@inviteUrl = new ReactiveVar ''
+	@generateProductList = []
 	@clearEmailForm = ->
 		$('#inviteEmails').val('')
 	@clearGenerateForm = ->

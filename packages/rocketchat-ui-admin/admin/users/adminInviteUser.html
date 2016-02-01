@@ -34,11 +34,7 @@
 					<input type="email" id="inviteEmail" placeholder="email"/>
 					<input type="text" id="inviteName" placeholder="name (optional)"/>
 				</div>
-				{{#if paymentRequired}}
-				<div>
-					<input type="checkbox" id="freeAccount"><label>{{_ "Free Account"}}</label>
-				</div>
-				{{/if}}
+				{{> Template.dynamic template=possibleProductsTemplate data=possibleProductsData}}
 			</form>
 		</div>
 		<nav>
