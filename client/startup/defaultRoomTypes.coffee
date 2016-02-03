@@ -5,18 +5,19 @@ Meteor.startup ->
 
 	Tracker.autorun ->
 		if RocketChat.settings.get 'General_Channels_Enabled'
-			RocketChat.roomTypes.add 'c', 10,
-				template: 'channels'
-				icon: 'icon-hash'
-				route:
-					name: 'channel'
-					path: '/channel/:name'
-					action: (params, queryParams) ->
-						Session.set 'showUserInfo'
-						openRoom 'c', params.name
-					link: (sub) ->
-						return { name: sub.name }
-				permissions: [ 'view-c-room' ]
+			unless RocketChat.roomTypes.getIcon 'c'
+				RocketChat.roomTypes.add 'c', 10,
+					template: 'channels'
+					icon: 'icon-hash'
+					route:
+						name: 'channel'
+						path: '/channel/:name'
+						action: (params, queryParams) ->
+							Session.set 'showUserInfo'
+							openRoom 'c', params.name
+						link: (sub) ->
+							return { name: sub.name }
+					permissions: [ 'view-c-room' ]
 
 	RocketChat.roomTypes.add 'd', 30,
 		template: 'directMessages'

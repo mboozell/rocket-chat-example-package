@@ -40,6 +40,9 @@ Template.sideNav.onRendered ->
 	wrapper = $('.rooms-list .wrapper').get(0)
 	lastLink = $('.rooms-list h3.history-div').get(0)
 
-	RocketChat.roomTypes.getTypes().forEach (roomType) ->
-		if Template[roomType.template]?
-			Blaze.render Template[roomType.template], wrapper, lastLink
+	Tracker.autorun ->
+		RocketChat.settings.get 'General_Channels_Enabled'
+		wrapper.innerHTML = ""
+		RocketChat.roomTypes.getTypes().forEach (roomType) ->
+			if Template[roomType.template]?
+				Blaze.render Template[roomType.template], wrapper, lastLink

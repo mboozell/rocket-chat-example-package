@@ -83,7 +83,7 @@ RocketChat.settings.addGroup 'General', ->
 	@add 'CDN_PREFIX', '', { type: 'string' }
 	@add 'Debug_Level', 'error', { type: 'select', values: [ { key: 'error', i18nLabel: 'Only_errors' }, { key: 'debug', i18nLabel: 'All_logs' } ] }
 	@add 'Restart', 'restart_server', { type: 'action', actionText: 'Restart_the_server' }
-	@add 'General_Channels_Enabled', false, { type: 'boolean' }
+	@add 'General_Channels_Enabled', true, { type: 'boolean', public: true }
 
 	@section 'UTF8', ->
 		@add 'UTF8_Names_Validation', '[0-9a-zA-Z-_.]+', { type: 'string', public: true, i18nDescription: 'UTF8_Names_Validation_Description'}

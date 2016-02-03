@@ -38,3 +38,26 @@ FinLabs.hftAlert.stream.permissions.read -> true
 
 for id, image of FinLabs.hftAlert.settings.images
 	FinLabs.hftAlert.models.Meta.create id
+
+
+Meteor.startup ->
+
+  permissions = [
+
+    { _id: 'view-hftalerts',
+    roles : ['admin', 'moderator', 'hftalert-user']}
+
+  ]
+
+  #alanning:roles
+  roles = _.pluck(Roles.getAllRoles().fetch(), 'name')
+
+  for permission in permissions
+    RocketChat.models.Permissions.upsert( permission._id, {$setOnInsert : permission })
+    for role in permission.roles
+      unless role in roles
+        Roles.createRole role
+        roles.push(role)
+
+	FinLabs.payment?.tools.add "hftalerts", ['hftalert-user']
+

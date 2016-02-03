@@ -36,12 +36,13 @@ Meteor.startup ->
 
 
 	updateProduct = (product) ->
-		for payment in product.payments
-			if payment.type is 'subscription'
-				plan = FinLabs.payment.util.getPlan payment.plan.id
-				FinLabs.models.Product.updatePlan plan
+		Meteor.defer ->
+			for payment in product.payments
+				if payment.type is 'subscription'
+					plan = FinLabs.payment.util.getPlan payment.plan.id
+					FinLabs.models.Product.updatePlan plan
 
-		updatePurchases product
+			updatePurchases product
 
 	FinLabs.models.Product.find().observe
 		changed: updateProduct

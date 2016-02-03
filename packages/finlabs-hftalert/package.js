@@ -13,12 +13,14 @@ Package.onUse(function(api) {
 		'underscore',
 		'rocketchat:lib@0.0.1',
 		'reactive-var',
-		'finlabs:lib@0.0.1'
+		'finlabs:lib@0.0.1',
+		'finlabs:payment@0.0.1'
 	]);
 
 	api.use([
 		'mongo',
-		'webapp'
+		'webapp',
+		"alanning:roles"
 	], 'server');
 
 	Npm.depends({

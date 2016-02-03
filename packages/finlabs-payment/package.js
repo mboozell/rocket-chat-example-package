@@ -18,7 +18,7 @@ Package.onUse(function(api) {
 
 	api.use([
 		"nimble:restivus",
-		"http",
+		"http"
 	], 'server');
 
 	api.use([
