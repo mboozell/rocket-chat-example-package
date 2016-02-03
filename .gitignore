@@ -1,6 +1,6 @@
 **/bin/**
-**/build/*
 **/node_modules/*
+**/.npm/**
 **/tmp/*
 /private/certs/*
 *.bak
