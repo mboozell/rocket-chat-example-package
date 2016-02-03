@@ -1,3 +1,5 @@
+param([String] $version)
+
 trap
 {
     write-output $_
@@ -6,7 +8,6 @@ trap
 }
 
 $app = $env:ApplicationName
-$version = "%build.number%"
 $arch = "os.linux.x86_64"
 
 # remove old files
