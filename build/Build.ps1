@@ -12,8 +12,11 @@ function AdjustPackages(
 )
 {
 	$inSection = $null;
-	Foreach($line in $pkg)
+
+	Foreach($line in $pkg.Split("`n"))
 	{	
+		$line = $line.Trim()
+	
 		if($line -match "# BEGIN (?<section>[A-Za-z.]+)")
 		{
 			$inSection = $matches['section'];
