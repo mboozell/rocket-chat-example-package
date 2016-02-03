@@ -1,5 +1,3 @@
-param([String] $id)
-
 trap
 {
     write-output $_
@@ -7,6 +5,7 @@ trap
     exit 1
 }
 
+$app = $env:ApplicationName
 $version = "%build.number%"
 $arch = "os.linux.x86_64"
 
@@ -17,7 +16,7 @@ Remove-Item build\octopus\* -Force -Recurse -ErrorAction SilentlyContinue
 
 # adapt packages
 
-./SetPackages.ps1 $id > build\meteor
+./SetPackages.ps1 $app > build\meteor
 
 # build
 
@@ -31,7 +30,7 @@ if ($LASTEXITCODE -lt 0)
 
 Copy-Item deployment\deploy.sh build\meteor
 
-build\octo.exe pack --id=$id --version=$version --basePath build\meteor --outFolder build\octopus --overwrite
+build\octo.exe pack --id=$app --version=$version --basePath build\meteor --outFolder build\octopus --overwrite
 if ($LASTEXITCODE -lt 0)
 {
     Throw "Packaging with Octo failed; error code: $lastexitcode"
