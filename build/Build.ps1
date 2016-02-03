@@ -15,8 +15,7 @@ Remove-Item build\meteor\* -Force -Recurse -ErrorAction SilentlyContinue
 Remove-Item build\octopus\* -Force -Recurse -ErrorAction SilentlyContinue
 
 # adapt packages
-
-./SetPackages.ps1 $app > build\meteor
+build\SetPackages.ps1 $app > build\meteor
 
 # build
 
