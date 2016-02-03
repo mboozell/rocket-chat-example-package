@@ -63,11 +63,9 @@ Remove-Item build\octopus\* -Force -Recurse -ErrorAction SilentlyContinue
 # adapt packages
 Get-Content .meteor\packages -Raw | AdjustPackages $app | Out-File .meteor\packages -Encoding utf8 -Append
 
-exit;
-
 # build
 
-meteor build build\meteor --architecture $arch
+meteor build build/meteor --architecture $arch
 if ($LASTEXITCODE -lt 0) {
     Throw "Meteor build failed; error code: $lastexitcode"
 }
