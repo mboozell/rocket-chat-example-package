@@ -87,13 +87,20 @@ rocketchat:wordpress
 #rocketchat:irc
 #rocketchat:livechat
 
-#custom plugins
+# Custom
 finlabs:lib
-#finlabs:hftalert
 finlabs:payment
 finlabs:analytics
-finlabs:wiseguy
+
 finlabs:slashcommands-alert
+
+# BEGIN SangLucci.Chat
+finlabs:wiseguy
+# END SangLucci.Chat
+
+# BEGIN HFTAlert.Chat
+#finlabs:hftalert
+# END HFTAlert.Chat
 
 konecty:change-case
 konecty:delayed-task
