@@ -1,4 +1,7 @@
-param([String] $version)
+param(
+	[Parameter(Mandatory = $true)]
+	[String] $version
+)
 
 function AdjustPackages(
 	[Parameter(ValueFromPipeline=$true)]
@@ -8,8 +11,6 @@ function AdjustPackages(
 	[String]$app
 )
 {
-	Write-Verbose $app
-	
 	$inSection = $null;
 	Foreach($line in $pkg)
 	{	
@@ -61,7 +62,9 @@ Remove-Item build\meteor\* -Force -Recurse -ErrorAction SilentlyContinue
 Remove-Item build\octopus\* -Force -Recurse -ErrorAction SilentlyContinue
 
 # adapt packages
-Get-Content .meteor\packages -Raw | AdjustPackages $app | Out-File .meteor\packages -Encoding utf8 -Append
+$pkgs = Get-Content .meteor\packages -Raw | AdjustPackages $app
+Remove-Item .meteor\packages
+$pkgs | Out-File .meteor\packages -Encoding utf8 -Append
 
 # build
 
