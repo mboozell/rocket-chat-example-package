@@ -128,6 +128,9 @@ FinLabs.payment.purchases =
 					return true
 			return false
 
+		manual: (userId, purchase, payment) ->
+			return purchase.active
+
 
 Meteor.startup ->
 
