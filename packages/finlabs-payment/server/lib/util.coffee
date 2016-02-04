@@ -50,6 +50,10 @@ FinLabs.payment.util = new class
 		subscription = (Meteor.wrapAsync _createSubscription)()
 		FinLabs.models.Subscription.createFromStripe user._id, subscription
 
+	refundCharge: (charge) ->
+		_refundCharge = (callback) => @stripe.refunds.create charge: charge, callback
+		(Meteor.wrapAsync _refundCharge)()
+
 	getCustomer: (userId) ->
 		FinLabs.models.Customer.findOneByUser userId
 

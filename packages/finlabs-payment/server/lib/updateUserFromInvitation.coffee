@@ -10,6 +10,15 @@ FinLabs.updateUserFromInvitation = (user, invitation) ->
 		for product in products
 			FinLabs.models.Purchase.createInactive user._id, product._id
 
+	if invitation.order
+		order = FinLabs.models.Order.findOneByOrderId invitation.order
+		trial = FinLabs.models.Trial.findOneBySKUE order.sku
+		update =
+			user: user._id
+			trialStart: new Date()
+			trialEnd: new Date(Date.now() + 1000*60*60*24*trial.period)
+		FinLabs.models.Order.updateByOrderId order._id, update
+
 	for productId in invitation.overrideProducts
 		purchaseId = FinLabs.models.Purchase.findOneWithUserAndProduct(user._id, productId)?._id
 		if not purchaseId

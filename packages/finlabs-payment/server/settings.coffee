@@ -40,9 +40,7 @@ FinLabs.payment = {}
 
 Meteor.startup ->
 
-	FinLabs.models.SKUSetting.upsertOne
-		sku: "whatecec"
-		period: 30
+	FinLabs.models.Trial.upsertOne "sku", 30
 
 Meteor.startup ->
 

@@ -1,6 +1,6 @@
-FinLabs.models.SKUSetting = new class extends RocketChat.models._Base
+FinLabs.models.Trial = new class extends RocketChat.models._Base
 	constructor: ->
-		@_initModel 'payment_sku_setting'
+		@_initModel 'payment_trial'
 
 		@tryEnsureIndex {'sku': 1}, {'unique': 1}
 
@@ -12,12 +12,11 @@ FinLabs.models.SKUSetting = new class extends RocketChat.models._Base
 
 		return @findOne query, options
 
-	findOneBySku: (sku, options) ->
+	findOneBySKU: (sku, options) ->
 		query =
 			sku: sku
 
 		return @findOne query, options
-
 
 	createOne: (sku, period, extraData) ->
 		setting =
