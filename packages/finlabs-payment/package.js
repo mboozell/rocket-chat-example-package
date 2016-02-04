@@ -69,6 +69,7 @@ Package.onUse(function(api) {
 		'server/models/Referral.coffee',
 		'server/models/Purchase.coffee',
 		'server/models/SKUSetting.coffee',
+		'server/models/Order.coffee',
 		'server/publications/products.coffee',
 		'server/publications/productChannels.coffee',
 		'server/publications/productPurchases.coffee',
