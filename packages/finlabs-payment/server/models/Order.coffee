@@ -20,11 +20,21 @@ FinLabs.models.Order = new class extends RocketChat.models._Base
 
 		return @findOne query, options
 
-	findOneByUser: (_id, options) ->
+	findByUser: (_id, options) ->
 		query =
 			user: _id
 
-		return @findOne query, options
+		return @find query, options
+
+	findValidByUserAndSKU: (user, sku, options) ->
+		query =
+			sku: sku
+			user: user
+			trialEnd:
+				$gt: new Date()
+			status: 'paid'
+
+		return @find query, options
 
 	# INSERT
 

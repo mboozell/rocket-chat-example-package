@@ -112,7 +112,10 @@ FinLabs.payment.purchases =
 			FinLabs.models.Subscription.userHasActivePlan userId, planId
 
 		order: (userId, purchase, payment) ->
-			return purchase.active
+			orders = FinLabs.models.Order.findValidByUserAndSKU userId, payment.sku
+			if orders.length > 0
+				return true
+			return false
 
 		wordpress: (userId, purchase, payment) ->
 			user = Meteor.users.findOne userId
