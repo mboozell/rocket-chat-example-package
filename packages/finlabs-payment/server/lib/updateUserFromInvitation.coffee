@@ -12,7 +12,7 @@ FinLabs.updateUserFromInvitation = (user, invitation) ->
 
 	if invitation.order
 		order = FinLabs.models.Order.findOneByOrderId invitation.order
-		trial = FinLabs.models.Trial.findOneBySKUE order.sku
+		trial = FinLabs.models.Trial.findOneBySKU order.sku
 		update =
 			user: user._id
 			trialStart: new Date()
