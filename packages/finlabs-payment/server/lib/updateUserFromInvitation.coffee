@@ -11,7 +11,7 @@ FinLabs.updateUserFromInvitation = (user, invitation) ->
 			FinLabs.models.Purchase.createInactive user._id, product._id
 
 	if invitation.order
-		order = FinLabs.models.Order.findOneByOrderId invitation.order
+		order = FinLabs.models.Order.findOneById invitation.order
 		trial = FinLabs.models.Trial.findOneBySKU order.sku
 		update =
 			user: user._id
