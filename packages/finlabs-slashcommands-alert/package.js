@@ -22,8 +22,8 @@ Package.onUse(function(api) {
 	], ['client', 'server']);
 
 	api.addFiles([
-		'client/slashcommand.html',
-		'client/slashcommand.coffee',
+		'client/slashAlertActivator.html',
+		'client/slashAlertActivator.coffee',
 		'client/slashcommand.coffee'
 	], 'client');
 

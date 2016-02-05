@@ -1,5 +1,6 @@
 Template.slashAlertActivator.helpers {}
-Template.slashAlertActivator.onCreate ->
+Template.slashAlertActivator.onCreated ->
 	instance = @
 
 Template.slashAlertActivator.onRendered ->
+	console.log 'hello'
