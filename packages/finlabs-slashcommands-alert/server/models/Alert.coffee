@@ -44,6 +44,18 @@ FinLabs.slashAlert.models.Alert = new class extends RocketChat.models._Base
 		return @find query, options
 
 
+	findAfterTimeInRoomsNotFromUser: (ts, rids, userId, options) ->
+		query =
+			ts:
+				$gt: ts
+			room:
+				$in: rids
+			user:
+				$ne: userId
+
+		return @find query, options
+
+
 	# INSERT
 	createWithRoomAndUser: (roomId, userId, extraData) ->
 		subscription =

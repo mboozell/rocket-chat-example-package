@@ -22,6 +22,8 @@ Package.onUse(function(api) {
 	], ['client', 'server']);
 
 	api.addFiles([
+		'client/slashcommand.html',
+		'client/slashcommand.coffee',
 		'client/slashcommand.coffee'
 	], 'client');
 
