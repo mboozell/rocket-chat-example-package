@@ -19,7 +19,7 @@ Package.onUse(function(api) {
 
 	api.addFiles([
 		'lib/slashAlert.coffee'
-	], 'lib');
+	], ['client', 'server']);
 
 	api.addFiles([
 		'client/slashcommand.coffee'
@@ -27,7 +27,7 @@ Package.onUse(function(api) {
 
 	api.addFiles([
 		'server/models/Alert.coffee',
-		'server/publications/alerts.coffee,
+		'server/publications/alerts.coffee',
 		'server/slashcommand.coffee',
 		'server/startup.coffee'
 	], 'server');

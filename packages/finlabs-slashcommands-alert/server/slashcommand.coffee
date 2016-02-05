@@ -25,6 +25,3 @@ class Alert
 
 
 RocketChat.slashCommands.add 'alert', Alert
-
-FinLabs.slashAlert.stream.permissions.write -> false
-FinLabs.slashAlert.stream.permissions.read -> true
