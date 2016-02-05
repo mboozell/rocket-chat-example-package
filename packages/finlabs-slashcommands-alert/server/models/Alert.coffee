@@ -28,26 +28,8 @@ FinLabs.slashAlert.models.Alert = new class extends RocketChat.models._Base
 
 		return @find query, options
 
-	findAfterTime: (ts, options) ->
+	findInRoomsNotFromUser: (rids, userId, options) ->
 		query =
-			ts: $gt: ts
-
-		return @find query, options
-
-	findAfterTimeInRooms: (ts, rids, options) ->
-		query =
-			ts:
-				$gt: ts
-			room:
-				$in: rids
-
-		return @find query, options
-
-
-	findAfterTimeInRoomsNotFromUser: (ts, rids, userId, options) ->
-		query =
-			ts:
-				$gt: ts
 			room:
 				$in: rids
 			user:

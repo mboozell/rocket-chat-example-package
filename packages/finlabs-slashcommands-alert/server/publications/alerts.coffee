@@ -1,8 +1,12 @@
-Meteor.publish 'slashcommand_alert', (ts) ->
+Meteor.publish 'slashcommandAlert', (limit, sort) ->
 	unless this.userId
 		return this.ready()
 
 	subscriptions = RocketChat.models.Subscriptions.findByUserId this.userId
-	console.log subscriptions
+	rids = subscriptions.map (sub) -> sub.rid
 
-	return FinLabs.slashAlert.models.Alert.findAfterTime ts
+	result = FinLabs.slashAlert.models.Alert.findInRoomsNotFromUser rids, this.userId,
+		limit: limit
+		sort: sort
+
+	return result
