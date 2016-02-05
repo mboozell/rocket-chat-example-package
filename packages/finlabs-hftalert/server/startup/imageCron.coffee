@@ -9,7 +9,7 @@ Meteor.startup ->
 				SyncedCron.add
 					name: "Get Delineator Image [#{id}]",
 					schedule: (parser) -> # parser is a later.parse object
-						return parser.text image.frequency
+						return parser.text "#{image.frequency} every weekday after 9:00 am before 4:30 pm"
 					job: ->
 						for tries in [1..3]
 							try
