@@ -1,0 +1,2 @@
+FinLabs.slashAlert =
+	models: {}
