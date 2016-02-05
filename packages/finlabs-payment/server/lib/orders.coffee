@@ -4,7 +4,6 @@ FinLabs.payment.orders =
 		unless order.status == 'paid'
 			return
 
-		order = FinLabs.models.Order.findOneByOrderId order.id
 		unless FinLabs.models.Trial.findeOneBySKU order.sku
 			return
 

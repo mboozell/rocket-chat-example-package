@@ -40,7 +40,7 @@ FinLabs.payment = {}
 
 Meteor.startup ->
 
-	FinLabs.models.Trial.upsertOne "sku", 30
+	FinLabs.models.Trial.upsertOne "wsj-one-time-50-off", 30
 
 Meteor.startup ->
 

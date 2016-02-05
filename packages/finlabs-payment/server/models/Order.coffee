@@ -50,11 +50,8 @@ FinLabs.models.Order = new class extends RocketChat.models._Base
 		order.orderId = order.id
 		delete order.id
 		order.updatedAt = new Date()
-		order.sku = _.reduce(
-			_.findWhere(order.items, type: "sku"),
-			(last, value) ->  return last or value,
-			undefined
-		)
+		if skuItem = _.findWhere(order.items, type: "sku")
+			order.sku = skuItem.parent
 		if user
 			order.user = user
 		updates = @updateByOrderId order.orderId, order
