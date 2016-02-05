@@ -168,11 +168,17 @@ rs0:PRIMARY> rs.status()
 
 ### Log locations and commands to control services
 
-#### RocketChat
+#### RocketChat - Sang Lucci
 
 `start|stop|restart SangLucci.Chat-Web.Production`
 
 `/var/apps/SangLucci.Chat/Web.Production/error|output.log`
+
+#### RocketChat - HFTAlert
+
+`start|stop|restart HFTAlert.Chat-Web.Production`
+
+`/var/apps/HFTAlert.Chat/Web.Production/error|output.log`
 
 #### nginx
 

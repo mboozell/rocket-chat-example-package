@@ -19,12 +19,13 @@ FinLabs.updateUserFromInvitation = (user, invitation) ->
 			trialEnd: new Date(Date.now() + 1000*60*60*24*trial.period)
 		FinLabs.models.Order.updateByOrderId order._id, update
 
-	for productId in invitation.overrideProducts
-		purchaseId = FinLabs.models.Purchase.findOneWithUserAndProduct(user._id, productId)?._id
-		if not purchaseId
-			purchaseId = FinLabs.models.Purchase.createActive(user._id, productId).insertedId
-		FinLabs.models.Purchase.override purchaseId
-		FinLabs.models.Purchase.makeActive purchaseId
+	if invitation.overrideProducts
+		for productId in invitation.overrideProducts
+			purchaseId = FinLabs.models.Purchase.findOneWithUserAndProduct(user._id, productId)?._id
+			if not purchaseId
+				purchaseId = FinLabs.models.Purchase.createActive(user._id, productId).insertedId
+			FinLabs.models.Purchase.override purchaseId
+			FinLabs.models.Purchase.makeActive purchaseId
 
 	emailText = "Invitation for #{invitation.name} <#{invitation.email}>[#{user._id}]
 			with key [#{invitation.key}] has been applied."
