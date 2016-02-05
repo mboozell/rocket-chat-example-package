@@ -17,10 +17,13 @@ Package.onUse(function(api) {
 		'alanning:roles@1.2.12'
 	]);
 
-	api.addFiles('lib.coffee', ['client', 'server']);
-	api.addFiles('client.coffee', 'client');
-	api.addFiles('server.coffee', 'server');
-	api.addFiles('startup.coffee', 'server');
+	api.addFiles([
+		'client/slashcommand.coffee'
+	], 'client');
+	api.addFiles([
+		'server/slashcommand.coffee',
+		'server/startup.coffee'
+	], 'server');
 
 	// TAPi18n
 	api.use('templating', 'client');

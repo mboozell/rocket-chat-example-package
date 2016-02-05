@@ -94,11 +94,11 @@ finlabs:analytics
 finlabs:slashcommands-alert
 
 # BEGIN SangLucci.Chat
-finlabs:wiseguy
+#finlabs:wiseguy
 # END SangLucci.Chat
 
 # BEGIN HFTAlert.Chat
-#finlabs:hftalert
+finlabs:hftalert
 # END HFTAlert.Chat
 
 konecty:change-case
