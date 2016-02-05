@@ -56,9 +56,10 @@ FinLabs.models.Order = new class extends RocketChat.models._Base
 			order.user = user
 		updates = @updateByOrderId order.orderId, order
 		if updates
-			return updates
+			return @findOneByOrderId order.orderId
 		order.createdAt = order.updatedAt
-		return @insert order
+		_id = @insert order
+		@findOneById _id
 
 	# REMOVE
 	removeById: (_id) ->
