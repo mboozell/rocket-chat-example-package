@@ -14,11 +14,14 @@ class Alert
 		user = Meteor.user()
 		room = RocketChat.models.Rooms.findOneById item.rid
 
+		unless room
+			return
+
 		msg = if params.trim().length > 0 then params.trim() else false
 		message = msg: msg, alert: true
 
 		RocketChat.sendMessage user, message, room
-		FinLabs.slashAlert.stream.emit 'new-alert', {room: item.rid, user: Meteor.userId()}
+		FinLabs.slashAlert.models.Alert.createWithRoomAndUser room._id, user._id
 
 
 RocketChat.slashCommands.add 'alert', Alert
