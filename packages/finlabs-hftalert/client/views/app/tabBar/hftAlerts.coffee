@@ -15,6 +15,7 @@ Template.hftAlerts.helpers
 
 Template.hftAlerts.onCreated ->
 	instance = @
+	@ready = new ReactiveVar false
 	@images = new ReactiveVar
 		'30min':
 			caption: "Delineator"
@@ -33,14 +34,26 @@ Template.hftAlerts.onCreated ->
 			extension: 'jpg',
 			num: 0
 
-	FinLabs.hftAlert.stream.on 'new image', (data) ->
-		setTimeout instance.getNewImage.bind(instance, data.id), Math.random()*2000
+	imagesToWatch = []
+	imagesToWatch.push image for image of @images.get()
+
+	@autorun =>
+		sub = @subscribe 'hftalertMeta', imagesToWatch
+		if sub.ready()
+			@ready.set true
 
 	@getNewImage = (id) ->
-		images = instance.images.get()
-		if images[id]
-			images[id].num++
-			instance.images.set(images)
+		setTimeout ->
+			images = instance.images.get()
+			if images[id]
+				images[id].num++
+				instance.images.set(images)
+		, Math.round Math.random() * 2000
+
+	FinLabs.hftAlert.models.Meta.find().observe
+		changed: (image) ->
+			unless image.locked
+				instance.getNewImage image._id
 
 Template.hftAlerts.onRendered ->
 	$('.hft-alert-swipebox').swipebox()

@@ -33,12 +33,8 @@ FinLabs.hftAlert.settings =
 			type: "image/jpg"
 			frequency: "every 30 sec"
 
-FinLabs.hftAlert.stream.permissions.write -> false
-FinLabs.hftAlert.stream.permissions.read -> true
-
 for id, image of FinLabs.hftAlert.settings.images
 	FinLabs.hftAlert.models.Meta.create id
-
 
 Meteor.startup ->
 

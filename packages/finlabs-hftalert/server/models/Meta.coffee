@@ -13,6 +13,12 @@ FinLabs.hftAlert.models.Meta = new class extends RocketChat.models._Base
 
 		@upsert query, doc
 
+	findByIds: (ids, options) ->
+		query =
+			_id: $in: ids
+
+		@find query, options
+
 	setLocked: (id, locked) ->
 		query =
 			_id: id
