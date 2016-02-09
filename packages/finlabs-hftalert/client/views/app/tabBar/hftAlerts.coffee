@@ -9,7 +9,7 @@ Template.hftAlerts.helpers
 	getUrl: ->
 		{host, protocol} = window.location
 		base = "/plugins/hftalert/image/"
-		image = "#{@id}.#{@extension}?num=#{@num}"
+		image = "#{@id}.#{@extension}?cache=#{@cache}&num=#{@num}"
 		return protocol + '//' + host + base + image
 
 
@@ -20,18 +20,22 @@ Template.hftAlerts.onCreated ->
 		'30min':
 			caption: "Delineator"
 			extension: "jpg"
+			cache: Random.id(),
 			num: 0
 		'SPYLiquidity':
 			caption: "SPY Liquidity",
 			extension: 'jpg',
+			cache: Random.id(),
 			num: 0
 		'SPYPressure':
 			caption: "SPY Market Pressure",
 			extension: 'jpg',
+			cache: Random.id(),
 			num: 0
 		'VXXPressure':
 			caption: "VXX Market Pressure",
 			extension: 'jpg',
+			cache: Random.id(),
 			num: 0
 
 	imagesToWatch = []
