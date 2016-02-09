@@ -4,7 +4,6 @@ Meteor.publish 'hftalertMeta', (ids) ->
 
 	unless RocketChat.authz.hasPermission this.userId, 'view-hftalerts'
 		return this.ready()
-	console.log "authed"
 
 	FinLabs.hftAlert.models.Meta.findByIds ids
 
