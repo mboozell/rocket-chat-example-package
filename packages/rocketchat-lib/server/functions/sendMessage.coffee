@@ -16,7 +16,7 @@ RocketChat.sendMessage = (user, message, room, options) ->
 
 	message.rid = room._id
 
-	if message.msg
+	if message.msg or message.file
 
 		if message.parseUrls isnt false
 			if urls = message.msg.match /([A-Za-z]{3,9}):\/\/([-;:&=\+\$,\w]+@{1})?([-A-Za-z0-9\.]+)+:?(\d+)?((\/[-\+=!:~%\/\.@\,\w]+)?\??([-\+=&!:;%@\/\.\,\w]+)?#?([\w]+)?)?/g
