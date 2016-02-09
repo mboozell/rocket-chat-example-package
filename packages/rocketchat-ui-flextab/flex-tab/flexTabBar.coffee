@@ -9,25 +9,19 @@ Template.flexTabBar.helpers
 Template.flexTabBar.events
 	'click .tab-button': (e, t) ->
 		e.preventDefault()
-
-		if RocketChat.TabBar.isFlexOpen() and RocketChat.TabBar.getTemplate() is $(e.currentTarget).data('template')
+		template = $(e.currentTarget).data('template')
+		if RocketChat.TabBar.isFlexOpen() and RocketChat.TabBar.getTemplate() is template
 			RocketChat.TabBar.closeFlex()
-			t.resize()
-			t.toggleResizer()
 		else
-			button = _.findWhere(RocketChat.TabBar.getButtons(), template: $(e.currentTarget).data('template'))
-
-			t.resize(button.width)
-			t.toggleResizer(button.resizeable, (newWidth) ->
-				RocketChat.TabBar.updateButton button.id, width: newWidth
-			)
-
-			RocketChat.TabBar.setTemplate $(e.currentTarget).data('template'), ->
+			RocketChat.TabBar.setTemplate template, ->
 				$('.flex-tab')?.find("input[type='text']:first")?.focus()
 				$('.flex-tab .content')?.scrollTop(0)
 
+		t.currentTemplate.set(template)
+
 Template.flexTabBar.onCreated ->
 	instance = @
+	@currentTemplate = new ReactiveVar RocketChat.TabBar.getTemplate()
 
 	@resize = (width) ->
 		if width?
@@ -62,3 +56,22 @@ Template.flexTabBar.onCreated ->
 		else
 			$('.flex-tab .tab-resizer').remove()
 
+
+Template.flexTabBar.onRendered ->
+	instance = Template.instance()
+
+	Tracker.autorun ->
+		template = instance.currentTemplate.get()
+		resize = instance.resize
+		toggleResizer = instance.toggleResizer
+		if RocketChat.TabBar.isFlexOpen()
+			button = _.findWhere(RocketChat.TabBar.getButtons(), template: template)
+			if button
+				console.log button
+				resize(button.width)
+				toggleResizer(button.resizeable, (newWidth) ->
+					RocketChat.TabBar.updateButton button.id, width: newWidth
+				)
+		else
+			resize()
+			toggleResizer()
