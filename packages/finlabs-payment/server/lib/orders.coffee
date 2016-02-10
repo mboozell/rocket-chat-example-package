@@ -19,9 +19,10 @@ FinLabs.payment.orders =
 		FinLabs.lib.emailTemplate "refundEmail", order.email, {}, subject: "Your Order has been Refunded!"
 
 	createInvite: (order) ->
-		invitation = RocketChat.models.Invitations.createOneWithEmail order.email, order: order._id
-		invitation.url = "#{Meteor.absoluteUrl()}register?invite=#{encodeURIComponent(invitation.key)}"
+		unless RocketChat.models.Invitations.findOneByEmail order.email
+			invitation = RocketChat.models.Invitations.createOneWithEmail order.email, order: order._id
+			invitation.url = "#{Meteor.absoluteUrl()}register?invite=#{encodeURIComponent(invitation.key)}"
 
-		FinLabs.lib.emailInvite invitation
+			FinLabs.lib.emailInvite invitation
 
 

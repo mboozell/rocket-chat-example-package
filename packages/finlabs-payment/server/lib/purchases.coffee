@@ -113,7 +113,7 @@ FinLabs.payment.purchases =
 
 		order: (userId, purchase, payment) ->
 			orders = FinLabs.models.Order.findValidByUserAndSKU userId, payment.sku
-			if orders.length > 0
+			if orders.count() > 0
 				return true
 			return false
 
