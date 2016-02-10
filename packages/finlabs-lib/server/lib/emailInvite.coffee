@@ -5,7 +5,7 @@ FinLabs.lib.emailInvite = (invitation) ->
 		subject: RocketChat.settings.get 'Invitation_Subject'
 	to = invitation.email
 
-	FinLabs.lib.emailTemplate template, to, data, settings
+	sent = FinLabs.lib.emailTemplate template, to, data, settings
 
 	FinLabs.lib.emailAdminsUpdate
 		subject: "Chat Update! New Invite Sent"

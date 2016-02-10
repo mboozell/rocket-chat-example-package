@@ -4,16 +4,17 @@ FinLabs.payment.orders =
 		unless order.status == 'paid'
 			return
 
-		unless FinLabs.models.Trial.findeOneBySKU order.sku
+		unless FinLabs.models.Trial.findOneBySKU order.sku
 			return
 
-		if FinLabs.models.Users.findOneByEmailAddress order.email
+		if RocketChat.models.Users.findOneByEmailAddress order.email
 			return FinLabs.payment.orders.refundOrder order
 		return FinLabs.payment.orders.createInvite order
 
 	refundOrder: (order) ->
 		try
 			FinLabs.payment.util.refundCharge order.charge
+			FinLabs.payment.util.updateOrder order.orderId, status: 'canceled'
 
 		FinLabs.lib.emailTemplate "refundEmail", order.email, {}, subject: "Your Order has been Refunded!"
 
