@@ -24,7 +24,9 @@ Package.onUse(function(api) {
 	api.addFiles([
 		"server/settings.coffee",
 		"server/methods/getHostname.coffee",
-		"server/lib/emailAdminsUpdate.coffee"
+		"server/lib/emailAdminsUpdate.coffee",
+		"server/lib/emailTemplate.coffee",
+		"server/lib/emailInvite.coffee"
 	], 'server');
 
 	api.addFiles([], 'client');

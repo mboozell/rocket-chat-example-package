@@ -37,3 +37,7 @@ FinLabs.payment.stripeEvents =
 
 		plan: (plan) ->
 			FinLabs.models.Product.updatePlan(plan)
+
+		order: (order) ->
+			order = FinLabs.models.Order.updateOrAdd order
+			FinLabs.payment.orders.handleNew order
