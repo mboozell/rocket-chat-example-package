@@ -14,6 +14,9 @@ FinLabs.lib.emailTemplate = (template, to, data = {}, settings = {}) ->
 
 	_.extend email, settings
 
+	console.log "sending email [#{email.subject}] to #{to}"
+	console.log data
+
 	tries = 0
 	sent = false
 	while true

@@ -15,5 +15,7 @@ FinLabs.payment.addAndSendInvitation = (email, stripe, apiKey) ->
 		FinLabs.updateUserFromInvitation user, invitation
 		invitation.url = "#{Meteor.absoluteUrl()}"
 
-  FinLabs.lib.emailInvite invitation
+	console.log invitation
+
+	FinLabs.lib.emailInvite invitation
 
