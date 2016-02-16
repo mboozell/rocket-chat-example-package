@@ -1,13 +1,14 @@
 FinLabs.WiseGuy.saveAlert = (alert, key) ->
 
-  unless alert
-    throw new Meteor.Error 500, 'Invalid WiseGuy Alert'
+	unless alert
+		throw new Meteor.Error 500, 'Invalid WiseGuy Alert'
 
-  product = FinLabs.models.Product.findOneByKey(key)
+	product = FinLabs.models.Product.findOneByKey(key)
 
-  if not product
-    throw new Meteor.Error 401, 'Bad API Key -> Not Authorized'
+	if not product
+		throw new Meteor.Error 401, 'Bad API Key -> Not Authorized'
 
-  data = FinLabs.WiseGuy.parseAll alert
+	data = FinLabs.WiseGuy.parseAll alert
+	data.text = alert
 
-  FinLabs.models.WiseGuyAlerts.createOneWithApiKey data, key
+	FinLabs.models.WiseGuyAlerts.createOneWithApiKey data, key
