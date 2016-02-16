@@ -14,7 +14,7 @@ FinLabs.WiseGuy.parse =
 		unless weekly
 			year = parseInt("20" + result.substr(3,2))
 		exp_date.setFullYear year
-		if today > exp_date
+		if weekly and today > exp_date
 			exp_date.setFullYear year + 1
 		# set day to 3rd Friday
 		unless weekly
