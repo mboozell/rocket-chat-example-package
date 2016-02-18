@@ -12,6 +12,22 @@ Meteor.startup ->
 			throw new Meteor.Error 'unsubscribed-user', TAPi18n.__ 'User is not Subscribed. Visit WallStJesus.com'
 		return true
 
+	toggleRolesForUser = (userId) ->
+		unless RocketChat.settings.get "Require_Payment"
+			if RocketChat.authz.hasRole userId, 'unpaid-user'
+				RocketChat.authz.removeUsersFromRoles userId, 'unpaid-user'
+				RocketChat.authz.addUsersToRoles userId, 'user'
+			return true
+
+		unless FinLabs.payment.purchases.userHasBaseProduct userId
+			if RocketChat.authz.hasRole userId, 'user'
+				RocketChat.authz.removeUsersFromRoles userId, 'user'
+				RocketChat.authz.addUsersToRoles userId, 'unpaid-user'
+		else
+			if RocketChat.authz.hasRole userId, 'unpaid-user'
+				RocketChat.authz.removeUsersFromRoles userId, 'unpaid-user'
+				RocketChat.authz.addUsersToRoles userId, 'user'
+
 	RocketChat.callbacks.add 'afterCreateUser', (options, user) ->
 		if options?.invitation
 			FinLabs.updateUserFromInvitation user, options.invitation
@@ -30,27 +46,18 @@ Meteor.startup ->
 			RocketChat.authz.removeUsersFromRoles user._id, 'user'
 			RocketChat.authz.addUsersToRoles user._id, 'unpaid-user'
 
+		try
+			FinLabs.payment.purchases.checkUser user._id
+		toggleRolesForUser(user._id)
+
 		return user
 	, RocketChat.callbacks.priority.HIGH
 
 	Accounts.onLogin ->
 		userId = Meteor.userId()
-		FinLabs.payment.purchases.checkUser userId
-
-		unless RocketChat.settings.get "Require_Payment"
-			if RocketChat.authz.hasRole userId, 'unpaid-user'
-				RocketChat.authz.removeUsersFromRoles userId, 'unpaid-user'
-				RocketChat.authz.addUsersToRoles userId, 'user'
-			return true
-
-		unless FinLabs.payment.purchases.userHasBaseProduct userId
-			if RocketChat.authz.hasRole userId, 'user'
-				RocketChat.authz.removeUsersFromRoles userId, 'user'
-				RocketChat.authz.addUsersToRoles userId, 'unpaid-user'
-		else
-			if RocketChat.authz.hasRole userId, 'unpaid-user'
-				RocketChat.authz.removeUsersFromRoles userId, 'unpaid-user'
-				RocketChat.authz.addUsersToRoles userId, 'user'
+		try
+			FinLabs.payment.purchases.checkUser userId
+		toggleRolesForUser(userId)
 
 
 	RocketChat.models.Users.find().observe

@@ -19,6 +19,18 @@ FinLabs.payment.products = new class
 
 Meteor.startup ->
 
+	updateChannels = (product) ->
+		for channelId in product.channels
+			unless RocketChat.models.Rooms.findOneById channelId
+				RocketChat.models.Rooms.createWithIdTypeAndName channelId, 'p', Random.id()
+
+	updatePlans = (product) ->
+		for payment in product.payments
+			if payment.type is 'subscription'
+				try
+					plan = FinLabs.payment.util.getPlan payment.plan.id
+					FinLabs.models.Product.updatePlan plan
+
 	updatePurchases = (product) ->
 		admins = RocketChat.authz.getUsersInRole 'admin'
 		for admin in admins
@@ -37,11 +49,8 @@ Meteor.startup ->
 
 	updateProduct = (product) ->
 		Meteor.defer ->
-			for payment in product.payments
-				if payment.type is 'subscription'
-					plan = FinLabs.payment.util.getPlan payment.plan.id
-					FinLabs.models.Product.updatePlan plan
-
+			updateChannels product
+			updatePlans product
 			updatePurchases product
 
 	FinLabs.models.Product.find().observe
