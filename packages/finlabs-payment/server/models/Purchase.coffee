@@ -111,6 +111,16 @@ FinLabs.models.Purchase = new class extends RocketChat.models._Base
 
 		return @update query, update
 
+	overrideAndActivate: (_id) ->
+		query =
+			_id: _id
+
+		update =
+			$set:
+				override: true
+				active: true
+
+		return @update query, update
 
 	# REMOVE
 	removeById: (_id) ->

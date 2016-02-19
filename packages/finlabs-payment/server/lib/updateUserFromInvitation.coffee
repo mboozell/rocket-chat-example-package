@@ -27,9 +27,9 @@ FinLabs.updateUserFromInvitation = (user, invitation) ->
 		for productId in invitation.overrideProducts
 			purchaseId = FinLabs.models.Purchase.findOneWithUserAndProduct(user._id, productId)?._id
 			if not purchaseId
-				purchaseId = FinLabs.models.Purchase.createActive(user._id, productId).insertedId
-			FinLabs.models.Purchase.override purchaseId
-			FinLabs.models.Purchase.makeActive purchaseId
+				FinLabs.models.Purchase.createActive(user._id, productId, {override: true})
+			else
+				FinLabs.models.Purchase.overrideAndActivate purchaseId
 
 	emailText = "Invitation for #{invitation.name} <#{invitation.email}>[#{user._id}]
 			with key [#{invitation.key}] has been applied."
