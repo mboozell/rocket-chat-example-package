@@ -24,7 +24,10 @@ RocketChat.Login = (->
 
 RocketChat.Button = (->
 		time = undefined
+		disable = (el) -> $(el).prop('disabled', true)
+		enable = (el) -> $(el).prop('disabled', false)
 		loading = (el) ->
+			disable(el)
 			$el = $(el)
 			next = el.attr("data-loading-text")
 			html = el.find("span").html()
@@ -33,9 +36,11 @@ RocketChat.Button = (->
 				el.addClass("going")
 			, 1
 		done = (el) ->
+			enable(el)
 			$el = $(el)
 			el.addClass("done")
 		reset = (el) ->
+			enable(el)
 			clearTimeout(time) if time
 			$el = $(el)
 			html= $el.attr("data-def-text")
@@ -44,6 +49,8 @@ RocketChat.Button = (->
 		done: done
 		loading: loading
 		reset: reset
+		disable: disable
+		enable: enable
 	)()
 
 RocketChat.animationSupport = ->
