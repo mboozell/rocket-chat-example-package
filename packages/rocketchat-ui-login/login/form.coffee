@@ -128,8 +128,8 @@ Template.loginForm.events
 			if instance.state.get() is 'register'
 				formData.secretURL = FlowRouter.getParam 'hash'
 				Meteor.call 'registerUser', formData, (error, result) ->
-					RocketChat.Button.reset(button)
 					if error?
+						RocketChat.Button.reset(button)
 						if error.error is 'Email already exists.'
 							toastr.error t 'Email_already_exists'
 						else
