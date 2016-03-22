@@ -44,3 +44,16 @@ Meteor.startup ->
 			link: (sub) ->
 				return { name: sub.name }
 		permissions: [ 'view-p-room' ]
+
+	RocketChat.roomTypes.add 'b', 20,
+					template: 'channels'
+					icon: 'icon-hash'
+					route:
+						name: 'boozell'
+						path: '/channel/:name'
+						action: (params, queryParams) ->
+							Session.set 'showUserInfo'
+							openRoom 'b', params.name
+						link: (sub) ->
+							return { name: sub.name }
+					permissions: [ 'view-b-room' ]
