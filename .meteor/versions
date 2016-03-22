@@ -82,6 +82,7 @@ livedata@1.0.15
 localstorage@1.0.5
 logging@1.0.8
 matb33:collection-hooks@0.8.1
+mboozell:example-package@0.0.1
 mdg:validation-error@0.2.0
 meteor@1.1.10
 meteor-base@1.0.1
